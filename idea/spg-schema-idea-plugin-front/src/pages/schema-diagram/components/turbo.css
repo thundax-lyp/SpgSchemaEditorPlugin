@@ -1,0 +1,306 @@
+
+.schema-diagram {
+	position: relative;
+	width: 100vw;
+	height: 100vh;
+}
+
+.turbo-container {
+	position: absolute;
+	width: 100vw;
+	height: 100vh;
+}
+
+.turbo-container * {
+	font-family: sans-serif;
+	box-sizing: border-box;
+}
+
+.react-flow {
+	--node-border-radius: 10px;
+	--node-box-shadow: 10px 0 15px rgba(42, 138, 246, 0.3), -10px 0 15px rgba(233, 42, 103, 0.3);
+	background-color: var(--bg-color);
+	color: var(--text-color);
+}
+
+.react-flow__node-turbo {
+	border-radius: var(--node-border-radius);
+	display: flex;
+	min-width: 150px;
+	font-family: "Fira Mono", Monospace;
+	font-weight: 500;
+	letter-spacing: -0.2px;
+	box-shadow: var(--node-box-shadow);
+}
+
+.react-flow__node-turbo .turbo-body-wrapper {
+	overflow: hidden;
+	display: flex;
+	padding: 2px;
+	position: relative;
+	border-radius: var(--node-border-radius);
+	flex-grow: 1;
+}
+
+.gradient:before {
+	content: "";
+	position: absolute;
+	padding-bottom: calc(100% * 1.41421356237);
+	width: calc(100% * 1.41421356237);
+	height: calc(100% * 1.41421356237);
+	background: conic-gradient(from -160deg at 50% 50%, #e92a67 0deg, #a853ba 120deg, #2a8af6 240deg, #e92a67 360deg);
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	border-radius: 100%;
+}
+
+.react-flow__node-turbo.selected .turbo-body-wrapper.gradient:before {
+	content: "";
+	background: conic-gradient(from -160deg at 50% 50%, #e92a67 0deg, #a853ba 120deg, #2a8af6 240deg, rgba(42, 138, 246, 0) 360deg);
+	animation: spinner 4s linear infinite;
+	transform: translate(-50%, -50%) rotate(0deg);
+	z-index: -1;
+}
+
+@keyframes spinner {
+	100% {
+		transform: translate(-50%, -50%) rotate(-360deg);
+	}
+}
+
+.react-flow__node-turbo .inner {
+	background: var(--bg-color);
+	padding: 16px 20px;
+	border-radius: var(--node-border-radius);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	flex-grow: 1;
+	position: relative;
+}
+
+.react-flow__node-turbo .icon {
+	margin-right: 8px;
+}
+
+.react-flow__node-turbo .turbo-body {
+	display: flex;
+	flex-direction: column;
+}
+
+.react-flow__node-turbo .turbo-title {
+	font-size: 16px;
+	margin-bottom: 2px;
+	line-height: 1;
+	color: var(--text-color);
+}
+
+.react-flow__node-turbo .turbo-subtitle {
+	font-size: 12px;
+	color: rgb(from var(--text-color) r g b / calc(alpha - .3));
+	opacity: 0.5;
+}
+
+
+.react-flow__node-turbo .turbo-properties-container {
+	display: flex;
+	flex-direction: column;
+	margin-top: 4px;
+	border-top: solid 1px rgb(from var(--text-color) r g b / calc(alpha - .7));
+}
+
+.react-flow__node-turbo .turbo-property {
+	display: flex;
+	flex-direction: row;
+	padding: 4px 0;
+	align-items: baseline;
+}
+
+.react-flow__node-turbo .turbo-property > div + div {
+	padding-left: 4px;
+}
+
+.react-flow__node-turbo .turbo-property-icon {
+	width: 20px;
+	height: 20px;
+}
+
+.react-flow__node-turbo .turbo-property-icon svg {
+	width: 20px;
+	height: 20px;
+	position: relative;
+	top: 4px;
+}
+
+.react-flow__node-turbo .turbo-property-title {
+	font-size: 16px;
+	color: var(--entity-name-color);
+}
+
+.react-flow__node-turbo .turbo-property-subtitle {
+	font-size: 12px;
+	color: var(--entity-alias-color);
+}
+
+.react-flow__node-turbo .turbo-property-types {
+	display: flex;
+	flex-direction: row;
+	font-size: 12px;
+	font-style: italic;
+}
+
+.react-flow__node-turbo .turbo-property-type:hover {
+	/*font-size: 16px;*/
+}
+
+.react-flow__node-turbo .turbo-property-type + .turbo-property-type {
+	padding-left: 4px;
+	color: var(--entity-reference-color);
+}
+
+.react-flow__node-turbo .turbo-property-type.builtin {
+	color: var(--keyword-color);
+}
+
+.react-flow__node-turbo .turbo-relations-container {
+	display: flex;
+	flex-direction: column;
+	margin-top: 4px;
+	border-top: solid 1px rgb(from var(--text-color) r g b / calc(alpha - .7));
+}
+
+.react-flow__node-turbo .turbo-relation {
+	display: flex;
+	flex-direction: row;
+	padding: 4px 0;
+	align-items: baseline;
+}
+
+.react-flow__node-turbo .turbo-relation > div + div {
+	padding-left: 4px;
+}
+
+.react-flow__node-turbo .turbo-relation-icon {
+	width: 20px;
+	height: 20px;
+}
+
+.react-flow__node-turbo .turbo-relation-icon svg {
+	width: 20px;
+	height: 20px;
+	position: relative;
+	top: 4px;
+}
+
+.react-flow__node-turbo .turbo-relation-title {
+	font-size: 16px;
+	color: var(--entity-name-color);
+}
+
+.react-flow__node-turbo .turbo-relation-subtitle {
+	font-size: 12px;
+	color: var(--entity-alias-color);
+}
+
+.react-flow__node-turbo .turbo-relation-types {
+	display: flex;
+	flex-direction: row;
+	font-size: 12px;
+	font-style: italic;
+}
+
+.react-flow__node-turbo .turbo-relation-type + .turbo-relation-type {
+	padding-left: 4px;
+	color: var(--entity-reference-color);
+}
+
+.react-flow__node-turbo .turbo-relation.builtin {
+	color: var(--keyword-color);
+}
+
+.react-flow__node-turbo .turbo-clouds {
+	position: absolute;
+	top: 0;
+	right: 0;
+	display: flex;
+	flex-direction: row;
+	z-index: 1;
+}
+
+.react-flow__node-turbo .turbo-cloud {
+	border-radius: 100%;
+	width: 30px;
+	height: 30px;
+	transform: translate(50%, -50%);
+	display: flex;
+	transform-origin: center center;
+	padding: 2px;
+	overflow: hidden;
+	box-shadow: var(--node-box-shadow);
+}
+
+.react-flow__node-turbo .turbo-cloud + .turbo-cloud {
+	margin-left: 2px;
+}
+
+.react-flow__node-turbo .turbo-cloud div {
+	background-color: var(--bg-color);
+	flex-grow: 1;
+	border-radius: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+}
+
+.react-flow__handle {
+	opacity: 0;
+}
+
+.react-flow__handle.source {
+	right: -10px;
+}
+
+.react-flow__handle.target {
+	left: -10px;
+}
+
+.react-flow__node:focus {
+	outline: none;
+}
+
+.react-flow__edge .react-flow__edge-path {
+	stroke: url(#edge-gradient);
+	stroke-width: 2;
+	stroke-opacity: 0.75;
+}
+
+.react-flow__controls button {
+	background-color: var(--bg-color);
+	color: var(--text-color);
+	border: 1px solid #95679e;
+	border-bottom: none;
+}
+
+.react-flow__controls button:hover {
+	background-color: rgb(37, 37, 37);
+}
+
+.react-flow__controls button:first-child {
+	border-radius: 5px 5px 0 0;
+}
+
+.react-flow__controls button:last-child {
+	border-bottom: 1px solid #95679e;
+	border-radius: 0 0 5px 5px;
+}
+
+.react-flow__controls button path {
+	fill: var(--text-color);
+}
+
+.react-flow__attribution {
+	display: none;
+}
+
