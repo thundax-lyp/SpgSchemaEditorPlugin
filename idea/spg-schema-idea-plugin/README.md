@@ -7,7 +7,7 @@ An IDEA plugin for OpenSPG Schema Mark Language
 ## Preview
 
 <div align="center">
-    <img src="./docs/resources/screenshot.png" width="1200" alt="screenshot"></img>
+    <img src="./docs/resources/screenshot.png" width="1200" alt="screenshot"/>
 </div>
 
 ## Features:
