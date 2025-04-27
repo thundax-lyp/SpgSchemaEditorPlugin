@@ -1,0 +1,206 @@
+{
+	"code": 0,
+	"message": "success",
+	"data": {
+		"namespace": {
+			"value": "RiskMining"
+		},
+		"entities": [
+			{
+				"name": "TaxOfRiskUser",
+				"aliasName": "风险用户",
+				"types": ["ConceptType"],
+				"properties": [
+					{
+						"name": "hypernymPredicate",
+						"value": "isA"
+					}
+				]
+			}, {
+				"name": "TaxOfRiskApp",
+				"aliasName": "风险应用",
+				"types": ["ConceptType"],
+				"properties": [
+					{
+						"name": "hypernymPredicate",
+						"value": "isA"
+					}
+				]
+			}, {
+				"name": "Cert",
+				"aliasName": "证书",
+				"types": ["EntityType"],
+				"properties": [
+					{
+						"name": "properties",
+						"children": [
+							{
+								"name": "certNum",
+								"aliasName": "证书编号",
+								"types": ["Text"]
+							}
+						]
+					}
+				]
+			}, {
+				"name": "App",
+				"aliasName": "应用",
+				"types": ["EntityType"],
+				"properties": [
+					{
+						"name": "properties",
+						"children": [
+							{
+								"name": "riskMark",
+								"aliasName": "风险标记",
+								"types": ["Text"]
+							}, {
+								"name": "useCert",
+								"aliasName": "使用证书",
+								"types": ["Cert"]
+							}, {
+								"name": "IND#belongTo",
+								"aliasName": "属于",
+								"types": ["TaxOfRiskApp"]
+							}
+						]
+					}
+				]
+			}, {
+				"name": "Company",
+				"aliasName": "企业",
+				"types": ["EntityType"],
+				"properties": [
+					{
+						"name": "properties",
+						"children": [
+							{
+								"name": "hasPhone",
+								"aliasName": "电话号码",
+								"types": ["Text"]
+							}
+						]
+					}, {
+						"name": "relations",
+						"children": [
+							{
+								"name": "hasCert",
+								"aliasName": "拥有证书",
+								"types": ["Cert"]
+							}, {
+								"name": "holdShare",
+								"aliasName": "持股",
+								"types": ["Company"]
+							}
+						]
+					}
+				]
+			}, {
+				"name": "Device",
+				"aliasName": "设备",
+				"types": ["EntityType"],
+				"properties": [
+					{
+						"name": "properties",
+						"children": [
+							{
+								"name": "umid",
+								"aliasName": "设备umid",
+								"types": ["Text"]
+							}, {
+								"name": "install",
+								"aliasName": "安装",
+								"types": ["App"],
+								"properties": [
+									{
+										"name": "constraint",
+										"value": "MultiValue"
+									}
+								]
+							}
+						]
+					}
+				]
+			}, {
+				"name": "Person",
+				"aliasName": "自然人",
+				"types": ["EntityType"],
+				"properties": [
+					{
+						"name": "properties",
+						"children": [
+							{
+								"name": "age",
+								"aliasName": "年龄",
+								"types": ["Integer"]
+							}, {
+								"name": "hasPhone",
+								"aliasName": "电话号码",
+								"types": ["Text"]
+							}, {
+								"name": "IND#belongTo",
+								"aliasName": "属于",
+								"types": ["TaxOfRiskUser"]
+							}
+						]
+					}, {
+						"name": "relations",
+						"children": [
+							{
+								"name": "hasDevice",
+								"aliasName": "拥有设备",
+								"types": ["Device"]
+							}, {
+								"name": "hasCert",
+								"aliasName": "拥有证书",
+								"types": ["Cert"]
+							}, {
+								"name": "holdShare",
+								"aliasName": "持股",
+								"types": ["Company"]
+							}, {
+								"name": "fundTrans",
+								"aliasName": "转账关系",
+								"types": ["Person"],
+								"properties": [
+									{
+										"name": "properties",
+										"children": [
+											{
+												"name": "transDate",
+												"alaisName": "交易日期"
+											}, {
+												"name": "transAmt",
+												"alaisName": "交易金额"
+											}
+										]
+									}
+								]
+							}, {
+								"name": "developed",
+								"aliasName": "开发",
+								"types": ["App"],
+								"properties": [
+									{
+										"name": "rule",
+										"value": "[[\n\t\t\t        Define (s:Person)-[p:developed]->(o:App) {\n\t\t\t\t        STRUCTURE {\n\t\t\t\t          \t(s)-[:hasDevice]->(d:Device)-[:install]->(o)\n\t\t\t\t        }\n\t\t\t\t\t\tCONSTRAINT {\n\t\t\t\t\t\t   deviceNum = group(s,o).count(d)\n\t\t\t\t\t\t   R1(\"设备超过5\"): deviceNum > 5\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n      \t\t\t  ]]"
+									}
+								]
+							}, {
+								"name": "release",
+								"aliasName": "发布",
+								"types": ["App"],
+								"properties": [
+									{
+										"name": "rule",
+										"value": "[[\n\t\t\t        Define (s:Person)-[p:release]->(o:App) {\n                        STRUCTURE {\n\t\t\t\t\t\t    (s)-[:holdShare]->(c:Company),\n\t\t\t\t\t\t    (c)-[:hasCert]->(cert:Cert)<-[useCert]-(o)\n\t\t\t\t\t    }\n\t\t\t\t\t    CONSTRAINT {\n\t\t\t\t\t    }\n\t\t\t\t\t}\n      \t\t\t  ]]"
+									}
+								]
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+}

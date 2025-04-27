@@ -1,0 +1,648 @@
+{
+	"code": 0,
+	"message": "success",
+	"data": {
+		"namespace": {
+			"value": "BaiKe"
+		},
+		"entities": [
+			{
+				"name": "Chunk",
+				"aliasName": "文本块",
+				"types": ["EntityType"],
+				"properties": [
+					{
+						"name": "desc",
+						"value": "A chunk refers to a segment of text."
+					}, {
+						"name": "properties",
+						"children": [
+							{
+								"name": "content",
+								"aliasName": "内容",
+								"types": ["Text"],
+								"properties": [
+									{
+										"name": "index",
+										"value": "TextAndVector"
+									}
+								]
+							},
+							{
+								"name": "subChunks",
+								"aliasName": "子内容",
+								"types": ["Chunk"]
+							}
+						]
+					}
+				]
+			}, {
+				"name": "ArtificialObject",
+				"aliasName": "人造物体",
+				"types": ["EntityType"],
+				"properties": [
+					{
+						"name": "desc",
+						"value": "a human-made entity that does not occur naturally."
+					}, {
+						"name": "properties",
+						"children": [
+							{
+								"name": "info",
+								"aliasName": "信息",
+								"types": ["Text"],
+								"properties": [
+									{
+										"name": "index",
+										"value": "TextAndVector"
+									}
+								]
+							}, {
+								"name": "semanticType",
+								"aliasName": "语义类型",
+								"types": ["Text"],
+								"properties": [
+									{
+										"name": "index",
+										"value": "Text"
+									}
+								]
+							}
+						]
+					}
+				]
+			}, {
+				"name": "Astronomy",
+				"aliasName": "天文学",
+				"types": ["EntityType"],
+				"properties": [
+					{
+						"name": "properties",
+						"children": [
+							{
+								"name": "info",
+								"aliasName": "信息",
+								"types": ["Text"],
+								"properties": [
+									{
+										"name": "index",
+										"value": "TextAndVector"
+									}
+								]
+							}, {
+								"name": "semanticType",
+								"aliasName": "语义类型",
+								"types": ["Text"],
+								"properties": [
+									{
+										"name": "index",
+										"value": "Text"
+									}
+								]
+							}
+						]
+					}
+				]
+			}, {
+				"name": "Building",
+				"aliasName": "建筑",
+				"types": ["EntityType"],
+				"properties": [
+					{
+						"name": "properties",
+						"children": [
+							{
+								"name": "info",
+								"aliasName": "信息",
+								"types": ["Text"],
+								"properties": [
+									{
+										"name": "index",
+										"value": "TextAndVector"
+									}
+								]
+							}, {
+								"name": "semanticType",
+								"aliasName": "语义类型",
+								"types": ["Text"],
+								"properties": [
+									{
+										"name": "index",
+										"value": "Text"
+									}
+								]
+							}, {
+								"name": "belongTo",
+								"aliasName": "所属",
+								"types": ["Chunk"]
+							}
+						]
+					}
+				]
+			}, {
+				"name": "Creature",
+				"aliasName": "生物",
+				"types": ["EntityType"],
+				"properties": [
+					{
+						"name": "desc",
+						"value": "generally refers to any living being, especially animals"
+					}, {
+						"name": "properties",
+						"children": [
+							{
+								"name": "info",
+								"aliasName": "信息",
+								"types": ["Text"],
+								"properties": [
+									{
+										"name": "index",
+										"value": "TextAndVector"
+									}
+								]
+							}, {
+								"name": "semanticType",
+								"aliasName": "语义类型",
+								"types": ["Text"],
+								"properties": [
+									{
+										"name": "index",
+										"value": "Text"
+									}
+								]
+							}
+						]
+					}
+				]
+			}, {
+				"name": "Concept",
+				"aliasName": "概念",
+				"types": ["EntityType"],
+				"properties": [
+					{
+						"name": "properties",
+						"children": [
+							{
+								"name": "info",
+								"aliasName": "信息",
+								"types": ["Text"],
+								"properties": [
+									{
+										"name": "index",
+										"value": "TextAndVector"
+									}
+								]
+							}, {
+								"name": "semanticType",
+								"aliasName": "语义类型",
+								"types": ["Text"],
+								"properties": [
+									{
+										"name": "index",
+										"value": "Text"
+									}
+								]
+							}
+						]
+					}
+				]
+			}, {
+				"name": "Date",
+				"aliasName": "日期",
+				"types": ["EntityType"],
+				"properties": [
+					{
+						"name": "properties",
+						"children": [
+							{
+								"name": "info",
+								"aliasName": "信息",
+								"types": ["Text"],
+								"properties": [
+									{
+										"name": "index",
+										"value": "TextAndVector"
+									}
+								]
+							}, {
+								"name": "semanticType",
+								"aliasName": "语义类型",
+								"types": ["Text"],
+								"properties": [
+									{
+										"name": "index",
+										"value": "Text"
+									}
+								]
+							}
+						]
+					}
+				]
+			}, {
+				"name": "GeographicLocation",
+				"aliasName": "地理位置",
+				"types": ["EntityType"],
+				"properties": [
+					{
+						"name": "properties",
+						"children": [
+							{
+								"name": "info",
+								"aliasName": "信息",
+								"types": ["Text"],
+								"properties": [
+									{
+										"name": "index",
+										"value": "TextAndVector"
+									}
+								]
+							}, {
+								"name": "semanticType",
+								"aliasName": "语义类型",
+								"types": ["Text"],
+								"properties": [
+									{
+										"name": "index",
+										"value": "Text"
+									}
+								]
+							}
+						]
+					}
+				]
+			}, {
+				"name": "Keyword",
+				"aliasName": "关键词",
+				"types": ["EntityType"],
+				"properties": [
+					{
+						"name": "properties",
+						"children": [
+							{
+								"name": "info",
+								"aliasName": "信息",
+								"types": ["Text"],
+								"properties": [
+									{
+										"name": "index",
+										"value": "TextAndVector"
+									}
+								]
+							}, {
+								"name": "semanticType",
+								"aliasName": "语义类型",
+								"types": ["Text"],
+								"properties": [
+									{
+										"name": "index",
+										"value": "Text"
+									}
+								]
+							}
+						]
+					}
+				]
+			}, {
+				"name": "Medicine",
+				"aliasName": "药物",
+				"types": ["EntityType"],
+				"properties": [
+					{
+						"name": "properties",
+						"children": [
+							{
+								"name": "info",
+								"aliasName": "信息",
+								"types": ["Text"],
+								"properties": [
+									{
+										"name": "index",
+										"value": "TextAndVector"
+									}
+								]
+							}, {
+								"name": "semanticType",
+								"aliasName": "语义类型",
+								"types": ["Text"],
+								"properties": [
+									{
+										"name": "index",
+										"value": "Text"
+									}
+								]
+							}
+						]
+					}
+				]
+			}, {
+				"name": "NaturalScience",
+				"aliasName": "自然科学",
+				"types": ["EntityType"],
+				"properties": [
+					{
+						"name": "properties",
+						"children": [
+							{
+								"name": "info",
+								"aliasName": "信息",
+								"types": ["Text"],
+								"properties": [
+									{
+										"name": "index",
+										"value": "TextAndVector"
+									}
+								]
+							}, {
+								"name": "semanticType",
+								"aliasName": "语义类型",
+								"types": ["Text"],
+								"properties": [
+									{
+										"name": "index",
+										"value": "Text"
+									}
+								]
+							}
+						]
+					}
+				]
+			}, {
+				"name": "Organization",
+				"aliasName": "组织机构",
+				"types": ["EntityType"],
+				"properties": [
+					{
+						"name": "properties",
+						"children": [
+							{
+								"name": "info",
+								"aliasName": "信息",
+								"types": ["Text"],
+								"properties": [
+									{
+										"name": "index",
+										"value": "TextAndVector"
+									}
+								]
+							}, {
+								"name": "semanticType",
+								"aliasName": "语义类型",
+								"types": ["Text"],
+								"properties": [
+									{
+										"name": "index",
+										"value": "Text"
+									}
+								]
+							}
+						]
+					}
+				]
+			}, {
+				"name": "Person",
+				"aliasName": "人物",
+				"types": ["EntityType"],
+				"properties": [
+					{
+						"name": "properties",
+						"children": [
+							{
+								"name": "info",
+								"aliasName": "信息",
+								"types": ["Text"],
+								"properties": [
+									{
+										"name": "index",
+										"value": "TextAndVector"
+									}
+								]
+							}, {
+								"name": "semanticType",
+								"aliasName": "语义类型",
+								"types": ["Text"],
+								"properties": [
+									{
+										"name": "index",
+										"value": "Text"
+									}
+								]
+							}, {
+								"name": "job",
+								"aliasName": "工作",
+								"types": ["Text"],
+								"properties": [
+									{
+										"name": "constraint",
+										"value": "MultiValue"
+									}
+								]
+							}, {
+								"name": "parent",
+								"aliasName": "家长",
+								"types": ["Person"]
+							}
+						]
+					}
+				]
+			}, {
+				"name": "Transport",
+				"aliasName": "运输",
+				"types": ["EntityType"],
+				"properties": [
+					{
+						"name": "properties",
+						"children": [
+							{
+								"name": "info",
+								"aliasName": "信息",
+								"types": ["Text"],
+								"properties": [
+									{
+										"name": "index",
+										"value": "TextAndVector"
+									}
+								]
+							}, {
+								"name": "semanticType",
+								"aliasName": "语义类型",
+								"types": ["Text"],
+								"properties": [
+									{
+										"name": "index",
+										"value": "Text"
+									}
+								]
+							}
+						]
+					}
+				]
+			}, {
+				"name": "Works",
+				"aliasName": "作品",
+				"types": ["EntityType"],
+				"properties": [
+					{
+						"name": "properties",
+						"children": [
+							{
+								"name": "info",
+								"aliasName": "信息",
+								"types": ["Text"],
+								"properties": [
+									{
+										"name": "index",
+										"value": "TextAndVector"
+									}
+								]
+							}, {
+								"name": "semanticType",
+								"aliasName": "语义类型",
+								"types": ["Text"],
+								"properties": [
+									{
+										"name": "index",
+										"value": "Text"
+									}
+								]
+							}, {
+								"name": "publisTime",
+								"aliasName": "发行时间",
+								"types": ["Date"]
+							}, {
+								"name": "authors",
+								"aliasName": "作者",
+								"types": ["Person"],
+								"properties": [
+									{
+										"name": "desc",
+										"value": "authors of work, such as director, actor,  lyricist, composer and singer"
+									}, {
+										"name": "constraint",
+										"value": "MultiValue"
+									}
+								]
+							}
+						]
+					}
+				]
+			}, {
+				"name": "BaikeEvent",
+				"aliasName": "事件",
+				"types": ["EventType"],
+				"properties": [
+					{
+						"name": "properties",
+						"children": [
+							{
+								"name": "subject",
+								"aliasName": "主体",
+								"types": ["Person"]
+							}, {
+								"name": "participants",
+								"aliasName": "参与者",
+								"types": ["Person"],
+								"properties": [
+									{
+										"name": "desc",
+										"value": "the participants of event, such as subject and objects"
+									}, {
+										"name": "constraint",
+										"value": "MultiValue"
+									}
+								]
+							}, {
+								"name": "time",
+								"aliasName": "时间",
+								"types": ["Date"]
+							}, {
+								"name": "location",
+								"aliasName": "地点",
+								"types": ["GeographicLocation"]
+							}, {
+								"name": "abstract",
+								"aliasName": "摘要",
+								"types": ["Text"],
+								"properties": [
+									{
+										"name": "index",
+										"value": "TextAndVector"
+									}
+								]
+							}, {
+								"name": "semanticType",
+								"aliasName": "事件语义类型",
+								"types": ["Text"],
+								"properties": [
+									{
+										"name": "desc",
+										"value": "a more specific and clearly defined type, such as Professor or Actor for the Person type"
+									}, {
+										"name": "index",
+										"value": "Text"
+									}
+								]
+							}
+						]
+					}
+				]
+			}, {
+				"name": "Others",
+				"aliasName": "其他",
+				"types": ["EntityType"],
+				"properties": [
+					{
+						"name": "desc",
+						"value": "Entities that does not belong to any other type"
+					}, {
+						"name": "properties",
+						"children": [
+							{
+								"name": "info",
+								"aliasName": "信息",
+								"types": ["Text"],
+								"properties": [
+									{
+										"name": "index",
+										"value": "TextAndVector"
+									}
+								]
+							}, {
+								"name": "semanticType",
+								"aliasName": "语义类型",
+								"types": ["Text"],
+								"properties": [
+									{
+										"name": "index",
+										"value": "Text"
+									}
+								]
+							}
+						]
+					}
+				]
+			}, {
+				"name": "SemanticConcept",
+				"aliasName": "语义概念",
+				"types": ["EntityType"],
+				"properties": [
+					{
+						"name": "properties",
+						"children": [
+							{
+								"name": "desc",
+								"aliasName": "内容",
+								"types": ["Text"],
+								"properties": [
+									{
+										"name": "index",
+										"value": "Text"
+									}
+								]
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+}
