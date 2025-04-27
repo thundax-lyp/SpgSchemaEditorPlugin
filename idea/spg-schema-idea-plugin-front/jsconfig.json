@@ -1,0 +1,10 @@
+{
+	"compilerOptions": {
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"baseUrl": "./openspg-schema-highlighter-idea-plugin-front",
+		"paths": {
+			"@/*": ["./src/*"]
+		}
+	}
+}
