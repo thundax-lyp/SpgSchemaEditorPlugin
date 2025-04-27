@@ -1,0 +1,385 @@
+{
+	"code": 0,
+	"message": "success",
+	"data": {
+		"namespace": {
+			"value": "SupplyChain"
+		},
+		"entities": [
+			{
+				"name": "Industry",
+				"aliasName": "产业",
+				"types": ["ConceptType"],
+				"properties": [
+					{
+						"name": "hypernymPredicate",
+						"value": "isA"
+					}
+				]
+			}, {
+				"name": "TaxOfProduct",
+				"aliasName": "产品分类",
+				"types": ["ConceptType"],
+				"properties": [
+					{
+						"name": "hypernymPredicate",
+						"value": "isA"
+					}
+				]
+			}, {
+				"name": "Product",
+				"aliasName": "产品",
+				"types": ["EntityType"],
+				"properties": [
+					{
+						"name": "properties",
+						"children": [
+							{
+								"name": "hasSupplyChain",
+								"aliasName": "供应链",
+								"types": ["Product"],
+								"properties": [
+									{
+										"name": "constraint",
+										"value": "MultiValue"
+									}
+								]
+							}, {
+								"name": "belongToIndustry",
+								"aliasName": "所属产业",
+								"types": ["Industry"]
+							}, {
+								"name": "IND#belongTo",
+								"aliasName": "所属产品分类",
+								"types": ["TaxOfProduct"]
+							}
+						]
+					}
+				]
+			}, {
+				"name": "Company",
+				"aliasName": "企业",
+				"types": ["EntityType"],
+				"properties": [
+					{
+						"name": "properties",
+						"children": [
+							{
+								"name": "product",
+								"aliasName": "经营产品",
+								"types": ["Product"],
+								"properties": [
+									{
+										"name": "constraint",
+										"value": "MultiValue"
+									}
+								]
+							}, {
+								"name": "totalTransInAmt",
+								"aliasName": "总共流入金额",
+								"types": ["Float"],
+								"properties": [
+									{
+										"name": "rule",
+										"value": "[[\n\t\t\t\tDefine (s:Company)-[p:totalTransInAmt]->(o:Float) {\n\t\t\t\t\tSTRUCTURE {\n\t\t\t\t\t\t(inCompany:Company)-[fundIn:fundTrans]->(s)\n\t\t\t\t\t}\n\t\t\t\t\tCONSTRAINT {\n\t\t\t\t\t\totherTransSum(\"总共转入金额\") = group(s).sum(fundIn.transAmt)\n\t\t\t\t\t\to = otherTransSum\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t]]"
+									}
+								]
+							}, {
+								"name": "fundTrans1Month",
+								"aliasName": "近1月流出",
+								"types": ["Float"],
+								"properties": [
+									{
+										"name": "rule",
+										"value": "[[\n\t\t\t    Define (s:Company)-[p:fundTrans1Month]->(o:Float) {\n                    STRUCTURE {\n          \t            (s)-[f:fundTrans]->(c:Company)\n                    }\n        \t        CONSTRAINT {\n          \t            R1(\"近1个月的流出资金\"): date_diff(from_unix_time(now(), 'yyyyMMdd'),f.transDate) < 30\n          \t            totalOut = group(s).sum(f.transAmt)\n          \t            o = totalOut\n                    }\n                }\n            ]]"
+									}
+								]
+							}, {
+								"name": "fundTrans3Month",
+								"aliasName": "近3月流出",
+								"types": ["Float"],
+								"properties": [
+									{
+										"name": "rule",
+										"value": "[[\n\t\t\t    Define (s:Company)-[p:fundTrans3Month]->(o:Float) {\n                    STRUCTURE {\n          \t            (s)-[f:fundTrans]->(c:Company)\n                    }\n        \t        CONSTRAINT {\n          \t            R1(\"近3个月的流出资金\"): date_diff(from_unix_time(now(), 'yyyyMMdd'),f.transDate) < 90\n          \t            totalOut = group(s).sum(f.transAmt)\n          \t            o = totalOut\n                    }\n                }\n            ]]"
+									}
+								]
+							}, {
+								"name": "fundTrans6Month",
+								"aliasName": "近6月流出",
+								"types": ["Float"],
+								"properties": [
+									{
+										"name": "rule",
+										"value": "[[\n\t\t\t    Define (s:Company)-[p:fundTrans6Month]->(o:Float) {\n                    STRUCTURE {\n          \t            (s)-[f:fundTrans]->(c:Company)\n                    }\n        \t        CONSTRAINT {\n          \t            R1(\"近6个月的流出资金\"): date_diff(from_unix_time(now(), 'yyyyMMdd'),f.transDate) < 180\n          \t            totalOut = group(s).sum(f.transAmt)\n          \t            o = totalOut\n                    }\n                }\n            ]]"
+									}
+								]
+							}, {
+								"name": "fundTrans1MonthIn",
+								"aliasName": "近1月流入",
+								"types": ["Float"],
+								"properties": [
+									{
+										"name": "rule",
+										"value": "[[\n\t\t\t    Define (s:Company)-[p:fundTrans1MonthIn]->(o:Integer) {\n                    STRUCTURE {\n          \t            (s)<-[f:fundTrans]-(c:Company)\n                    }\n        \t        CONSTRAINT {\n          \t            R1(\"近1个月的流出资金\"): date_diff(from_unix_time(now(), 'yyyyMMdd'),f.transDate) < 30\n          \t            totalOut = group(s).sum(f.transAmt)\n          \t            o = totalOut\n                    }\n                }\n            ]]"
+									}
+								]
+							}, {
+								"name": "fundTrans3MonthIn",
+								"aliasName": "近3月流入",
+								"types": ["Float"],
+								"properties": [
+									{
+										"name": "rule",
+										"value": "[[\n\t\t\t    Define (s:Company)-[p:fundTrans3MonthIn]->(o:Float) {\n                    STRUCTURE {\n          \t            (s)<-[f:fundTrans]-(c:Company)\n                    }\n        \t        CONSTRAINT {\n          \t            R1(\"近3个月的流出资金\"): date_diff(from_unix_time(now(), 'yyyyMMdd'),f.transDate) < 90\n          \t            totalOut = group(s).sum(f.transAmt)\n          \t            o = totalOut\n                    }\n                }\n            ]]"
+									}
+								]
+							}, {
+								"name": "fundTrans6MonthIn",
+								"aliasName": "近6月流入",
+								"types": ["Float"],
+								"properties": [
+									{
+										"name": "rule",
+										"value": "[[\n\t\t\t    Define (s:Company)-[p:fundTrans6MonthIn]->(o:Float) {\n                    STRUCTURE {\n          \t            (s)<-[f:fundTrans]-(c:Company)\n                    }\n        \t        CONSTRAINT {\n          \t            R1(\"近6个月的流出资金\"): date_diff(from_unix_time(now(), 'yyyyMMdd'),f.transDate) < 180\n          \t            totalOut = group(s).sum(f.transAmt)\n          \t            o = totalOut\n                    }\n                }\n            ]]"
+									}
+								]
+							}, {
+								"name": "cashflowDiff1Month",
+								"aliasName": "近1个月资金流水差",
+								"types": ["Float"],
+								"properties": [
+									{
+										"name": "rule",
+										"value": "[[\n\t\t\t    Define (s:Company)-[p:cashflowDiff1Month]->(o:Float) {\n                      STRUCTURE{\n                        (s)\n                      }\n                      CONSTRAINT {\n                          // 此处引用特征3中的规则\n                          fundTrans1Month = rule_value(s.fundTrans1Month == null, 0, s.fundTrans1Month)\n                          fundTrans1MonthIn = rule_value(s.fundTrans1MonthIn == null, 0, s.fundTrans1MonthIn)\n                          o = fundTrans1Month - fundTrans1MonthIn\n                      }\n                }\n            ]]"
+									}
+								]
+							}, {
+								"name": "cashflowDiff3Month",
+								"aliasName": "近3个月资金流水差",
+								"types": ["Float"],
+								"properties": [
+									{
+										"name": "rule",
+										"value": "[[\n\t\t\t    Define (s:Company)-[p:cashflowDiff3Month]->(o:Float) {\n                      STRUCTURE{\n                        (s)\n                      }\n                      CONSTRAINT {\n                              // 此处引用特征3中的规则\n                          fundTrans3Month = rule_value(s.fundTrans3Month == null, 0, s.fundTrans3Month)\n                          fundTrans3MonthIn = rule_value(s.fundTrans3MonthIn == null, 0, s.fundTrans3MonthIn)\n                          o = fundTrans3Month - fundTrans3MonthIn\n                      }\n                }\n            ]]"
+									}
+								]
+							}, {
+								"name": "cashflowDiff6Month",
+								"aliasName": "近6个月资金流水差",
+								"types": ["Float"],
+								"properties": [
+									{
+										"name": "rule",
+										"value": "[[\n\t\t\t    Define (s:Company)-[p:cashflowDiff6Month]->(o:Float) {\n                  STRUCTURE{\n                    (s)\n                  }\n                  CONSTRAINT {\n                          fundTrans6Month = rule_value(s.fundTrans6Month == null, 0, s.fundTrans6Month)\n                          fundTrans6MonthIn = rule_value(s.fundTrans6MonthIn == null, 0, s.fundTrans6MonthIn)\n                          o = fundTrans6Month - fundTrans6MonthIn\n                  }\n                }\n            ]]"
+									}
+								]
+							}
+						]
+					}, {
+						"name": "relations",
+						"children": [
+							{
+								"name": "fundTrans",
+								"aliasName": "资金往来",
+								"types": ["Company"],
+								"properties": [
+									{
+										"name": "properties",
+										"children": [
+											{
+												"name": "transDate",
+												"alaisName": "交易日期"
+											}, {
+												"name": "transAmt",
+												"alaisName": "交易金额"
+											}
+										]
+									}
+								]
+							}, {
+								"name": "mainSupply",
+								"aliasName": "主要客户",
+								"types": ["Company"],
+								"properties": [
+									{
+										"name": "rule",
+										"value": "[[\n\t\t\t    Define (s:Company)-[p:mainSupply]->(o:Company) {\n                    STRUCTURE {\n                    \t(s)-[:product]->(upProd:Product)-[:hasSupplyChain]->(downProd:Product)<-[:product]-(o),\n                    \t(o)-[f:fundTrans]->(s)\n                    }\n                  \tCONSTRAINT {\n                    \t// 计算公司o的转入占比\n                    \ttargetTransSum(\"供应链公司转入金额\") = group(s,o).sum(f.transAmt)\n                    \tR1(\"占比必须超过50%\"): targetTransSum*1.0/s.totalTransInAmt > 0.5\n                    }\n                }\n             ]]"
+									}
+								]
+							}, {
+								"name": "belongToIndustry",
+								"aliasName": "所在行业",
+								"types": ["Industry"],
+								"properties": [
+									{
+										"name": "rule",
+										"value": "[[\n\t\t\t    Define (s:Company)-[p:belongToIndustry]->(o:Industry) {\n                    STRUCTURE {\n            \t        (s)-[:product]->(c:Product)-[:belongToIndustry]->(o)\n                    }\n          \t        CONSTRAINT {\n                    }\n                }\n    \t    ]]"
+									}
+								]
+							}, {
+								"name": "sameLegalRepresentative",
+								"aliasName": "共同法人",
+								"types": ["Company"],
+								"properties": [
+									{
+										"name": "rule",
+										"value": "[[\n\t\t\t    Define (s:Company)-[p:sameLegalRepresentative]->(o:Company) {\n                    STRUCTURE {\n          \t            (s)<-[:legalRepresentative]-(u:Person)-[:legalRepresentative]->(o)\n                    }\n        \t        CONSTRAINT {\n                    }\n                }\n            ]]"
+									}
+								]
+							}
+						]
+					}
+				]
+			}, {
+				"name": "Person",
+				"aliasName": "自然人",
+				"types": ["EntityType"],
+				"properties": [
+					{
+						"name": "properties",
+						"children": [
+							{
+								"name": "age",
+								"aliasName": "年龄",
+								"types": ["Integer"]
+							}, {
+								"name": "certNo",
+								"aliasName": "证件号码",
+								"types": ["Text"]
+							}, {
+								"name": "legalRepresentative",
+								"aliasName": "法人代表",
+								"types": ["Company"],
+								"properties": [
+									{
+										"name": "constraint",
+										"value": "MultiValue"
+									}
+								]
+							}
+						]
+					}
+				]
+			}, {
+				"name": "Index",
+				"aliasName": "指标",
+				"types": ["ConceptType"],
+				"properties": [
+					{
+						"name": "hypernymPredicate",
+						"value": "isA"
+					}
+				]
+			}, {
+				"name": "Trend",
+				"aliasName": "趋势",
+				"types": ["ConceptType"],
+				"properties": [
+					{
+						"name": "hypernymPredicate",
+						"value": "isA"
+					}
+				]
+			}, {
+				"name": "TaxOfCompanyEvent",
+				"aliasName": "公司事件分类",
+				"types": ["ConceptType"],
+				"properties": [
+					{
+						"name": "hypernymPredicate",
+						"value": "isA"
+					}
+				]
+			}, {
+				"name": "CompanyEvent",
+				"aliasName": "公司事件",
+				"types": ["EventType"],
+				"properties": [
+					{
+						"name": "properties",
+						"children": [
+							{
+								"name": "subject",
+								"aliasName": "主体",
+								"types": ["Company"]
+							}, {
+								"name": "index",
+								"aliasName": "指标",
+								"types": ["Index"]
+							}, {
+								"name": "trend",
+								"aliasName": "趋势",
+								"types": ["Trend"]
+							}, {
+								"name": "IND#belongTo",
+								"aliasName": "属于",
+								"types": ["TaxOfCompanyEvent"]
+							}, {
+								"name": "CAU#leadTo",
+								"aliasName": "导致",
+								"types": ["CompanyEvent"]
+							}
+						]
+					}
+				]
+			}, {
+				"name": "TaxOfProdEvent",
+				"aliasName": "产业链事件分类",
+				"types": ["ConceptType"],
+				"properties": [
+					{
+						"name": "hypernymPredicate",
+						"value": "isA"
+					}, {
+						"name": "relations",
+						"children": [
+							{
+								"name": "CAU#leadTo",
+								"aliasName": "导致",
+								"types": ["TaxOfCompanyEvent"]
+							}
+						]
+					}
+				]
+			}, {
+				"name": "ProductChainEvent",
+				"aliasName": "产业链事件",
+				"types": ["EventType"],
+				"properties": [
+					{
+						"name": "properties",
+						"children": [
+							{
+								"name": "subject",
+								"aliasName": "主体",
+								"types": ["Product"]
+							}, {
+								"name": "index",
+								"aliasName": "指标",
+								"types": ["Index"]
+							}, {
+								"name": "trend",
+								"aliasName": "趋势",
+								"types": ["Trend"]
+							}, {
+								"name": "IND#belongTo",
+								"aliasName": "属于",
+								"types": ["TaxOfProdEvent"]
+							}
+						]
+					}, {
+						"name": "relations",
+						"children": [
+							{
+								"name": "CAU#leadTo",
+								"aliasName": "导致",
+								"types": ["CompanyEvent"]
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+}
