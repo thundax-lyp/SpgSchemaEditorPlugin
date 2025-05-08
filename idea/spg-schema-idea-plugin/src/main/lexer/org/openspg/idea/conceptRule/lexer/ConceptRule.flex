@@ -1,7 +1,8 @@
 package org.openspg.idea.lang.lexer;
 
 import com.intellij.openapi.vfs.newvfs.persistent.log.VfsOperation;import com.intellij.psi.TokenType;
-import com.intellij.psi.tree.IElementType;import com.intellij.ui.dsl.builder.AlignX;import java.security.cert.CertificateRevokedException;
+import com.intellij.psi.tree.IElementType;import com.intellij.ui.dsl.builder.AlignX;
+import java.security.cert.CertificateRevokedException;
 
 /* Auto generated File */
 %%
