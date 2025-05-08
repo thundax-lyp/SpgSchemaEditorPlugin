@@ -55,6 +55,19 @@
                 language="OpenSPG Schema"
                 implementationClass="org.openspg.idea.schema.grammar.SchemaParserDefinition"/>
 
+        <fileType
+                name="OpenSPG Schema Rule File"
+                implementationClass="org.openspg.idea.conceptRule.ConceptRuleFileType"
+                fieldName="INSTANCE"
+                language="OpenSPG Schema Rule"
+                extensions="rule"/>
+
+        <lang.parserDefinition
+                language="OpenSPG Schema Rule"
+                implementationClass="org.openspg.idea.conceptRule.grammar.ConceptRuleParserDefinition"/>
+
+
+
         <lang.syntaxHighlighterFactory
                 language="OpenSPG Schema"
                 implementationClass="org.openspg.idea.schema.highlighter.SchemaSyntaxHighlighterFactory"/>
