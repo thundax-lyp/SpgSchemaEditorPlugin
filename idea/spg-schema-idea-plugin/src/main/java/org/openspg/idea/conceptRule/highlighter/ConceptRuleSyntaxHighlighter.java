@@ -1,15 +1,12 @@
 package org.openspg.idea.conceptRule.highlighter;
 
 
-import com.intellij.ide.highlighter.JavaHighlightingColors;
 import com.intellij.lexer.Lexer;
 import com.intellij.openapi.editor.HighlighterColors;
 import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.openapi.fileTypes.SyntaxHighlighterBase;
-import com.intellij.psi.StringEscapesTokenTypes;
 import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.tree.ParentProviderElementType;
 import org.jetbrains.annotations.NotNull;
 import org.openspg.idea.conceptRule.lexer.ConceptRuleLexerAdapter;
 import org.openspg.idea.grammar.psi.ConceptRuleTypes;
@@ -69,15 +66,7 @@ public class ConceptRuleSyntaxHighlighter extends SyntaxHighlighterBase {
 
     @Override
     public TextAttributesKey @NotNull [] getTokenHighlights(IElementType tokenType) {
-        IElementType iteratorType = tokenType;
-
-        while (iteratorType instanceof ParentProviderElementType parentProviderElementType) {
-            if (parentProviderElementType.getParents().size() == 1) {
-                iteratorType = parentProviderElementType.getParents().iterator().next();
-            }
-        }
-
-        return pack(ourMap.get(iteratorType));
+        return pack(ourMap.get(tokenType));
     }
 
 }
