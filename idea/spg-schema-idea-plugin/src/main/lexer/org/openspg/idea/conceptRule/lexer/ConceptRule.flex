@@ -108,7 +108,7 @@ ESCAPED_SYMBOLIC_NAME =         \`[^`]*\`
 <YYINITIAL> {
     {EOL}     { return EOL;     }
     ":"       { return COLON;   }
-    [Rr][Uu][Ll][Ee]    { return RULE_KEYWORD; }
+    [Rr][Uu][Ll][Ee]    { return WRAPPER_RULE_KEYWORD; }
 
     "namespace" {
           goToState(NAMESPACE_STATE);
@@ -119,13 +119,12 @@ ESCAPED_SYMBOLIC_NAME =         \`[^`]*\`
           return OPEN_RULE_BLOCK;
       }
 
-    {DOUBLE_QUOTED_STRING}   { return CONTAINER_TITLE_CHAR; }
-    {SINGLE_QUOTED_STRING}   { return CONTAINER_TITLE_CHAR; }
-    {ESCAPED_SYMBOLIC_NAME}  { return CONTAINER_TITLE_CHAR; }
-    [^\s\n\[\`\'\":]+        { return CONTAINER_TITLE_CHAR; }
+    {DOUBLE_QUOTED_STRING}   { return RULE_WRAPPER_TEXT; }
+    {SINGLE_QUOTED_STRING}   { return RULE_WRAPPER_TEXT; }
+    {ESCAPED_SYMBOLIC_NAME}  { return RULE_WRAPPER_TEXT; }
+    [^\s\n\[\`\'\":]+        { return RULE_WRAPPER_TEXT; }
 
     [^] {
-          trace("YYINITIAL");
           return TokenType.BAD_CHARACTER;
       }
 }
@@ -317,7 +316,6 @@ ESCAPED_SYMBOLIC_NAME =         \`[^`]*\`
 //    "\""    { return DOUBLE_QUOTE; }
 
     [^] {
-          trace("RULE_STATE");
           return TokenType.BAD_CHARACTER;
       }
 }

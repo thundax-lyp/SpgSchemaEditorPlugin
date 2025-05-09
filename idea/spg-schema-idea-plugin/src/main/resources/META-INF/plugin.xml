@@ -55,6 +55,14 @@
                 language="OpenSPG Schema"
                 implementationClass="org.openspg.idea.schema.grammar.SchemaParserDefinition"/>
 
+        <lang.syntaxHighlighterFactory
+                language="OpenSPG Schema"
+                implementationClass="org.openspg.idea.schema.highlighter.SchemaSyntaxHighlighterFactory"/>
+
+        <colorSettingsPage
+                implementation="org.openspg.idea.schema.highlighter.SchemaColorSettingsPage"/>
+
+
         <fileType
                 name="OpenSPG Schema Rule File"
                 implementationClass="org.openspg.idea.conceptRule.ConceptRuleFileType"
@@ -66,14 +74,14 @@
                 language="OpenSPG Schema Rule"
                 implementationClass="org.openspg.idea.conceptRule.grammar.ConceptRuleParserDefinition"/>
 
-
-
         <lang.syntaxHighlighterFactory
-                language="OpenSPG Schema"
-                implementationClass="org.openspg.idea.schema.highlighter.SchemaSyntaxHighlighterFactory"/>
+                language="OpenSPG Schema Rule"
+                implementationClass="org.openspg.idea.conceptRule.highlighter.ConceptRuleSyntaxHighlighterFactory"/>
 
         <colorSettingsPage
-                implementation="org.openspg.idea.schema.highlighter.SchemaColorSettingsPage"/>
+                implementation="org.openspg.idea.conceptRule.highlighter.ConceptRuleColorSettingsPage"/>
+
+
 
         <annotator
                 language="OpenSPG Schema"
