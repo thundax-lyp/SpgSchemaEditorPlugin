@@ -18,7 +18,7 @@
     <change-notes><![CDATA[
         <ul>
             <li><b>version 0.0.9</b> RuleML: add structure view</li>
-            <li><b>version 0.0.8</b> RuleML:support Concept-Rule mark language</li>
+            <li><b>version 0.0.8</b> RuleML: support Concept-Rule mark language</li>
             <li><b>version 0.0.7</b> SchemaML: support PyCharm IDE</li>
             <li><b>version 0.0.6</b> SchemaML: relationship graph support self-edge</li>
             <li><b>version 0.0.5</b> SchemaML: add relationship graph preview</li>
