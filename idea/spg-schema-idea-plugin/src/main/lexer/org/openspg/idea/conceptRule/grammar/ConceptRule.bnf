@@ -20,13 +20,17 @@ ruleFile ::= item_*
 
 private item_ ::= rule_wrapper | namespace | EOL | reserved_keywords | debug_items_
 
-namespace ::= NAMESPACE_KEYWORD namespace_value
+namespace ::= NAMESPACE_KEYWORD namespace_value {
+    methods=[getValue]
+}
 namespace_value ::= TEXT
 
-rule_wrapper ::= rule_wrapper_head (EOL WRAPPER_RULE_KEYWORD COLON EOL* OPEN_RULE_BLOCK rule_wrapper_body CLOSE_RULE_BLOCK)?
-rule_wrapper_head ::= rule_wrapper_title COLON
-rule_wrapper_title ::= RULE_WRAPPER_TEXT+
-rule_wrapper_body ::= base_predicated_define
+rule_wrapper ::= rule_wrapper_head (EOL WRAPPER_RULE_KEYWORD COLON EOL* OPEN_RULE_BLOCK rule_wrapper_body CLOSE_RULE_BLOCK)? {
+    methods=[getLabel]
+}
+rule_wrapper_head ::= rule_wrapper_title
+rule_wrapper_title ::= (RULE_WRAPPER_TEXT|COLON)+
+rule_wrapper_body ::= base_predicated_define*
 
 // all logic copy from file "openspg/KGDSL.g4"
 
@@ -71,7 +75,9 @@ private base_predicated_define ::= the_define_structure
 // Define 定义部分
 //#############################################################################
 the_define_structure ::= DEFINE_KEYWORD predicated_define LBRACE base_rule_define RBRACE
-predicated_define ::= node_pattern full_edge_pointing_right node_pattern
+predicated_define ::= node_pattern full_edge_pointing_right node_pattern {
+    methods=[getMajorLabel getMinorLabel]
+}
 
 //#############################################################################
 // graph structure 定义部分
