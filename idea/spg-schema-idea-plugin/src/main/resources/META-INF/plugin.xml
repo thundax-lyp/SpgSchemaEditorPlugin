@@ -55,6 +55,10 @@
                 language="OpenSPG Schema"
                 implementationClass="org.openspg.idea.schema.grammar.SchemaParserDefinition"/>
 
+        <annotator
+                language="OpenSPG Schema"
+                implementationClass="org.openspg.idea.schema.annotator.SchemaAnnotator"/>
+
         <lang.syntaxHighlighterFactory
                 language="OpenSPG Schema"
                 implementationClass="org.openspg.idea.schema.highlighter.SchemaSyntaxHighlighterFactory"/>
@@ -65,6 +69,10 @@
         <lang.psiStructureViewFactory
                 language="OpenSPG Schema"
                 implementationClass="org.openspg.idea.schema.structureView.SchemaStructureViewFactory"/>
+
+        <codeInsight.lineMarkerProvider
+                language="OpenSPG Schema"
+                implementationClass="org.openspg.idea.schema.SchemaLineMarkerProvider"/>
 
         <navbar implementation="org.openspg.idea.schema.structureView.SchemaStructureAwareNavbar"/>
 
@@ -85,6 +93,14 @@
         <httpRequestHandler implementation="org.openspg.idea.schema.ui.editor.server.PreviewStaticServer"/>
         <fileEditorProvider id="schema-preview-editor"
                             implementation="org.openspg.idea.schema.ui.editor.SchemaSplitEditorProvider"/>
+
+        <lang.foldingBuilder
+                language="OpenSPG Schema"
+                implementationClass="org.openspg.idea.schema.SchemaFoldingBuilder"/>
+
+        <spellchecker.support
+                language="OpenSPG Schema"
+                implementationClass="org.openspg.idea.schema.spellchecker.SchemaSpellcheckingStrategy"/>
         <!-- SchemaML: end -->
 
         <!-- ConceptRuleML: begin -->
@@ -128,29 +144,17 @@
         <!-- ConceptRuleML: end -->
 
 
-        <annotator
-                language="OpenSPG Schema"
-                implementationClass="org.openspg.idea.schema.annotator.SchemaAnnotator"/>
-
-        <codeInsight.lineMarkerProvider
-                language="OpenSPG Schema"
-                implementationClass="org.openspg.idea.schema.SchemaLineMarkerProvider"/>
-
         <completion.contributor
                 language="OpenSPG Schema"
                 implementationClass="org.openspg.idea.schema.completion.SchemaCompletionContributor"/>
 
-        <!--        <psi.referenceContributor-->
-        <!--                language="OpenSPG Schema"-->
-        <!--                implementation="org.openspg.idea.schema.reference.SchemaReferenceContributor"/>-->
-        <!--        -->
+<!--        <psi.referenceContributor-->
+<!--                language="OpenSPG Schema"-->
+<!--                implementation="org.openspg.idea.schema.reference.SchemaReferenceContributor"/>-->
+
         <!--        <lang.findUsagesProvider-->
         <!--                language="OpenSPG Schema"-->
         <!--                implementationClass="org.openspg.idea.schema.SchemaFindUsagesProvider"/>-->
-
-        <!--        <lang.foldingBuilder-->
-        <!--                language="JAVA"-->
-        <!--                implementationClass="org.openspg.idea.language.SchemaFoldingBuilder"/>-->
 
     </extensions>
 

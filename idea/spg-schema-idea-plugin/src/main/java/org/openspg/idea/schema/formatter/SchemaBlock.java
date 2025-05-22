@@ -7,18 +7,17 @@ import com.intellij.psi.formatter.common.AbstractBlock;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.openspg.idea.lang.psi.SchemaPlainText;
+import org.openspg.idea.schema.lang.psi.SchemaPlainTextBlock;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import static org.openspg.idea.grammar.psi.SchemaTypes.EOL;
 
 public class SchemaBlock extends AbstractBlock {
 
     private static final Set<IElementType> NONBLOCK_ELEMENT_TYPES = Set.of(
-            TokenType.WHITE_SPACE, EOL
+            TokenType.WHITE_SPACE
     );
 
     private final SpacingBuilder mySpacingBuilder;
@@ -31,7 +30,7 @@ public class SchemaBlock extends AbstractBlock {
     @Override
     protected List<Block> buildChildren() {
         List<Block> blocks = new ArrayList<>();
-        if (myNode.getPsi() instanceof SchemaPlainText) {
+        if (myNode.getPsi() instanceof SchemaPlainTextBlock) {
             return blocks;
         }
 
@@ -65,7 +64,7 @@ public class SchemaBlock extends AbstractBlock {
 
     @Override
     public boolean isLeaf() {
-        return myNode.getPsi() instanceof SchemaPlainText || myNode.getFirstChildNode() == null;
+        return myNode.getPsi() instanceof SchemaPlainTextBlock || myNode.getFirstChildNode() == null;
     }
 
 }
