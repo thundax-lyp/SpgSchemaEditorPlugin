@@ -22,15 +22,10 @@ public class SchemaFoldingBuilder extends FoldingBuilderEx implements DumbAware 
     public FoldingDescriptor @NotNull [] buildFoldRegions(@NotNull PsiElement root, @NotNull Document document, boolean quick) {
         List<FoldingDescriptor> descriptors = new ArrayList<>();
 
-        PsiTreeUtil.findChildrenOfType(root, PsiComment.class).forEach(element -> {
-            descriptors.add(new FoldingDescriptor(element, element.getTextRange()));
-        });
-
-        PsiTreeUtil.findChildrenOfAnyType(root, SchemaEntity.class, SchemaEntityMeta.class).forEach(element -> {
-            descriptors.add(new FoldingDescriptor(element, element.getTextRange()));
-        });
-
-        return descriptors.toArray(new FoldingDescriptor[0]);
+        return PsiTreeUtil.findChildrenOfAnyType(root, PsiComment.class, SchemaEntity.class, SchemaEntityMeta.class)
+                .stream()
+                .map(element -> new FoldingDescriptor(element, element.getTextRange()))
+                .toArray(FoldingDescriptor[]::new);
     }
 
     @Override
@@ -40,10 +35,18 @@ public class SchemaFoldingBuilder extends FoldingBuilderEx implements DumbAware 
             return "#...";
 
         } else if (element instanceof SchemaEntity entity) {
-            return entity.getEntityHead().getBasicStructureDeclaration().getText() + "\n";
+            String placeHolder = entity.getEntityHead().getText();
+            if (entity.getEntityBody() != null && !entity.getEntityBody().getEntityMetaList().isEmpty()) {
+                placeHolder += " {...}";
+            }
+            return placeHolder;
 
         } else if (element instanceof SchemaEntityMeta entityMeta) {
-            return entityMeta.getEntityMetaHead().getBasicPropertyDeclaration().getText() + "\n";
+            String placeHolder = entityMeta.getEntityMetaHead().getText();
+            if (entityMeta.getEntityMetaBody() != null && !entityMeta.getEntityMetaBody().getPropertyList().isEmpty()) {
+                placeHolder += " {...}";
+            }
+            return placeHolder;
         }
         return "";
     }

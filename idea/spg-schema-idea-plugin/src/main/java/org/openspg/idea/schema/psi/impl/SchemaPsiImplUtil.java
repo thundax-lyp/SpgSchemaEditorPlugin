@@ -110,12 +110,14 @@ public class SchemaPsiImplUtil {
 
     public static Map<String, Object> toJson(SchemaEntity element) {
         Map<String, Object> result = element.getEntityHead().getBasicStructureDeclaration().toJson();
-        result.put("properties", element.getEntityBody()
-                .getEntityMetaList()
-                .stream()
-                .map(SchemaPsiImplUtil::toJson)
-                .toList()
-        );
+        if (element.getEntityBody() != null) {
+            result.put("properties", element.getEntityBody()
+                    .getEntityMetaList()
+                    .stream()
+                    .map(SchemaPsiImplUtil::toJson)
+                    .toList()
+            );
+        }
         return result;
     }
 
@@ -140,12 +142,14 @@ public class SchemaPsiImplUtil {
     //
     public static Map<String, Object> toJson(SchemaEntityMeta element) {
         Map<String, Object> result = element.getEntityMetaHead().getBasicPropertyDeclaration().toJson();
-        result.put("children", element.getEntityMetaBody()
-                .getPropertyList()
-                .stream()
-                .map(SchemaPsiImplUtil::toJson)
-                .toList()
-        );
+        if (element.getEntityMetaBody() != null) {
+            result.put("children", element.getEntityMetaBody()
+                    .getPropertyList()
+                    .stream()
+                    .map(SchemaPsiImplUtil::toJson)
+                    .toList()
+            );
+        }
         return result;
     }
 
@@ -154,12 +158,14 @@ public class SchemaPsiImplUtil {
     //
     public static Map<String, Object> toJson(SchemaProperty element) {
         Map<String, Object> result = element.getPropertyHead().getBasicStructureDeclaration().toJson();
-        result.put("properties", element.getPropertyBody()
-                .getPropertyMetaList()
-                .stream()
-                .map(SchemaPsiImplUtil::toJson)
-                .toList()
-        );
+        if (element.getPropertyBody() != null) {
+            result.put("properties", element.getPropertyBody()
+                    .getPropertyMetaList()
+                    .stream()
+                    .map(SchemaPsiImplUtil::toJson)
+                    .toList()
+            );
+        }
         return result;
     }
 
@@ -168,12 +174,14 @@ public class SchemaPsiImplUtil {
     //
     public static Map<String, Object> toJson(SchemaPropertyMeta element) {
         Map<String, Object> result = element.getPropertyMetaHead().getBasicPropertyDeclaration().toJson();
-        result.put("children", element.getPropertyMetaBody()
-                .getSubPropertyList()
-                .stream()
-                .map(SchemaPsiImplUtil::toJson)
-                .toList()
-        );
+        if (element.getPropertyMetaBody() != null) {
+            result.put("children", element.getPropertyMetaBody()
+                    .getSubPropertyList()
+                    .stream()
+                    .map(SchemaPsiImplUtil::toJson)
+                    .toList()
+            );
+        }
         return result;
     }
 
@@ -182,12 +190,14 @@ public class SchemaPsiImplUtil {
     //
     public static Map<String, Object> toJson(SchemaSubProperty element) {
         Map<String, Object> result = element.getSubPropertyHead().getBasicStructureDeclaration().toJson();
-        result.put("properties", element.getSubPropertyBody()
-                .getSubPropertyMetaList()
-                .stream()
-                .map(SchemaPsiImplUtil::toJson)
-                .toList()
-        );
+        if (element.getSubPropertyBody() != null) {
+            result.put("properties", element.getSubPropertyBody()
+                    .getSubPropertyMetaList()
+                    .stream()
+                    .map(SchemaPsiImplUtil::toJson)
+                    .toList()
+            );
+        }
         return result;
     }
 
