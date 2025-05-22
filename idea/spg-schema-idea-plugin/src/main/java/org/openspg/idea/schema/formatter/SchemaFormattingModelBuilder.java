@@ -6,7 +6,8 @@ import com.intellij.psi.codeStyle.CommonCodeStyleSettings;
 import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
 import org.openspg.idea.schema.SchemaLanguage;
-import org.openspg.idea.schema.grammar.psi.SchemaTypes;
+
+import static org.openspg.idea.schema.grammar.psi.SchemaTypes.*;
 
 public final class SchemaFormattingModelBuilder implements FormattingModelBuilder {
 
@@ -29,14 +30,14 @@ public final class SchemaFormattingModelBuilder implements FormattingModelBuilde
         CommonCodeStyleSettings commonSetting = settings.getCommonSettings(SchemaLanguage.INSTANCE.getID());
 
         SpacingBuilder builder = new SpacingBuilder(settings, SchemaLanguage.INSTANCE);
-        builder = builder.after(SchemaTypes.NAMESPACE_KEYWORD).spaces(1);
+        builder = builder.after(NAMESPACE_KEYWORD).spaces(1);
 
         int blankLinesAfterNamespace = Math.max(0, commonSetting.BLANK_LINES_AFTER_PACKAGE) + 1;
-        builder = builder.after(TokenSet.create(SchemaTypes.NAMESPACE))
+        builder = builder.after(TokenSet.create(NAMESPACE))
                 .spacing(0, 0, blankLinesAfterNamespace, false, 0);
 
         int blankLinesAfterEntity = Math.max(0, commonSetting.BLANK_LINES_AFTER_IMPORTS) + 1;
-        builder = builder.after(TokenSet.create(SchemaTypes.ENTITY))
+        builder = builder.after(TokenSet.create(ENTITY))
                 .spacing(0, 0, blankLinesAfterEntity, false, 0);
 
         builder = initSpaceBuilderByIndent(builder, commonSetting);
@@ -46,21 +47,21 @@ public final class SchemaFormattingModelBuilder implements FormattingModelBuilde
         boolean spaceAroundBrackets = commonSetting.SPACE_WITHIN_BRACKETS;
         if (spaceAroundBrackets) {
             builder = builder
-                    .before(SchemaTypes.DOUBLE_LBRACKET).spaces(1)
-                    .after(SchemaTypes.DOUBLE_RBRACKET).spaces(1);
+                    .before(DOUBLE_LBRACKET).spaces(1)
+                    .after(DOUBLE_RBRACKET).spaces(1);
         } else {
             builder = builder
-                    .around(SchemaTypes.DOUBLE_LBRACKET).spaces(0)
-                    .around(SchemaTypes.DOUBLE_RBRACKET).spaces(0);
+                    .around(DOUBLE_LBRACKET).spaces(0)
+                    .around(DOUBLE_RBRACKET).spaces(0);
         }
 
-        //.after(TokenSet.create(
-        //        SchemaTypes.ENTITY_INFO, SchemaTypes.ENTITY_META, SchemaTypes.ENTITY_META_INFO,
-        //        SchemaTypes.PROPERTY_INFO, SchemaTypes.PROPERTY_META_INFO,
-        //        SchemaTypes.SUB_PROPERTY_INFO, SchemaTypes.SUB_PROPERTY_META,
-        //        SchemaTypes.LINE_COMMENT
-        //))
-        //.spacing(0, 0, 1, false, 0)
+        // non-blank tokens
+        TokenSet nonBlankLineTokens = TokenSet.create(
+                ENTITY_HEAD, ENTITY_META, ENTITY_META_HEAD, PROPERTY, PROPERTY_HEAD, PROPERTY_META, PROPERTY_META_HEAD, SUB_PROPERTY
+        );
+        builder = builder
+                .after(nonBlankLineTokens)
+                .spacing(0, 0, 1, false, 0);
 
         return builder;
     }
@@ -69,19 +70,19 @@ public final class SchemaFormattingModelBuilder implements FormattingModelBuilde
         CommonCodeStyleSettings.IndentOptions indentOptions = settings.getIndentOptions();
         int indentSize = indentOptions == null ? 4 : Math.max(1, indentOptions.INDENT_SIZE);
 
-        builder = builder.after(SchemaTypes.INDENT_META)
+        builder = builder.after(INDENT_META)
                 .spaces(indentSize - 1)
 
-                .after(SchemaTypes.INDENT_PROP)
+                .after(INDENT_PROP)
                 .spaces(indentSize * 2 - 1)
 
-                .after(SchemaTypes.INDENT_PROPMETA)
+                .after(INDENT_PROPMETA)
                 .spaces(indentSize * 3 - 1)
 
-                .after(SchemaTypes.INDENT_SUBPROP)
+                .after(INDENT_SUBPROP)
                 .spaces(indentSize * 4 - 1)
 
-                .after(SchemaTypes.INDENT_SUBPROPMETA)
+                .after(INDENT_SUBPROPMETA)
                 .spaces(indentSize * 5 - 1);
         return builder;
     }
@@ -91,13 +92,13 @@ public final class SchemaFormattingModelBuilder implements FormattingModelBuilde
         boolean spaceBeforeComma = settings.SPACE_BEFORE_COMMA;
 
         if (spaceBeforeComma && !spaceAfterComma) {
-            builder = builder.before(SchemaTypes.COMMA).spaces(1);
+            builder = builder.before(COMMA).spaces(1);
         } else if (spaceBeforeComma) {
-            builder = builder.around(SchemaTypes.COMMA).spaces(1);
+            builder = builder.around(COMMA).spaces(1);
         } else if (spaceAfterComma) {
-            builder = builder.after(SchemaTypes.COMMA).spaces(1);
+            builder = builder.after(COMMA).spaces(1);
         } else {
-            builder = builder.before(SchemaTypes.COMMA).spaces(0);
+            builder = builder.before(COMMA).spaces(0);
         }
         return builder;
     }
@@ -106,7 +107,7 @@ public final class SchemaFormattingModelBuilder implements FormattingModelBuilde
         boolean spaceAfterColon = settings.SPACE_AFTER_COLON;
         boolean spaceBeforeColon = settings.SPACE_BEFORE_COLON;
 
-        TokenSet tokenSet = TokenSet.create(SchemaTypes.COLON, SchemaTypes.RIGHT_ARROW);
+        TokenSet tokenSet = TokenSet.create(COLON, RIGHT_ARROW);
         if (spaceBeforeColon && !spaceAfterColon) {
             builder = builder.before(tokenSet).spaces(1);
         } else if (spaceBeforeColon) {

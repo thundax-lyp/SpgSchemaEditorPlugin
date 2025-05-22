@@ -90,7 +90,7 @@ plain_text_block ::= DOUBLE_LBRACKET PLAIN_TEXT* DOUBLE_RBRACKET
  * Chunk(文本块): EntityType
  * Chunk(文本块)->EntityType, ConceptType:
  */
-entity ::= entity_head entity_body {
+entity ::= entity_head entity_body? {
     methods=[getName toJson]
 }
 
@@ -100,7 +100,7 @@ entity_head ::= basic_structure_declaration {
     methods=[getName setName getNameIdentifier]
 }
 
-entity_body ::= entity_meta*
+entity_body ::= entity_meta+
 
 /**
  * EntityMeta
@@ -108,11 +108,11 @@ entity_body ::= entity_meta*
  * Chunk(文本块): EntityType
  *     desc: 文本块
  */
-entity_meta ::= entity_meta_head entity_meta_body {
+entity_meta ::= entity_meta_head entity_meta_body? {
     methods=[toJson]
 }
 entity_meta_head ::= INDENT_META basic_property_declaration
-entity_meta_body ::= property*
+entity_meta_body ::= property+
 
 /**
  * Property
@@ -121,28 +121,28 @@ entity_meta_body ::= property*
  *     properties :
  *         belongTo(属于) : Story
  */
-property ::= property_head property_body {
+property ::= property_head property_body? {
     methods=[toJson]
 }
 property_head ::= INDENT_PROP basic_structure_declaration
-property_body ::= property_meta*
+property_body ::= property_meta+
 
 /**
- * Property
+ * PropertyMeta
  * Example:
  * Chunk(文本块): EntityType
  *     properties :
  *         belongTo(属于) : Story
  *             desc: 属于
  */
-property_meta ::= property_meta_head property_meta_body {
+property_meta ::= property_meta_head property_meta_body? {
     methods=[toJson]
 }
 property_meta_head ::= INDENT_PROPMETA basic_property_declaration
-property_meta_body ::= sub_property*
+property_meta_body ::= sub_property+
 
 /**
- * Property
+ * SubProperty
  * Example:
  * Disease(疾病): EntityType
  *     properties:
@@ -150,16 +150,16 @@ property_meta_body ::= sub_property*
  *             properties:
  *                 desc(描述): Text
  */
-sub_property ::= sub_property_head sub_property_body {
+sub_property ::= sub_property_head sub_property_body? {
     methods=[toJson]
 }
 sub_property_head ::= (INDENT_SUBPROP basic_structure_declaration) {
     methods=[getPropertyName getPropertyAliasName getPropertyClassList]
 }
-sub_property_body ::= sub_property_meta*
+sub_property_body ::= sub_property_meta+
 
 /**
- * Property
+ * SubPropertyMeta
  * Example:
  * Disease(疾病): EntityType
  *     properties:
