@@ -39,7 +39,7 @@ import java.security.cert.CertificateRevokedException;
 
 // NB !(!a|b) is "a - b"
 // From the spec
-IDENTIFIER =                    [:jletter:] [:jletterdigit:]*
+IDENTIFIER = [:jletter:] [:jletterdigit:]*
 
 DIGIT = [0-9]
 DIGIT_OR_UNDERSCORE = [_0-9]
