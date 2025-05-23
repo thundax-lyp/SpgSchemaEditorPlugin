@@ -107,6 +107,8 @@ DOUBLE_QUOTED_STRING = \"([^\\\"\r\n]|\\[^\r\n])*\"?
 SINGLE_QUOTED_STRING = '([^\\'\r\n]|\\[^\r\n])*'?
 GRAVE_QUOTED_STRING = \`([^\\`\r\n]|\\[^\r\n])*\`?
 
+PLAIN_TEXT_BLOCK = "[[" {ANY_CHAR}* "]]"
+
 WHITE_SPACE_CHAR = [ \t]
 WHITE_SPACE = {WHITE_SPACE_CHAR}+
 EOL = "\n"
@@ -242,7 +244,7 @@ COMMENT = "#"{LINE}
 <DEFINITION_STATE> {
     {DOUBLE_QUOTED_STRING}   { return STRING_LITERAL;  }
     {SINGLE_QUOTED_STRING}   { return STRING_LITERAL;  }
-    {GRAVE_QUOTED_STRING}   { return STRING_LITERAL;  }
+    {GRAVE_QUOTED_STRING}    { return STRING_LITERAL;  }
 
     [Ee][Nn][Tt][Ii][Tt][Yy][Tt][Yy][Pp][Ee]      { return ENTITY_TYPE_KEYWORD; }
     [Cc][Oo][Nn][Cc][Ee][Pp][Tt][Tt][Yy][Pp][Ee]  { return CONCEPT_TYPE_KEYWORD; }
@@ -300,33 +302,32 @@ COMMENT = "#"{LINE}
 //-------------------------------------------------------------------------------------------------------------------
 // waiting value
 <WAITING_VALUE_STATE> {
-    "[[": {
-          yybegin(WAITING_BLOCK_VALUE_STATE);
-          return DOUBLE_LBRACKET;
+    {PLAIN_TEXT_BLOCK} {
+          goToState(WAITING_BLOCK_VALUE_STATE);
       }
 
-    ([Ii][Ss][Aa]) {
+    [Ii][Ss][Aa] {
           return IS_A_KEYWORD;
       }
-    ([Ll][Oo][Cc][Aa][Tt][Ee][Aa][Tt]) {
+    [Ll][Oo][Cc][Aa][Tt][Ee][Aa][Tt] {
           return LOCATE_AT_KEYWORD;
       }
-    ([Mm][Aa][Nn][Nn][Ee][Rr][Oo][ff]) {
+    [Mm][Aa][Nn][Nn][Ee][Rr][Oo][ff] {
           return MANNER_OF_KEYWORD;
       }
-    ([Tt][Ee][Xx][Tt]) {
+    [Tt][Ee][Xx][Tt] {
           return TEXT_KEYWORD;
       }
-    ([Vv][Ee][Cc][Tt][Oo][Rr]) {
+    [Vv][Ee][Cc][Tt][Oo][Rr] {
           return VECTOR_KEYWORD;
       }
-    ([Tt][Ee][Xx][Tt][Aa][Nn][Dd][Vv][Ee][Cc][Tt][Oo][Rr]) {
+    [Tt][Ee][Xx][Tt][Aa][Nn][Dd][Vv][Ee][Cc][Tt][Oo][Rr] {
           return TEXT_AND_VECTOR_KEYWORD;
       }
-    ([Nn][Oo][Tt][Nn][Uu][Ll][Ll]) {
+    [Nn][Oo][Tt][Nn][Uu][Ll][Ll] {
           return NOT_NULL_KEYWORD;
       }
-    ([Mm][Uu][Ll][Tt][Ii][Vv][Aa][Ll][Uu][Ee]) {
+    [Mm][Uu][Ll][Tt][Ii][Vv][Aa][Ll][Uu][Ee] {
           return MULTI_VALUE_KEYWORD;
       }
 
@@ -339,13 +340,24 @@ COMMENT = "#"{LINE}
 //-------------------------------------------------------------------------------------------------------------------
 // key-value-state
 <WAITING_BLOCK_VALUE_STATE> {
+    "[[" {
+          return DOUBLE_LBRACKET;
+      }
+
     "]]" {
-          yybegin(KV_STATE);
+          yybegin(WAITING_VALUE_STATE);
           return DOUBLE_RBRACKET;
       }
 
-    ^(.*\]\]) {
-          yybegin(WAITING_VALUE_STATE);
+    "[" {
+          return PLAIN_TEXT;
+      }
+
+    "]" {
+          return PLAIN_TEXT;
+      }
+
+    [^\[\]]+ {
           return PLAIN_TEXT;
       }
 }

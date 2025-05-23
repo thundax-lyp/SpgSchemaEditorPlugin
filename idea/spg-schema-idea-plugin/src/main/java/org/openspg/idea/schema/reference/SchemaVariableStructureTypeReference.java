@@ -10,9 +10,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.openspg.idea.schema.SchemaIcons;
-import org.openspg.idea.schema.grammar.psi.SchemaTypes;
 import org.openspg.idea.schema.lang.psi.*;
-import org.openspg.idea.schema.util.PsiUtils;
 
 public class SchemaVariableStructureTypeReference extends PsiPolyVariantReferenceBase<SchemaVariableStructureType> {
 
@@ -25,9 +23,9 @@ public class SchemaVariableStructureTypeReference extends PsiPolyVariantReferenc
 
     @Override
     public ResolveResult @NotNull [] multiResolve(boolean incompleteCode) {
-        return PsiUtils.searchChildrenOfAnyType(myElement.getContainingFile(), true, SchemaTypes.ENTITY_HEAD)
+        return PsiTreeUtil.findChildrenOfType(myElement.getContainingFile(), SchemaEntity.class)
                 .stream()
-                .map(x -> ((SchemaEntityHead) x))
+                .map(SchemaEntity::getEntityHead)
                 .map(SchemaEntityHead::getBasicStructureDeclaration)
                 .map(SchemaBasicStructureDeclaration::getStructureNameDeclaration)
                 .map(SchemaStructureNameDeclaration::getStructureName)

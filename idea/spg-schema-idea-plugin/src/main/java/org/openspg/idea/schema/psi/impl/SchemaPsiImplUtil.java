@@ -108,6 +108,10 @@ public class SchemaPsiImplUtil {
         return element.getEntityHead().getName();
     }
 
+    public static boolean isBodyEmpty(SchemaEntity element) {
+        return element.getEntityBody() == null || element.getEntityBody().getEntityMetaList().isEmpty();
+    }
+
     public static Map<String, Object> toJson(SchemaEntity element) {
         Map<String, Object> result = element.getEntityHead().getBasicStructureDeclaration().toJson();
         if (element.getEntityBody() != null) {
@@ -140,6 +144,10 @@ public class SchemaPsiImplUtil {
     // ============================================
     // SchemaEntityMeta methods
     //
+    public static boolean isBodyEmpty(SchemaEntityMeta element) {
+        return element.getEntityMetaBody() == null || element.getEntityMetaBody().getPropertyList().isEmpty();
+    }
+
     public static Map<String, Object> toJson(SchemaEntityMeta element) {
         Map<String, Object> result = element.getEntityMetaHead().getBasicPropertyDeclaration().toJson();
         if (element.getEntityMetaBody() != null) {
@@ -156,6 +164,10 @@ public class SchemaPsiImplUtil {
     // ============================================
     // SchemaProperty methods
     //
+    public static boolean isBodyEmpty(SchemaProperty element) {
+        return element.getPropertyBody() == null || element.getPropertyBody().getPropertyMetaList().isEmpty();
+    }
+
     public static Map<String, Object> toJson(SchemaProperty element) {
         Map<String, Object> result = element.getPropertyHead().getBasicStructureDeclaration().toJson();
         if (element.getPropertyBody() != null) {

@@ -91,7 +91,7 @@ plain_text_block ::= DOUBLE_LBRACKET PLAIN_TEXT* DOUBLE_RBRACKET
  * Chunk(文本块)->EntityType, ConceptType:
  */
 entity ::= entity_head entity_body? {
-    methods=[getName toJson]
+    methods=[getName isBodyEmpty toJson]
 }
 
 entity_head ::= basic_structure_declaration {
@@ -109,7 +109,7 @@ entity_body ::= entity_meta+
  *     desc: 文本块
  */
 entity_meta ::= entity_meta_head entity_meta_body? {
-    methods=[toJson]
+    methods=[isBodyEmpty toJson]
 }
 entity_meta_head ::= INDENT_META basic_property_declaration
 entity_meta_body ::= property+
@@ -122,7 +122,7 @@ entity_meta_body ::= property+
  *         belongTo(属于) : Story
  */
 property ::= property_head property_body? {
-    methods=[toJson]
+    methods=[isBodyEmpty toJson]
 }
 property_head ::= INDENT_PROP basic_structure_declaration
 property_body ::= property_meta+

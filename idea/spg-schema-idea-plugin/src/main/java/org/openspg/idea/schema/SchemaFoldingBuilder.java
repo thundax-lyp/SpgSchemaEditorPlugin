@@ -12,17 +12,18 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.openspg.idea.schema.lang.psi.SchemaEntity;
 import org.openspg.idea.schema.lang.psi.SchemaEntityMeta;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.openspg.idea.schema.lang.psi.SchemaPlainTextBlock;
 
 public class SchemaFoldingBuilder extends FoldingBuilderEx implements DumbAware {
 
     @Override
     public FoldingDescriptor @NotNull [] buildFoldRegions(@NotNull PsiElement root, @NotNull Document document, boolean quick) {
-        List<FoldingDescriptor> descriptors = new ArrayList<>();
-
-        return PsiTreeUtil.findChildrenOfAnyType(root, PsiComment.class, SchemaEntity.class, SchemaEntityMeta.class)
+        return PsiTreeUtil.findChildrenOfAnyType(root,
+                        PsiComment.class,
+                        SchemaEntity.class,
+                        SchemaEntityMeta.class,
+                        SchemaPlainTextBlock.class
+                )
                 .stream()
                 .map(element -> new FoldingDescriptor(element, element.getTextRange()))
                 .toArray(FoldingDescriptor[]::new);
@@ -36,19 +37,23 @@ public class SchemaFoldingBuilder extends FoldingBuilderEx implements DumbAware 
 
         } else if (element instanceof SchemaEntity entity) {
             String placeHolder = entity.getEntityHead().getText();
-            if (entity.getEntityBody() != null && !entity.getEntityBody().getEntityMetaList().isEmpty()) {
+            if (!entity.isBodyEmpty()) {
                 placeHolder += " {...}";
             }
             return placeHolder;
 
         } else if (element instanceof SchemaEntityMeta entityMeta) {
             String placeHolder = entityMeta.getEntityMetaHead().getText();
-            if (entityMeta.getEntityMetaBody() != null && !entityMeta.getEntityMetaBody().getPropertyList().isEmpty()) {
+            if (!entityMeta.isBodyEmpty()) {
                 placeHolder += " {...}";
             }
             return placeHolder;
+
+        } else if (element instanceof SchemaPlainTextBlock) {
+            return "[[...]]";
         }
-        return "";
+
+        throw new IllegalArgumentException("Unknown PsiElement type: " + element.getClass());
     }
 
     @Override
