@@ -44,16 +44,16 @@ public final class SchemaFormattingModelBuilder implements FormattingModelBuilde
         builder = initSpaceBuilderByComma(builder, commonSetting);
         builder = initSpaceBuilderByColon(builder, commonSetting);
 
-        boolean spaceAroundBrackets = commonSetting.SPACE_WITHIN_BRACKETS;
-        if (spaceAroundBrackets) {
-            builder = builder
-                    .before(DOUBLE_LBRACKET).spaces(1)
-                    .after(DOUBLE_RBRACKET).spaces(1);
-        } else {
-            builder = builder
-                    .around(DOUBLE_LBRACKET).spaces(0)
-                    .around(DOUBLE_RBRACKET).spaces(0);
-        }
+//        boolean spaceAroundBrackets = commonSetting.SPACE_WITHIN_BRACKETS;
+//        if (spaceAroundBrackets) {
+//            builder = builder
+//                    .before(DOUBLE_LBRACKET).spaces(1)
+//                    .after(DOUBLE_RBRACKET).spaces(1);
+//        } else {
+//            builder = builder
+//                    .around(DOUBLE_LBRACKET).spaces(0)
+//                    .around(DOUBLE_RBRACKET).spaces(0);
+//        }
 
         // non-blank tokens
         TokenSet nonBlankLineTokens = TokenSet.create(

@@ -38,6 +38,7 @@ public final class SchemaLineMarkerProvider extends RelatedItemLineMarkerProvide
 
         result.add(
                 builder.createLineMarkerInfo(
+
                         entityHead.getBasicStructureDeclaration()
                                 .getStructureNameDeclaration()
                                 .getStructureName()

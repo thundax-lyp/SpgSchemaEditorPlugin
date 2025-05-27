@@ -13,15 +13,12 @@ import org.openspg.idea.schema.grammar.psi.SchemaTypes;
 public class SchemaSpellcheckingStrategy extends SpellcheckingStrategy implements DumbAware {
 
     public static final TokenSet NO_SPELLCHECKING_TYPES = TokenSet.create(
-            SchemaTypes.PLAIN_TEXT
+            SchemaTypes.PLAIN_TEXT_BLOCK
     );
 
     @Override
     public @NotNull Tokenizer<?> getTokenizer(PsiElement element) {
         final ASTNode node = element.getNode();
-        if (node == null || node.getElementType() != SchemaTypes.TEXT) {
-            return SpellcheckingStrategy.EMPTY_TOKENIZER;
-        }
 
         if (TreeUtil.findParent(node, NO_SPELLCHECKING_TYPES) != null) {
             return SpellcheckingStrategy.EMPTY_TOKENIZER;

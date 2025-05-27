@@ -7,11 +7,12 @@ import com.intellij.psi.formatter.common.AbstractBlock;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.openspg.idea.schema.lang.psi.SchemaPlainTextBlock;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+
+import static org.openspg.idea.schema.grammar.psi.SchemaTypes.*;
 
 
 public class SchemaBlock extends AbstractBlock {
@@ -20,51 +21,90 @@ public class SchemaBlock extends AbstractBlock {
             TokenType.WHITE_SPACE
     );
 
+    private static final Set<IElementType> NONE_INDENT_BLOCK_ELEMENT_TYPES = Set.of(
+            NAMESPACE, ENTITY
+    );
+
+    private static final Set<IElementType> NORMAL_INDENT_BLOCK_ELEMENT_TYPES = Set.of(
+            ENTITY_META, PROPERTY, PROPERTY_META, SUB_PROPERTY, SUB_PROPERTY_META
+    );
+
+    private final Indent myIndent;
     private final SpacingBuilder mySpacingBuilder;
 
-    protected SchemaBlock(@NotNull ASTNode node, @Nullable Wrap wrap, @Nullable Alignment alignment, SpacingBuilder spacingBuilder) {
+    protected SchemaBlock(
+            @NotNull ASTNode node,
+            @Nullable Wrap wrap,
+            @Nullable Alignment alignment,
+            @Nullable SpacingBuilder spacingBuilder
+    ) {
+        this(node, wrap, alignment, spacingBuilder, null);
+    }
+
+    protected SchemaBlock(
+            @NotNull ASTNode node,
+            @Nullable Wrap wrap,
+            @Nullable Alignment alignment,
+            @Nullable SpacingBuilder spacingBuilder,
+            @Nullable Indent indent
+    ) {
         super(node, wrap, alignment);
         mySpacingBuilder = spacingBuilder;
+        myIndent = indent;
+        this.setBuildIndentsOnly(true);
     }
 
     @Override
     protected List<Block> buildChildren() {
         List<Block> blocks = new ArrayList<>();
-        if (myNode.getPsi() instanceof SchemaPlainTextBlock) {
-            return blocks;
-        }
 
-        ASTNode child = myNode.getFirstChildNode();
-        while (child != null) {
-            IElementType type = child.getElementType();
-            if (!NONBLOCK_ELEMENT_TYPES.contains(type)) {
-                blocks.add(new SchemaBlock(
-                        child,
-                        Wrap.createWrap(WrapType.NONE, false),
-                        Alignment.createAlignment(),
-                        mySpacingBuilder
-                ));
+        ASTNode[] children = myNode.getChildren(null);
+        for (ASTNode child : children) {
+            Block childBlock = buildBlock(child);
+            if (childBlock != null) {
+                blocks.add(childBlock);
             }
-            child = child.getTreeNext();
         }
 
         return blocks;
     }
 
+    private Block buildBlock(ASTNode node) {
+        IElementType type = node.getElementType();
+        if (NONBLOCK_ELEMENT_TYPES.contains(type)) {
+            return null;
+        }
+
+        Indent indent = null;
+        if (NONE_INDENT_BLOCK_ELEMENT_TYPES.contains(type)) {
+            indent = Indent.getNoneIndent();
+        } else if (NORMAL_INDENT_BLOCK_ELEMENT_TYPES.contains(type)) {
+            indent = Indent.getNormalIndent();
+        }
+
+        return new SchemaBlock(
+                node,
+                Wrap.createWrap(WrapType.NONE, true),
+                Alignment.createAlignment(),
+                mySpacingBuilder,
+                indent
+        );
+    }
+
     @Override
     public Indent getIndent() {
-        return Indent.getNoneIndent();
+        return myIndent == null ? Indent.getNoneIndent() : myIndent;
     }
 
     @Nullable
     @Override
     public Spacing getSpacing(@Nullable Block firstChild, @NotNull Block secondChild) {
-        return mySpacingBuilder.getSpacing(this, firstChild, secondChild);
+        return mySpacingBuilder == null ? null : mySpacingBuilder.getSpacing(this, firstChild, secondChild);
     }
 
     @Override
     public boolean isLeaf() {
-        return myNode.getPsi() instanceof SchemaPlainTextBlock || myNode.getFirstChildNode() == null;
+        return myNode.getFirstChildNode() == null;
     }
 
 }
