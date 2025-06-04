@@ -7,9 +7,9 @@ import com.intellij.psi.LiteralTextEscaper;
 import com.intellij.psi.PsiLanguageInjectionHost;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class SchemaPlainTextBlockBase extends ASTWrapperPsiElement implements PsiLanguageInjectionHost {
+public abstract class SchemaPlainTextContentBase extends ASTWrapperPsiElement implements PsiLanguageInjectionHost {
 
-    public SchemaPlainTextBlockBase(@NotNull ASTNode node) {
+    public SchemaPlainTextContentBase(@NotNull ASTNode node) {
         super(node);
     }
 

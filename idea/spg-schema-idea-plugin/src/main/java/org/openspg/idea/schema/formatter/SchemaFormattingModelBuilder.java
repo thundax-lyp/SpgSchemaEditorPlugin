@@ -40,20 +40,16 @@ public final class SchemaFormattingModelBuilder implements FormattingModelBuilde
         builder = builder.after(TokenSet.create(ENTITY))
                 .spacing(0, 0, blankLinesAfterEntity, false, 0);
 
-        builder = initSpaceBuilderByIndent(builder, commonSetting);
+        builder = builder
+                .before(TokenSet.create(DOUBLE_LBRACKET))
+                .spacing(1, 1, 0, false, 0)
+                .after(TokenSet.create(DOUBLE_LBRACKET))
+                .spacing(0, 0, 1, false, 0)
+                .around(TokenSet.create(DOUBLE_RBRACKET))
+                .spacing(0, 0, 1, false, 0);
+
         builder = initSpaceBuilderByComma(builder, commonSetting);
         builder = initSpaceBuilderByColon(builder, commonSetting);
-
-//        boolean spaceAroundBrackets = commonSetting.SPACE_WITHIN_BRACKETS;
-//        if (spaceAroundBrackets) {
-//            builder = builder
-//                    .before(DOUBLE_LBRACKET).spaces(1)
-//                    .after(DOUBLE_RBRACKET).spaces(1);
-//        } else {
-//            builder = builder
-//                    .around(DOUBLE_LBRACKET).spaces(0)
-//                    .around(DOUBLE_RBRACKET).spaces(0);
-//        }
 
         // non-blank tokens
         TokenSet nonBlankLineTokens = TokenSet.create(
@@ -63,27 +59,6 @@ public final class SchemaFormattingModelBuilder implements FormattingModelBuilde
                 .after(nonBlankLineTokens)
                 .spacing(0, 0, 1, false, 0);
 
-        return builder;
-    }
-
-    private static SpacingBuilder initSpaceBuilderByIndent(SpacingBuilder builder, CommonCodeStyleSettings settings) {
-        CommonCodeStyleSettings.IndentOptions indentOptions = settings.getIndentOptions();
-        int indentSize = indentOptions == null ? 4 : Math.max(1, indentOptions.INDENT_SIZE);
-
-        builder = builder.after(INDENT_META)
-                .spaces(indentSize - 1)
-
-                .after(INDENT_PROP)
-                .spaces(indentSize * 2 - 1)
-
-                .after(INDENT_PROPMETA)
-                .spaces(indentSize * 3 - 1)
-
-                .after(INDENT_SUBPROP)
-                .spaces(indentSize * 4 - 1)
-
-                .after(INDENT_SUBPROPMETA)
-                .spaces(indentSize * 5 - 1);
         return builder;
     }
 

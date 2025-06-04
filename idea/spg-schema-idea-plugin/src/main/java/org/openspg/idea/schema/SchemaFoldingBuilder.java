@@ -10,10 +10,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.openspg.idea.schema.lang.psi.SchemaEntity;
-import org.openspg.idea.schema.lang.psi.SchemaEntityMeta;
-import org.openspg.idea.schema.lang.psi.SchemaPlainTextBlock;
-import org.openspg.idea.schema.lang.psi.SchemaProperty;
+import org.openspg.idea.schema.lang.psi.*;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -26,7 +23,9 @@ public class SchemaFoldingBuilder extends FoldingBuilderEx implements DumbAware 
             new SchemaEntityFoldingAdapter(),
             new SchemaEntityMetaFoldingAdapter(),
             new SchemaPropertyFoldingAdapter(),
-            new SchemaPlainTextBlockFoldingAdapter()
+            new SchemaPropertyMetaFoldingAdapter(),
+            new SchemaSubPropertyFoldingAdapter()
+//            new SchemaPlainTextBlockFoldingAdapter()
     );
 
     @Override
@@ -117,12 +116,34 @@ public class SchemaFoldingBuilder extends FoldingBuilderEx implements DumbAware 
         }
     }
 
-    public static class SchemaPlainTextBlockFoldingAdapter extends FoldingAdapter<SchemaPlainTextBlock> {
+    public static class SchemaPropertyMetaFoldingAdapter extends FoldingAdapter<SchemaPropertyMeta> {
         @Override
-        protected String getPlaceholderText(@NotNull SchemaPlainTextBlock element) {
-            return "[[...]]";
+        protected String getPlaceholderText(@NotNull SchemaPropertyMeta element) {
+            String placeHolder = element.getPropertyMetaHead().getText();
+            if (element.getPropertyMetaBody() != null && !element.getPropertyMetaBody().getSubPropertyList().isEmpty()) {
+                placeHolder += " {...}";
+            }
+            return placeHolder;
         }
     }
+
+    public static class SchemaSubPropertyFoldingAdapter extends FoldingAdapter<SchemaSubProperty> {
+        @Override
+        protected String getPlaceholderText(@NotNull SchemaSubProperty element) {
+            String placeHolder = element.getSubPropertyHead().getText();
+            if (element.getSubPropertyBody() != null && !element.getSubPropertyBody().getSubPropertyMetaList().isEmpty()) {
+                placeHolder += " {...}";
+            }
+            return placeHolder;
+        }
+    }
+
+//    public static class SchemaPlainTextBlockFoldingAdapter extends FoldingAdapter<SchemaPlainTextBlock> {
+//        @Override
+//        protected String getPlaceholderText(@NotNull SchemaPlainTextBlock element) {
+//            return "[[...]]";
+//        }
+//    }
 
 }
 

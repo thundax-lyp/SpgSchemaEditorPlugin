@@ -1,20 +1,21 @@
 package org.openspg.idea.schema.psi;
 
+import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.InjectedLanguagePlaces;
 import com.intellij.psi.LanguageInjector;
 import com.intellij.psi.PsiLanguageInjectionHost;
 import org.jetbrains.annotations.NotNull;
 import org.openspg.idea.conceptRule.ConceptRuleLanguage;
-import org.openspg.idea.schema.lang.psi.SchemaPlainTextBlock;
+import org.openspg.idea.schema.lang.psi.SchemaPlainTextContent;
 
 public final class SchemaLanguageInjector implements LanguageInjector {
 
     @Override
     public void getLanguagesToInject(@NotNull PsiLanguageInjectionHost host, @NotNull InjectedLanguagePlaces injectionPlacesRegistrar) {
-        if (host instanceof SchemaPlainTextBlock block) {
+        if (host instanceof SchemaPlainTextContent block) {
             injectionPlacesRegistrar.addPlace(
                     ConceptRuleLanguage.INSTANCE,
-                    block.getInjectTextRange(),
+                    TextRange.from(0, block.getTextLength()),
                     "",
                     ""
             );

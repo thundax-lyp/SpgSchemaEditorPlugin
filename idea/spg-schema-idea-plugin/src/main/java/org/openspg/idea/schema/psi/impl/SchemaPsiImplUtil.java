@@ -1,7 +1,6 @@
 package org.openspg.idea.schema.psi.impl;
 
 import com.intellij.lang.ASTNode;
-import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReference;
 import org.openspg.idea.schema.grammar.psi.SchemaTypes;
@@ -86,11 +85,25 @@ public class SchemaPsiImplUtil {
     }
 
     public static String getValue(SchemaBasicPropertyDeclaration element) {
-        SchemaPropertyValueDeclaration declaration = element.getPropertyValueDeclaration();
-        if (declaration != null) {
-            return declaration.getPropertyValueVariable().getText();
+        PsiElement sibling = element.getPropertyNameDeclaration().getNextSibling();
+
+        while (sibling != null && sibling.getNode().getElementType() != SchemaTypes.COLON) {
+            sibling = sibling.getNextSibling();
         }
-        return null;
+
+        if (sibling == null) {
+            return null;
+        }
+
+        StringBuilder value = new StringBuilder();
+
+        sibling = sibling.getNextSibling();
+        while (sibling != null) {
+            value.append(sibling.getText());
+            sibling = sibling.getNextSibling();
+        }
+
+        return value.toString().trim();
     }
 
     public static Map<String, Object> toJson(SchemaBasicPropertyDeclaration element) {
@@ -224,11 +237,14 @@ public class SchemaPsiImplUtil {
     // ============================================
     // SchemaPlainTextBlock methods
     //
-    public static TextRange getInjectTextRange(SchemaPlainTextBlock element) {
-        return TextRange.create(
-                element.getFirstChild().getTextLength(),
-                element.getTextLength() - element.getLastChild().getTextLength());
-    }
+//    public static TextRange getInjectTextRange(SchemaPlainTextBlock element) {
+//        System.out.println(element.getFirstChild().getText());
+//        System.out.println(element.getLastChild().getText());
+//        int start = element.getFirstChild().getTextLength();
+//        int end = element.getTextLength() - element.getLastChild().getTextLength();
+//        System.out.println(element.getTextLength());
+//        return TextRange.create(start, end);
+//    }
     // ============================================
 
     public static String unwrapText(String text) {

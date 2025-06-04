@@ -31,6 +31,7 @@ import com.intellij.psi.tree.IElementType;import com.intellij.ui.mac.foundation.
     private final IElementType[] indentToken = {INDENT, INDENT_META, INDENT_PROP, INDENT_PROPMETA, INDENT_SUBPROP, INDENT_SUBPROPMETA};
     private final int maxIndentLevel = 6;
     private int currentIndentLevel = 0;
+    private int lastIndentLevel = 0;
 
     //-------------------------------------------------------------------------------------------------------------------
 
@@ -119,18 +120,10 @@ COMMENT = "#"{LINE}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Main states
-%xstate LINE_START_STATE, PLAIN_BLOCK_STATE
+%xstate LINE_START_STATE, INDENT_STATE
 
 // Small technical one-token states
 %xstate NAMESPACE_STATE, LINE_COMMENT_STATE, ERROR_STATE
-
-%xstate ENTITY_STATE, WAITING_ENTITY_ALIAS_NAME_STATE, WAITING_ENTITY_CLASS_STATE
-%xstate ENTITYMETA_STATE
-
-%xstate PROPERTY_STATE, WAITING_PROPERTY_ALIAS_NAME_STATE, WAITING_PROPERTY_CLASS_STATE
-%xstate PROPERTYMETA_STATE
-
-%xstate WAITING_META_VALUE_STATE, WAITING_META_BUILTIN_VALUE_STATE, WAITING_META_TEXT_VALUE_STATE
 
 %xstate DEFINITION_STATE, KV_STATE, WAITING_VALUE_STATE, WAITING_BLOCK_VALUE_STATE
 %%
@@ -148,15 +141,11 @@ COMMENT = "#"{LINE}
       }
 
     {BLANK_LINE} {
-          return TokenType.WHITE_SPACE;
+          return TokenType.NEW_LINE_INDENT;
       }
 
     {WHITE_SPACE}* {COMMENT} {
           return LINE_COMMENT;
-      }
-
-    {EOL} {
-          return TokenType.WHITE_SPACE;
       }
 
     {WHITE_SPACE} {
@@ -164,9 +153,11 @@ COMMENT = "#"{LINE}
           if (indentLevel < 0) {
               goToState(ERROR_STATE);
           } else {
-              yybegin(this.indentState[indentLevel]);
-              yypushback(yylength());
-              return this.indentToken[indentLevel];
+//              yybegin(this.indentState[indentLevel]);
+//              yypushback(yylength());
+//              return this.indentToken[indentLevel];
+                yybegin(INDENT_STATE);
+                return TokenType.WHITE_SPACE;
           }
       }
 
@@ -177,13 +168,24 @@ COMMENT = "#"{LINE}
 }
 //-------------------------------------------------------------------------------------------------------------------
 
+//-------------------------------------------------------------------------------------------------------------------
+// indent: after whitespac
+<INDENT_STATE> {
+    {ANY_CHAR} {
+          yybegin(this.indentState[this.currentIndentLevel]);
+          yypushback(yylength());
+          return this.indentToken[this.currentIndentLevel];
+      }
+}
+//-------------------------------------------------------------------------------------------------------------------
+
 
 //-------------------------------------------------------------------------------------------------------------------
 // common: white-space, eol, comment
 <NAMESPACE_STATE, ERROR_STATE, DEFINITION_STATE, KV_STATE, WAITING_VALUE_STATE> {
     {EOL} {
           yybegin(LINE_START_STATE);
-          return TokenType.WHITE_SPACE;
+          return TokenType.NEW_LINE_INDENT;
       }
 
     {COMMENT} {
@@ -198,7 +200,7 @@ COMMENT = "#"{LINE}
 <LINE_COMMENT_STATE> {
     {EOL} {
           yybegin(LINE_START_STATE);
-          return TokenType.WHITE_SPACE;
+          return TokenType.NEW_LINE_INDENT;
       }
 
     {WHITE_SPACE} {
@@ -354,11 +356,15 @@ COMMENT = "#"{LINE}
           return PLAIN_TEXT;
       }
 
+    {EOL} {
+          return TokenType.NEW_LINE_INDENT;
+      }
+
     {WHITE_SPACE} {
           return isAfterEol() ? TokenType.WHITE_SPACE : PLAIN_TEXT;
       }
 
-    [^ \[\]]+ {
+    [^ \n\[\]]+ {
           return PLAIN_TEXT;
       }
 }

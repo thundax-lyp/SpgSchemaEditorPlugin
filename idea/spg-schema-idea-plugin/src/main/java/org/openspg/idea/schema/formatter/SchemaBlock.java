@@ -14,19 +14,14 @@ import java.util.Set;
 
 import static org.openspg.idea.schema.grammar.psi.SchemaTypes.*;
 
-
 public class SchemaBlock extends AbstractBlock {
 
     private static final Set<IElementType> NONBLOCK_ELEMENT_TYPES = Set.of(
             TokenType.WHITE_SPACE
     );
 
-    private static final Set<IElementType> NONE_INDENT_BLOCK_ELEMENT_TYPES = Set.of(
-            NAMESPACE, ENTITY
-    );
-
     private static final Set<IElementType> NORMAL_INDENT_BLOCK_ELEMENT_TYPES = Set.of(
-            ENTITY_META, PROPERTY, PROPERTY_META, SUB_PROPERTY, SUB_PROPERTY_META
+            ENTITY_META, PROPERTY, PROPERTY_META, SUB_PROPERTY, SUB_PROPERTY_META, PLAIN_TEXT_CONTENT
     );
 
     private final Indent myIndent;
@@ -76,15 +71,13 @@ public class SchemaBlock extends AbstractBlock {
         }
 
         Indent indent = null;
-        if (NONE_INDENT_BLOCK_ELEMENT_TYPES.contains(type)) {
-            indent = Indent.getNoneIndent();
-        } else if (NORMAL_INDENT_BLOCK_ELEMENT_TYPES.contains(type)) {
+        if (NORMAL_INDENT_BLOCK_ELEMENT_TYPES.contains(type)) {
             indent = Indent.getNormalIndent();
         }
 
         return new SchemaBlock(
                 node,
-                Wrap.createWrap(WrapType.NONE, true),
+                Wrap.createWrap(WrapType.NONE, false),
                 Alignment.createAlignment(),
                 mySpacingBuilder,
                 indent

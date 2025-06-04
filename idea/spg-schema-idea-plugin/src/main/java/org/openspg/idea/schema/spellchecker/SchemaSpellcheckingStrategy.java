@@ -13,7 +13,7 @@ import org.openspg.idea.schema.grammar.psi.SchemaTypes;
 public class SchemaSpellcheckingStrategy extends SpellcheckingStrategy implements DumbAware {
 
     public static final TokenSet NO_SPELLCHECKING_TYPES = TokenSet.create(
-            SchemaTypes.PLAIN_TEXT_BLOCK
+            SchemaTypes.PLAIN_TEXT_CONTENT
     );
 
     @Override

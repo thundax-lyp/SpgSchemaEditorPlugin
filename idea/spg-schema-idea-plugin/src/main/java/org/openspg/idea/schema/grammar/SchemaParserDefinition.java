@@ -37,7 +37,7 @@ public final class SchemaParserDefinition implements ParserDefinition {
     @NotNull
     @Override
     public TokenSet getWhitespaceTokens() {
-        return TokenSet.create(TokenType.WHITE_SPACE, TokenType.BAD_CHARACTER);
+        return TokenSet.create(TokenType.WHITE_SPACE, TokenType.NEW_LINE_INDENT, TokenType.BAD_CHARACTER);
     }
 
     @NotNull
