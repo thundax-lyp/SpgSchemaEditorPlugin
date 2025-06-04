@@ -95,9 +95,6 @@ import com.intellij.psi.tree.IElementType;import com.intellij.ui.mac.foundation.
 // From the spec
 ANY_CHAR = [^]
 
-// Schema spec: when a comment follows another syntax element,
-//  it must be separated from it by space characters.
-// See http://www.yaml.org/spec/1.2/spec.html#comment
 COMMENT =                       "#"{LINE}
 
 IDENTIFIER = [:jletter:] [:jletterdigit:]*
@@ -168,7 +165,7 @@ COMMENT = "#"{LINE}
               goToState(ERROR_STATE);
           } else {
               yybegin(this.indentState[indentLevel]);
-              yypushback(yylength() - 1);
+              yypushback(yylength());
               return this.indentToken[indentLevel];
           }
       }
@@ -338,7 +335,7 @@ COMMENT = "#"{LINE}
 //-------------------------------------------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------------------------------------
-// key-value-state
+// plain-text-block-state
 <WAITING_BLOCK_VALUE_STATE> {
     "[[" {
           return DOUBLE_LBRACKET;
@@ -357,7 +354,11 @@ COMMENT = "#"{LINE}
           return PLAIN_TEXT;
       }
 
-    [^\[\]]+ {
+    {WHITE_SPACE} {
+          return isAfterEol() ? TokenType.WHITE_SPACE : PLAIN_TEXT;
+      }
+
+    [^ \[\]]+ {
           return PLAIN_TEXT;
       }
 }

@@ -1,15 +1,15 @@
 package org.openspg.idea.schema.util;
 
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
-import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.openspg.idea.schema.lang.psi.SchemaEntity;
 import org.openspg.idea.schema.lang.psi.SchemaEntityHead;
 import org.openspg.idea.schema.lang.psi.SchemaNamespace;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class PsiUtils {

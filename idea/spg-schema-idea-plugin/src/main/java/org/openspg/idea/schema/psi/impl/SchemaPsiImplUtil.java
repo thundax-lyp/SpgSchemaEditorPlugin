@@ -1,6 +1,7 @@
 package org.openspg.idea.schema.psi.impl;
 
 import com.intellij.lang.ASTNode;
+import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReference;
 import org.openspg.idea.schema.grammar.psi.SchemaTypes;
@@ -218,6 +219,15 @@ public class SchemaPsiImplUtil {
     //
     public static Map<String, Object> toJson(SchemaSubPropertyMeta element) {
         return element.getBasicPropertyDeclaration().toJson();
+    }
+
+    // ============================================
+    // SchemaPlainTextBlock methods
+    //
+    public static TextRange getInjectTextRange(SchemaPlainTextBlock element) {
+        return TextRange.create(
+                element.getFirstChild().getTextLength(),
+                element.getTextLength() - element.getLastChild().getTextLength());
     }
     // ============================================
 

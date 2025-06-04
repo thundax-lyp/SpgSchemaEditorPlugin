@@ -20,7 +20,7 @@ schemaFile ::= item_*
 
 private item_ ::= namespace|entity|COMMENT|LINE_COMMENT|indents_
 
-private indents_ ::= INDENT|INDENT_META|INDENT_PROP|INDENT_PROPMETA|INDENT_SUBPROP|INDENT_SUBPROPMETA
+private indents_ ::= INDENT|INDENT_META|INDENT_PROP|INDENT_PROPMETA|INDENT_SUBPROP|INDENT_SUBPROPMETA | DOUBLE_LBRACKET | DOUBLE_RBRACKET
 
 namespace ::= NAMESPACE_KEYWORD IDENTIFIER {
     methods=[getNamespace toJson]
@@ -81,7 +81,11 @@ builtin_property_name ::= DESC_KEYWORD | PROPERTIES_KEYWORD | RELATIONS_KEYWORD 
 property_value_declaration ::= property_value_variable
 property_value_variable ::= builtin_property_value | plain_text_block | TEXT+
 builtin_property_value ::= IS_A_KEYWORD | LOCATE_AT_KEYWORD | MANNER_OF_KEYWORD | TEXT_KEYWORD | VECTOR_KEYWORD | TEXT_AND_VECTOR_KEYWORD | NOT_NULL_KEYWORD | MULTI_VALUE_KEYWORD
-plain_text_block ::= DOUBLE_LBRACKET PLAIN_TEXT* DOUBLE_RBRACKET
+plain_text_block ::= DOUBLE_LBRACKET PLAIN_TEXT* DOUBLE_RBRACKET {
+    mixin="org.openspg.idea.schema.psi.impl.SchemaPlainTextBlockBase"
+    implements="com.intellij.psi.PsiLanguageInjectionHost"
+    methods=[getInjectTextRange]
+}
 
 
 /**

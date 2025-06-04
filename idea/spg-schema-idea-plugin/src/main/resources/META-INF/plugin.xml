@@ -17,6 +17,7 @@
 
     <change-notes><![CDATA[
         <ul>
+            <li><b>version 0.0.11</b> SchemaML: add folding</li>
             <li><b>version 0.0.10</b> RuleML: add formatter and commenter</li>
             <li><b>version 0.0.9</b> RuleML: add structure view</li>
             <li><b>version 0.0.8</b> RuleML: support Concept-Rule mark language</li>
@@ -101,6 +102,9 @@
         <spellchecker.support
                 language="OpenSPG Schema"
                 implementationClass="org.openspg.idea.schema.spellchecker.SchemaSpellcheckingStrategy"/>
+
+        <languageInjector implementation="org.openspg.idea.schema.psi.SchemaLanguageInjector"/>
+        <multiHostInjector implementation="org.openspg.idea.schema.injection.SchemaMultiHostInjector"/>
         <!-- SchemaML: end -->
 
         <!-- ConceptRuleML: begin -->
@@ -148,9 +152,9 @@
                 language="OpenSPG Schema"
                 implementationClass="org.openspg.idea.schema.completion.SchemaCompletionContributor"/>
 
-<!--        <psi.referenceContributor-->
-<!--                language="OpenSPG Schema"-->
-<!--                implementation="org.openspg.idea.schema.reference.SchemaReferenceContributor"/>-->
+        <!--        <psi.referenceContributor-->
+        <!--                language="OpenSPG Schema"-->
+        <!--                implementation="org.openspg.idea.schema.reference.SchemaReferenceContributor"/>-->
 
         <!--        <lang.findUsagesProvider-->
         <!--                language="OpenSPG Schema"-->

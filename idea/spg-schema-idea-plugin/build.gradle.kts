@@ -1,4 +1,3 @@
-import org.jetbrains.kotlin.ir.backend.js.compile
 
 plugins {
     id("java")
@@ -14,7 +13,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.alibaba:fastjson:1.2.83")
+    implementation("com.alibaba:fastjson:2.0.57")
 }
 
 sourceSets {
@@ -29,7 +28,7 @@ sourceSets {
 // Configure Gradle IntelliJ Plugin
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
 intellij {
-    version.set("2024.1.7")
+    version.set("2023.1")
     type.set("IC") // Target IDE Platform
 
     plugins.set(listOf("com.intellij.java"))
@@ -46,7 +45,7 @@ tasks {
     }
 
     patchPluginXml {
-        sinceBuild.set("222")
+        sinceBuild.set("231")
         untilBuild.set("")
     }
 

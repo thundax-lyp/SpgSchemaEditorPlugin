@@ -35,8 +35,7 @@ public class SchemaSplitEditorProvider implements FileEditorProvider, DumbAware 
         return isSchemaFileType(project, file);
     }
 
-
-    @Override
+    // @Override
     public boolean acceptRequiresReadAction() {
         return false;
     }
