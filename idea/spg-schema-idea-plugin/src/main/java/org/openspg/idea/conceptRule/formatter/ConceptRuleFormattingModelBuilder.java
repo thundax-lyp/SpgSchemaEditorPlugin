@@ -60,9 +60,7 @@ public final class ConceptRuleFormattingModelBuilder implements FormattingModelB
                 .after(TokenSet.create(LBRACE))
                 .spacing(0, 0, 1, false, 0)
                 .before(TokenSet.create(RBRACE))
-                .lineBreakInCode()
-//                .spacing(0, 0, 1, false, 0)
-        ;
+                .lineBreakInCode();
 
         builder = initSpaceBuilderByComma(builder, commonSetting);
         builder = initSpaceBuilderByColon(builder, commonSetting);

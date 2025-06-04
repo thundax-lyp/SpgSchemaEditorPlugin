@@ -77,7 +77,7 @@ public class ConceptRuleBlock extends AbstractBlock {
 
         return new ConceptRuleBlock(
                 node,
-                Wrap.createWrap(WrapType.NONE, true),
+                Wrap.createWrap(WrapType.NONE, false),
                 Alignment.createAlignment(),
                 mySpacingBuilder,
                 indent
