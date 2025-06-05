@@ -17,7 +17,7 @@
 
     <change-notes><![CDATA[
         <ul>
-            <li><b>version 0.0.11</b> SchemaML: add folding</li>
+            <li><b>version 0.0.11</b> SchemaML: add RuleML injection</li>
             <li><b>version 0.0.10</b> RuleML: add formatter and commenter</li>
             <li><b>version 0.0.9</b> RuleML: add structure view</li>
             <li><b>version 0.0.8</b> RuleML: support Concept-Rule mark language</li>
