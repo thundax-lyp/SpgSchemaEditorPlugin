@@ -1,7 +1,7 @@
 package org.openspg.idea.conceptRule.psi.impl;
 
 import org.apache.commons.lang3.StringUtils;
-import org.openspg.idea.lang.psi.*;
+import org.openspg.idea.conceptRule.lang.psi.*;
 
 import java.util.List;
 

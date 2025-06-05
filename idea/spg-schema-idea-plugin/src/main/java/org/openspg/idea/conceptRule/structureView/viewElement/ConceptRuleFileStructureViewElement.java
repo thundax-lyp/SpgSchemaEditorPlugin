@@ -4,7 +4,7 @@ import com.intellij.ide.util.treeView.smartTree.TreeElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
-import org.openspg.idea.lang.psi.ConceptRuleRuleWrapper;
+import org.openspg.idea.conceptRule.lang.psi.ConceptRuleRuleWrapper;
 
 import java.util.ArrayList;
 import java.util.List;

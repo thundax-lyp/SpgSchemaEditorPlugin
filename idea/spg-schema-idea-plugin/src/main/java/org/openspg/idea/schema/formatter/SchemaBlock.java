@@ -3,7 +3,10 @@ package org.openspg.idea.schema.formatter;
 import com.intellij.formatting.*;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.TokenType;
+import com.intellij.psi.codeStyle.CodeStyleSettings;
+import com.intellij.psi.codeStyle.CodeStyleSettingsManager;
 import com.intellij.psi.formatter.common.AbstractBlock;
+import com.intellij.psi.formatter.common.SettingsAwareBlock;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -14,10 +17,14 @@ import java.util.Set;
 
 import static org.openspg.idea.schema.grammar.psi.SchemaTypes.*;
 
-public class SchemaBlock extends AbstractBlock {
+public class SchemaBlock extends AbstractBlock implements SettingsAwareBlock {
 
     private static final Set<IElementType> NONBLOCK_ELEMENT_TYPES = Set.of(
-            TokenType.WHITE_SPACE
+            TokenType.WHITE_SPACE, TokenType.NEW_LINE_INDENT, TokenType.BAD_CHARACTER
+    );
+
+    private static final Set<IElementType> INJECTED_ELEMENT_TYPES = Set.of(
+            PLAIN_TEXT_CONTENT
     );
 
     private static final Set<IElementType> NORMAL_INDENT_BLOCK_ELEMENT_TYPES = Set.of(
@@ -26,6 +33,7 @@ public class SchemaBlock extends AbstractBlock {
 
     private final Indent myIndent;
     private final SpacingBuilder mySpacingBuilder;
+    private final boolean myInjection;
 
     protected SchemaBlock(
             @NotNull ASTNode node,
@@ -42,16 +50,26 @@ public class SchemaBlock extends AbstractBlock {
             @Nullable Alignment alignment,
             @Nullable SpacingBuilder spacingBuilder,
             @Nullable Indent indent
-    ) {
+            ) {
         super(node, wrap, alignment);
         mySpacingBuilder = spacingBuilder;
         myIndent = indent;
-        this.setBuildIndentsOnly(true);
+
+        if (INJECTED_ELEMENT_TYPES.contains(node.getElementType())) {
+            this.myInjection = true;
+            this.setBuildIndentsOnly(false);
+        } else {
+            this.myInjection = false;
+            this.setBuildIndentsOnly(true);
+        }
     }
 
     @Override
     protected List<Block> buildChildren() {
         List<Block> blocks = new ArrayList<>();
+        if (this.myInjection) {
+            return blocks;
+        }
 
         ASTNode[] children = myNode.getChildren(null);
         for (ASTNode child : children) {
@@ -77,7 +95,7 @@ public class SchemaBlock extends AbstractBlock {
 
         return new SchemaBlock(
                 node,
-                Wrap.createWrap(WrapType.NONE, false),
+                Wrap.createWrap(WrapType.NONE, true),
                 Alignment.createAlignment(),
                 mySpacingBuilder,
                 indent
@@ -100,4 +118,8 @@ public class SchemaBlock extends AbstractBlock {
         return myNode.getFirstChildNode() == null;
     }
 
+    @Override
+    public @NotNull CodeStyleSettings getSettings() {
+        return CodeStyleSettingsManager.getInstance().createSettings();
+    }
 }

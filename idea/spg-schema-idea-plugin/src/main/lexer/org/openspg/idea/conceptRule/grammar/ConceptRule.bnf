@@ -1,15 +1,15 @@
 {
-    parserClass="org.openspg.idea.lang.parser.ConceptRuleParser"
+    parserClass="org.openspg.idea.conceptRule.lang.parser.ConceptRuleParser"
     parserUtilClass="org.openspg.idea.conceptRule.grammar.ConceptRuleParserUtil"
 
     extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
 
     psiClassPrefix="ConceptRule"
     psiImplClassSuffix="Impl"
-    psiPackage="org.openspg.idea.lang.psi"
-    psiImplPackage="org.openspg.idea.lang.psi.impl"
+    psiPackage="org.openspg.idea.conceptRule.lang.psi"
+    psiImplPackage="org.openspg.idea.conceptRule.lang.psi.impl"
 
-    elementTypeHolderClass="org.openspg.idea.grammar.psi.ConceptRuleTypes"
+    elementTypeHolderClass="org.openspg.idea.conceptRule.grammar.psi.ConceptRuleTypes"
     elementTypeClass="org.openspg.idea.conceptRule.ConceptRuleElementType"
     tokenTypeClass="org.openspg.idea.conceptRule.psi.ConceptRuleTokenType"
 
@@ -18,17 +18,17 @@
 
 ruleFile ::= item_*
 
-private item_ ::= namespace | rule_wrapper | LINE_COMMENT | BLOCK_COMMENT | EOL | reserved_keywords | debug_items_
+private item_ ::= namespace | rule_wrapper | base_predicated_define | LINE_COMMENT | BLOCK_COMMENT | EOL | reserved_keywords | debug_items_
 
 namespace ::= NAMESPACE_KEYWORD namespace_value {
     methods=[getValue]
 }
-namespace_value ::= TEXT
+namespace_value ::= UNESCAPED_SYMBOLIC_NAME | STRING_LITERAL | ESCAPED_SYMBOLIC_NAME
 
-rule_wrapper ::= rule_wrapper_head (EOL rule_wrapper_body)?
+rule_wrapper ::= rule_wrapper_head (rule_wrapper_body)?
 rule_wrapper_head ::= rule_wrapper_pattern
 rule_wrapper_pattern ::= (label_expression (COLON label_expression)+) | (label_expression COLON)
-rule_wrapper_body ::= WRAPPER_RULE_KEYWORD COLON EOL* OPEN_RULE_BLOCK base_predicated_define* CLOSE_RULE_BLOCK
+rule_wrapper_body ::= WRAPPER_RULE_KEYWORD COLON OPEN_RULE_BLOCK base_predicated_define* CLOSE_RULE_BLOCK
 
 // all logic copy from file "openspg/KGDSL.g4"
 
@@ -286,9 +286,8 @@ graph_alias_element_list ::= graph_alias_with_property ( COMMA graph_alias_with_
 // graph structure 定义部分
 //#############################################################################
 
-create_action_symbol::= ACTION_KEYWORD
 create_action ::= create_action_symbol LBRACE create_action_body* RBRACE
-
+create_action_symbol::= ACTION_KEYWORD
 create_action_body ::= add_node | add_edge
 
 add_edge ::= ADD_EDGE_KEYWORD LPARENTH  add_edge_param COMMA  add_edge_param COMMA add_type COMMA add_props RPARENTH
@@ -386,7 +385,7 @@ identifier ::= UNESCAPED_SYMBOLIC_NAME | ESCAPED_SYMBOLIC_NAME {
     methods=[getLabel]
 }
 
-WHITESPACE ::= SPACE | TAB | LF | VT | FF | CR | FS | GS | RS | US | '\u1680' | '\u180e' | '\u2000' | '\u2001' | '\u2002' | '\u2003' | '\u2004' | '\u2005' | '\u2006' | '\u2008' | '\u2009' | '\u200a' | '\u2028' | '\u2029' | '\u205f' | '\u3000' | '\u00a0' | '\u2007' | '\u202f' | Comment
+WHITESPACE ::= SPACE | TAB | LF | VT | FF | CR | FS | GS | RS | US | '\u1680' | '\u180e' | '\u2000' | '\u2001' | '\u2002' | '\u2003' | '\u2004' | '\u2005' | '\u2006' | '\u2008' | '\u2009' | '\u200a' | '\u2028' | '\u2029' | '\u205f' | '\u3000' | '\u00a0' | '\u2007' | '\u202f'
 
 // ################################################ Simplify DSL ################################################
 

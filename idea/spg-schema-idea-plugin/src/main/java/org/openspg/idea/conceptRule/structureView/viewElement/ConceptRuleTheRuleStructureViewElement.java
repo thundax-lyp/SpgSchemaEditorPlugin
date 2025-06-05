@@ -3,7 +3,7 @@ package org.openspg.idea.conceptRule.structureView.viewElement;
 import com.intellij.ide.projectView.PresentationData;
 import com.intellij.ide.util.treeView.smartTree.TreeElement;
 import org.jetbrains.annotations.NotNull;
-import org.openspg.idea.lang.psi.ConceptRuleTheRule;
+import org.openspg.idea.conceptRule.lang.psi.ConceptRuleTheRule;
 import org.openspg.idea.schema.SchemaIcons;
 
 

@@ -4,7 +4,7 @@ import com.intellij.ide.projectView.PresentationData;
 import com.intellij.ide.util.treeView.smartTree.TreeElement;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
-import org.openspg.idea.lang.psi.*;
+import org.openspg.idea.conceptRule.lang.psi.*;
 import org.openspg.idea.schema.SchemaIcons;
 
 import java.util.ArrayList;

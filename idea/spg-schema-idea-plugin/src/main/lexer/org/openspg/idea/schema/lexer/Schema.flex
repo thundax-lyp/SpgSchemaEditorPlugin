@@ -1,7 +1,7 @@
-package org.openspg.idea.lang.lexer;
+package org.openspg.idea.schema.lang.lexer;
 
 import com.intellij.psi.TokenType;
-import com.intellij.psi.tree.IElementType;import com.intellij.ui.mac.foundation.ID;
+import com.intellij.psi.tree.IElementType;
 
 /* Auto generated File */
 %%

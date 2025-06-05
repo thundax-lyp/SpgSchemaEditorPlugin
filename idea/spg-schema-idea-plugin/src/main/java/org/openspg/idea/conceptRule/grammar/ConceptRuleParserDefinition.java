@@ -13,10 +13,10 @@ import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
 import org.openspg.idea.conceptRule.ConceptRuleLanguage;
+import org.openspg.idea.conceptRule.grammar.psi.ConceptRuleTypes;
+import org.openspg.idea.conceptRule.lang.parser.ConceptRuleParser;
 import org.openspg.idea.conceptRule.lexer.ConceptRuleLexerAdapter;
 import org.openspg.idea.conceptRule.psi.ConceptRuleFile;
-import org.openspg.idea.grammar.psi.ConceptRuleTypes;
-import org.openspg.idea.lang.parser.ConceptRuleParser;
 
 public final class ConceptRuleParserDefinition implements ParserDefinition {
 

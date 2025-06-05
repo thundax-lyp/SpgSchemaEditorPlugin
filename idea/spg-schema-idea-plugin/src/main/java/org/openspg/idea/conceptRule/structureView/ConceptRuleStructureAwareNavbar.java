@@ -5,9 +5,9 @@ import com.intellij.lang.Language;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.openspg.idea.conceptRule.ConceptRuleLanguage;
+import org.openspg.idea.conceptRule.lang.psi.ConceptRuleNamespace;
+import org.openspg.idea.conceptRule.lang.psi.ConceptRuleRuleWrapper;
 import org.openspg.idea.conceptRule.psi.ConceptRuleFile;
-import org.openspg.idea.lang.psi.ConceptRuleNamespace;
-import org.openspg.idea.lang.psi.ConceptRuleRuleWrapper;
 import org.openspg.idea.schema.SchemaIcons;
 
 import javax.swing.*;
@@ -22,19 +22,19 @@ public class ConceptRuleStructureAwareNavbar extends StructureAwareNavBarModelEx
 
     @Override
     public @Nullable String getPresentableText(Object object) {
-        if (object instanceof ConceptRuleFile) {
-            return ((ConceptRuleFile) object).getName();
+        if (object instanceof ConceptRuleFile file) {
+            return file.getName();
         }
 
-        if (object instanceof ConceptRuleNamespace) {
-            return ((ConceptRuleNamespace) object)
+        if (object instanceof ConceptRuleNamespace namespace) {
+            return namespace
                     .getNamespaceValue()
                     .getText();
         }
 
-        if (object instanceof ConceptRuleRuleWrapper) {
+        if (object instanceof ConceptRuleRuleWrapper ruleWrapper) {
             //TODO
-            return ((ConceptRuleRuleWrapper) object)
+            return ruleWrapper
                     .getRuleWrapperHead()
                     .getRuleWrapperPattern()
                     .getText();

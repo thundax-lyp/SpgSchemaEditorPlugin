@@ -145,6 +145,10 @@
         <lang.commenter
                 language="OpenSPG Concept Rule"
                 implementationClass="org.openspg.idea.conceptRule.ConceptRuleCommenter"/>
+
+        <lang.foldingBuilder
+                language="OpenSPG Concept Rule"
+                implementationClass="org.openspg.idea.conceptRule.ConceptRuleFoldingBuilder"/>
         <!-- ConceptRuleML: end -->
 
 

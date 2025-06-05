@@ -12,10 +12,10 @@ public final class SchemaLanguageInjector implements LanguageInjector {
 
     @Override
     public void getLanguagesToInject(@NotNull PsiLanguageInjectionHost host, @NotNull InjectedLanguagePlaces injectionPlacesRegistrar) {
-        if (host instanceof SchemaPlainTextContent block) {
+        if (host instanceof SchemaPlainTextContent content) {
             injectionPlacesRegistrar.addPlace(
                     ConceptRuleLanguage.INSTANCE,
-                    TextRange.from(0, block.getTextLength()),
+                    TextRange.from(0, content.getTextLength()),
                     "",
                     ""
             );

@@ -24,8 +24,8 @@ public class SchemaFoldingBuilder extends FoldingBuilderEx implements DumbAware 
             new SchemaEntityMetaFoldingAdapter(),
             new SchemaPropertyFoldingAdapter(),
             new SchemaPropertyMetaFoldingAdapter(),
-            new SchemaSubPropertyFoldingAdapter()
-//            new SchemaPlainTextBlockFoldingAdapter()
+            new SchemaSubPropertyFoldingAdapter(),
+            new SchemaPlainTextContentFoldingAdapter()
     );
 
     @Override
@@ -138,12 +138,12 @@ public class SchemaFoldingBuilder extends FoldingBuilderEx implements DumbAware 
         }
     }
 
-//    public static class SchemaPlainTextBlockFoldingAdapter extends FoldingAdapter<SchemaPlainTextBlock> {
-//        @Override
-//        protected String getPlaceholderText(@NotNull SchemaPlainTextBlock element) {
-//            return "[[...]]";
-//        }
-//    }
+    public static class SchemaPlainTextContentFoldingAdapter extends FoldingAdapter<SchemaPlainTextContent> {
+        @Override
+        protected String getPlaceholderText(@NotNull SchemaPlainTextContent element) {
+            return "...";
+        }
+    }
 
 }
 

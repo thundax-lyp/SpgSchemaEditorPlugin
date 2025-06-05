@@ -2,17 +2,20 @@ package org.openspg.idea.conceptRule.formatter;
 
 import com.intellij.formatting.*;
 import com.intellij.lang.ASTNode;
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.TokenType;
 import com.intellij.psi.formatter.common.AbstractBlock;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.openspg.idea.conceptRule.lang.psi.ConceptRuleRuleWrapperBody;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import static org.openspg.idea.grammar.psi.ConceptRuleTypes.*;
+import static org.openspg.idea.conceptRule.grammar.psi.ConceptRuleTypes.*;
+
 
 public class ConceptRuleBlock extends AbstractBlock {
 
@@ -21,7 +24,7 @@ public class ConceptRuleBlock extends AbstractBlock {
     );
 
     private static final Set<IElementType> NORMAL_INDENT_BLOCK_ELEMENT_TYPES = Set.of(
-            RULE_WRAPPER_BODY, THE_DEFINE_STRUCTURE, BASE_RULE_DEFINE, RULE_EXPRESSION_BODY, PATH_PATTERN_LIST
+            RULE_WRAPPER_BODY, BASE_RULE_DEFINE, RULE_EXPRESSION_BODY, PATH_PATTERN_LIST
     );
 
     private final Indent myIndent;
@@ -73,6 +76,12 @@ public class ConceptRuleBlock extends AbstractBlock {
         Indent indent = null;
         if (NORMAL_INDENT_BLOCK_ELEMENT_TYPES.contains(type)) {
             indent = Indent.getNormalIndent();
+
+        } else if (type == THE_DEFINE_STRUCTURE) {
+            PsiElement parent = node.getPsi().getParent();
+            if (parent instanceof ConceptRuleRuleWrapperBody) {
+                indent = Indent.getNormalIndent();
+            }
         }
 
         return new ConceptRuleBlock(

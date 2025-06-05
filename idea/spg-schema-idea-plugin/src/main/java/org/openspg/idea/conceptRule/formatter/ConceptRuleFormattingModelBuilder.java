@@ -7,9 +7,9 @@ import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
 import org.openspg.idea.conceptRule.ConceptRuleLanguage;
 import org.openspg.idea.conceptRule.codeStyle.ConceptRuleCodeStyleSettings;
-import org.openspg.idea.grammar.psi.ConceptRuleTypes;
+import org.openspg.idea.conceptRule.grammar.psi.ConceptRuleTypes;
 
-import static org.openspg.idea.grammar.psi.ConceptRuleTypes.*;
+import static org.openspg.idea.conceptRule.grammar.psi.ConceptRuleTypes.*;
 
 public final class ConceptRuleFormattingModelBuilder implements FormattingModelBuilder {
 

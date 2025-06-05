@@ -5,10 +5,10 @@ import com.intellij.ide.util.treeView.smartTree.TreeElement;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
-import org.openspg.idea.lang.psi.ConceptRuleCreateAction;
-import org.openspg.idea.lang.psi.ConceptRuleTheDefineStructure;
-import org.openspg.idea.lang.psi.ConceptRuleTheGraphStructure;
-import org.openspg.idea.lang.psi.ConceptRuleTheRule;
+import org.openspg.idea.conceptRule.lang.psi.ConceptRuleCreateAction;
+import org.openspg.idea.conceptRule.lang.psi.ConceptRuleTheDefineStructure;
+import org.openspg.idea.conceptRule.lang.psi.ConceptRuleTheGraphStructure;
+import org.openspg.idea.conceptRule.lang.psi.ConceptRuleTheRule;
 import org.openspg.idea.schema.SchemaIcons;
 
 import java.util.ArrayList;

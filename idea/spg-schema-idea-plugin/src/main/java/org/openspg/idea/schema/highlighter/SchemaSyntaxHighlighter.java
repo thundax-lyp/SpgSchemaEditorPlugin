@@ -8,7 +8,7 @@ import com.intellij.openapi.fileTypes.SyntaxHighlighterBase;
 import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
-import org.openspg.idea.grammar.psi.ConceptRuleTypes;
+import org.openspg.idea.conceptRule.grammar.psi.ConceptRuleTypes;
 import org.openspg.idea.schema.lexer.SchemaLexerAdapter;
 
 import java.util.HashMap;

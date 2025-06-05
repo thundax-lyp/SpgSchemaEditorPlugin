@@ -1,7 +1,7 @@
 package org.openspg.idea.conceptRule.psi.impl;
 
 import com.intellij.psi.tree.TokenSet;
-import org.openspg.idea.grammar.psi.ConceptRuleTypes;
+import org.openspg.idea.conceptRule.grammar.psi.ConceptRuleTypes;
 
 
 public interface BasicElementTypes extends ConceptRuleTypes {

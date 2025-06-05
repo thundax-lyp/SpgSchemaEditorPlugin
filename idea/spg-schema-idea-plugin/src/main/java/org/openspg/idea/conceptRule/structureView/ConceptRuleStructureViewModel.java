@@ -8,8 +8,8 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.psi.PsiFile;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.openspg.idea.conceptRule.lang.psi.ConceptRuleRuleWrapper;
 import org.openspg.idea.conceptRule.structureView.viewElement.ConceptRuleFileStructureViewElement;
-import org.openspg.idea.lang.psi.ConceptRuleRuleWrapper;
 
 public class ConceptRuleStructureViewModel extends StructureViewModelBase implements
         StructureViewModel.ElementInfoProvider {

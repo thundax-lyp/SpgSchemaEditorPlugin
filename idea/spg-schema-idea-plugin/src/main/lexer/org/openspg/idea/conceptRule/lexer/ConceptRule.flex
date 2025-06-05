@@ -1,14 +1,13 @@
-package org.openspg.idea.lang.lexer;
+package org.openspg.idea.conceptRule.lang.lexer;
 
-import com.intellij.openapi.vfs.newvfs.persistent.log.VfsOperation;import com.intellij.psi.TokenType;
-import com.intellij.psi.tree.IElementType;import com.intellij.ui.dsl.builder.AlignX;
-import java.security.cert.CertificateRevokedException;
+import com.intellij.psi.TokenType;
+import com.intellij.psi.tree.IElementType;
 
 /* Auto generated File */
 %%
 
 %class ConceptRuleLexer
-%implements com.intellij.lexer.FlexLexer, org.openspg.idea.grammar.psi.ConceptRuleTypes
+%implements com.intellij.lexer.FlexLexer, org.openspg.idea.conceptRule.grammar.psi.ConceptRuleTypes
 %unicode
 %public
 %column
@@ -95,70 +94,69 @@ ESCAPED_SYMBOLIC_NAME =         \`[^`]*\`
     {WHITE_SPACE}            { return TokenType.WHITE_SPACE; }
 }
 
-<YYINITIAL> {
-    {EOL}     { return EOL;     }
-    ":"       { return COLON;   }
-    "/"       { return DIV;   }
-    [Rr][Uu][Ll][Ee]    { return WRAPPER_RULE_KEYWORD; }
-
-    "namespace" {
-          goToState(NAMESPACE_STATE);
-      }
-
-    "[[" {
-          yybegin(RULE_STATE);
-          return OPEN_RULE_BLOCK;
-      }
-
-    {DOUBLE_QUOTED_STRING}   { return ESCAPED_SYMBOLIC_NAME; }
-    {SINGLE_QUOTED_STRING}   { return ESCAPED_SYMBOLIC_NAME; }
-    {ESCAPED_SYMBOLIC_NAME}  { return ESCAPED_SYMBOLIC_NAME; }
-    {IDENTIFIER}             { return UNESCAPED_SYMBOLIC_NAME; }
-
-    [^] {
-          return TokenType.BAD_CHARACTER;
-      }
-}
+//<YYINITIAL> {
+//    {EOL}     { return EOL;     }
+//    ":"       { return COLON;   }
+//    "/"       { return DIV;   }
+//    [Rr][Uu][Ll][Ee]    { return WRAPPER_RULE_KEYWORD; }
+//
+//    "namespace" {
+//          goToState(NAMESPACE_STATE);
+//      }
+//
+//    "[[" {
+//          yybegin(RULE_STATE);
+//          return OPEN_RULE_BLOCK;
+//      }
+//
+//    {DOUBLE_QUOTED_STRING}   { return ESCAPED_SYMBOLIC_NAME; }
+//    {SINGLE_QUOTED_STRING}   { return ESCAPED_SYMBOLIC_NAME; }
+//    {ESCAPED_SYMBOLIC_NAME}  { return ESCAPED_SYMBOLIC_NAME; }
+//    {IDENTIFIER}             { return UNESCAPED_SYMBOLIC_NAME; }
+//
+//    [^] {
+//          return TokenType.BAD_CHARACTER;
+//      }
+//}
 //-------------------------------------------------------------------------------------------------------------------
 
 
 //-------------------------------------------------------------------------------------------------------------------
 // namespace
-<NAMESPACE_STATE> {
-    "namespace" {
-        return NAMESPACE_KEYWORD;
-    }
-
-    {DOUBLE_QUOTED_STRING}   { return TEXT; }
-    {SINGLE_QUOTED_STRING}   { return TEXT; }
-    {ESCAPED_SYMBOLIC_NAME}  { return TEXT; }
-    [\w]+                    { return TEXT; }
-
-    {WHITE_SPACE} {
-          return TokenType.WHITE_SPACE;
-      }
-
-    {EOL} {
-          yybegin(YYINITIAL);
-          return TokenType.WHITE_SPACE;
-      }
-
-    [^] {
-          return TokenType.BAD_CHARACTER;
-      }
-}
+//<NAMESPACE_STATE> {
+//    "namespace" {
+//        return NAMESPACE_KEYWORD;
+//    }
+//
+//    {DOUBLE_QUOTED_STRING}   { return TEXT; }
+//    {SINGLE_QUOTED_STRING}   { return TEXT; }
+//    {ESCAPED_SYMBOLIC_NAME}  { return TEXT; }
+//    [\w]+                    { return TEXT; }
+//
+//    {WHITE_SPACE} {
+//          return TokenType.WHITE_SPACE;
+//      }
+//
+//    {EOL} {
+//          yybegin(YYINITIAL);
+//          return TokenType.WHITE_SPACE;
+//      }
+//
+//    [^] {
+//          return TokenType.BAD_CHARACTER;
+//      }
+//}
 //-------------------------------------------------------------------------------------------------------------------
 
 
 //-------------------------------------------------------------------------------------------------------------------
 // rulue block
-<RULE_STATE> {
+//<RULE_STATE> {
+<YYINITIAL> {
     {EOL}                   { return TokenType.NEW_LINE_INDENT; }
 
-    "]]" {
-          yybegin(YYINITIAL);
-          return CLOSE_RULE_BLOCK;
-      }
+    "[[" { return OPEN_RULE_BLOCK; }
+    "]]" { return CLOSE_RULE_BLOCK; }
 
     {INTEGER_LITERAL}        { return INTEGER_LITERAL; }
     {LONG_LITERAL}           { return INTEGER_LITERAL; }
@@ -169,15 +167,18 @@ ESCAPED_SYMBOLIC_NAME =         \`[^`]*\`
 
     {ESCAPED_SYMBOLIC_NAME}  { return ESCAPED_SYMBOLIC_NAME; }
 
-    "Action"                          { return ACTION_KEYWORD;          }
-    "Define"                          { return DEFINE_KEYWORD;          }
-    "DefinePriority"                  { return DEFINE_PRIORITY_KEYWORD; }
-    "Description"                     { return DESCRIPTION_KEYWORD;     }
-    "GraphStructure"                  { return GRAPH_STRUCTURE_KEYWORD; }
-    "Rule"                            { return RULE_KEYWORD;            }
-    "createEdgeInstance"              { return ADD_EDGE_KEYWORD;        }
-    "createNodeInstance"              { return ADD_NODE_KEYWORD;        }
-    "str_join"                        { return STR_JOIN_KEYWORD;        }
+    "namespace"              { return NAMESPACE_KEYWORD;       }
+    "rule"                   { return WRAPPER_RULE_KEYWORD;    }
+
+    "Action"                 { return ACTION_KEYWORD;          }
+    "Define"                 { return DEFINE_KEYWORD;          }
+    "DefinePriority"         { return DEFINE_PRIORITY_KEYWORD; }
+    "Description"            { return DESCRIPTION_KEYWORD;     }
+    "GraphStructure"         { return GRAPH_STRUCTURE_KEYWORD; }
+    "Rule"                   { return RULE_KEYWORD;            }
+    "createEdgeInstance"     { return ADD_EDGE_KEYWORD;        }
+    "createNodeInstance"     { return ADD_NODE_KEYWORD;        }
+    "str_join"               { return STR_JOIN_KEYWORD;        }
 
 
     [C][Oo][Nn][Ss][Tt][Rr][Aa][Ii][Nn][Tt] {
