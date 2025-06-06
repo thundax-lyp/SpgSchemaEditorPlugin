@@ -76,7 +76,7 @@ ESCAPED_SYMBOLIC_NAME =         \`[^`]*\`
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Main states
-%xstate NAMESPACE_STATE, RULE_STATE
+%xstate TODO_STATE
 
 %%
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -88,70 +88,14 @@ ESCAPED_SYMBOLIC_NAME =         \`[^`]*\`
 
 //-------------------------------------------------------------------------------------------------------------------
 // common: white-space, eol, comment
-<YYINITIAL, RULE_STATE> {
+<YYINITIAL> {
     {LINE_COMMENT}           { return LINE_COMMENT;    }
     {BLOCK_COMMENT}          { return BLOCK_COMMENT;   }
     {WHITE_SPACE}            { return TokenType.WHITE_SPACE; }
 }
 
-//<YYINITIAL> {
-//    {EOL}     { return EOL;     }
-//    ":"       { return COLON;   }
-//    "/"       { return DIV;   }
-//    [Rr][Uu][Ll][Ee]    { return WRAPPER_RULE_KEYWORD; }
-//
-//    "namespace" {
-//          goToState(NAMESPACE_STATE);
-//      }
-//
-//    "[[" {
-//          yybegin(RULE_STATE);
-//          return OPEN_RULE_BLOCK;
-//      }
-//
-//    {DOUBLE_QUOTED_STRING}   { return ESCAPED_SYMBOLIC_NAME; }
-//    {SINGLE_QUOTED_STRING}   { return ESCAPED_SYMBOLIC_NAME; }
-//    {ESCAPED_SYMBOLIC_NAME}  { return ESCAPED_SYMBOLIC_NAME; }
-//    {IDENTIFIER}             { return UNESCAPED_SYMBOLIC_NAME; }
-//
-//    [^] {
-//          return TokenType.BAD_CHARACTER;
-//      }
-//}
-//-------------------------------------------------------------------------------------------------------------------
-
-
-//-------------------------------------------------------------------------------------------------------------------
-// namespace
-//<NAMESPACE_STATE> {
-//    "namespace" {
-//        return NAMESPACE_KEYWORD;
-//    }
-//
-//    {DOUBLE_QUOTED_STRING}   { return TEXT; }
-//    {SINGLE_QUOTED_STRING}   { return TEXT; }
-//    {ESCAPED_SYMBOLIC_NAME}  { return TEXT; }
-//    [\w]+                    { return TEXT; }
-//
-//    {WHITE_SPACE} {
-//          return TokenType.WHITE_SPACE;
-//      }
-//
-//    {EOL} {
-//          yybegin(YYINITIAL);
-//          return TokenType.WHITE_SPACE;
-//      }
-//
-//    [^] {
-//          return TokenType.BAD_CHARACTER;
-//      }
-//}
-//-------------------------------------------------------------------------------------------------------------------
-
-
 //-------------------------------------------------------------------------------------------------------------------
 // rulue block
-//<RULE_STATE> {
 <YYINITIAL> {
     {EOL}                   { return TokenType.NEW_LINE_INDENT; }
 
