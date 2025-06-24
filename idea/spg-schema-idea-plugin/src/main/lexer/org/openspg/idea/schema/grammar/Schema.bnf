@@ -56,7 +56,7 @@ basic_structure_type_variable ::= knowledge_structure_type | basic_structure_typ
 inherited_structure_type_declaration ::= RIGHT_ARROW (inherited_structure_type_variable COMMA)* inherited_structure_type_variable COLON
 inherited_structure_type_variable ::= knowledge_structure_type | standard_structure_type | variable_structure_type
 
-knowledge_structure_type ::= ENTITY_TYPE_KEYWORD | CONCEPT_TYPE_KEYWORD | EVENT_TYPE_KEYWORD
+knowledge_structure_type ::= ENTITY_TYPE_KEYWORD | CONCEPT_TYPE_KEYWORD | EVENT_TYPE_KEYWORD | INDEX_TYPE_KEYWORD
 basic_structure_type ::= (BASIC_TYPE_KEYWORD DOT)? (INTEGER_KEYWORD | FLOAT_KEYWORD | TEXT_KEYWORD)
 standard_structure_type ::= STANDARD_TYPE_KEYWORD DOT IDENTIFIER
 variable_structure_type ::= structure_name {
@@ -80,7 +80,7 @@ builtin_property_name ::= DESC_KEYWORD | PROPERTIES_KEYWORD | RELATIONS_KEYWORD 
 
 private property_value_declaration ::= property_value_variable
 private property_value_variable ::= builtin_property_value | plain_text_block | TEXT+
-private builtin_property_value ::= IS_A_KEYWORD | LOCATE_AT_KEYWORD | MANNER_OF_KEYWORD | TEXT_KEYWORD | VECTOR_KEYWORD | TEXT_AND_VECTOR_KEYWORD | NOT_NULL_KEYWORD | MULTI_VALUE_KEYWORD
+private builtin_property_value ::= IS_A_KEYWORD | LOCATE_AT_KEYWORD | MANNER_OF_KEYWORD | TEXT_KEYWORD | VECTOR_KEYWORD | TEXT_AND_VECTOR_KEYWORD | SPARSE_VECTOR_KEYWORD | TEXT_AND_SPARSE_VECTOR_KEYWORD | NOT_NULL_KEYWORD | MULTI_VALUE_KEYWORD
 
 private plain_text_block ::= DOUBLE_LBRACKET plain_text_content? DOUBLE_RBRACKET
 plain_text_content ::= PLAIN_TEXT+ {

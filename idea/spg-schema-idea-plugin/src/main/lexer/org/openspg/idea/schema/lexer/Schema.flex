@@ -248,6 +248,7 @@ COMMENT = "#"{LINE}
     [Ee][Nn][Tt][Ii][Tt][Yy][Tt][Yy][Pp][Ee]      { return ENTITY_TYPE_KEYWORD; }
     [Cc][Oo][Nn][Cc][Ee][Pp][Tt][Tt][Yy][Pp][Ee]  { return CONCEPT_TYPE_KEYWORD; }
     [Ee][Vv][Ee][Nn][Tt][Tt][Yy][Pp][Ee]          { return EVENT_TYPE_KEYWORD; }
+    [Ii][Nn][Dd][Ee][Xx][Tt][Yy][Pp][Ee]          { return INDEX_TYPE_KEYWORD; }
     [Ss][Tt][Aa][Nn][Dd][Aa][Rr][Dd][Tt][Yy][Pp][Ee] { return STANDARD_TYPE_KEYWORD; }
     [Bb][Aa][Ss][Ii][Cc][Tt][Yy][Pp][Ee]          { return BASIC_TYPE_KEYWORD; }
     [Ii][Nn][Tt][Ee][Gg][Ee][Rr]                  { return INTEGER_KEYWORD; }
@@ -320,8 +321,14 @@ COMMENT = "#"{LINE}
     [Vv][Ee][Cc][Tt][Oo][Rr] {
           return VECTOR_KEYWORD;
       }
+    [Ss][Pp][Aa][Rr][Ss][Ee][Vv][Ee][Cc][Tt][Oo][Rr] {
+          return SPARSE_VECTOR_KEYWORD;
+      }
     [Tt][Ee][Xx][Tt][Aa][Nn][Dd][Vv][Ee][Cc][Tt][Oo][Rr] {
           return TEXT_AND_VECTOR_KEYWORD;
+      }
+    [Tt][Ee][Xx][Tt][Aa][Nn][Dd][Ss][Pp][Aa][Rr][Ss][Ee][Vv][Ee][Cc][Tt][Oo][Rr] {
+          return TEXT_AND_SPARSE_VECTOR_KEYWORD;
       }
     [Nn][Oo][Tt][Nn][Uu][Ll][Ll] {
           return NOT_NULL_KEYWORD;
