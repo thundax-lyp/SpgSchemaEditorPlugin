@@ -188,7 +188,7 @@ COMMENT = "#"{LINE}
           return TokenType.NEW_LINE_INDENT;
       }
 
-    {COMMENT} {
+    {WHITE_SPACE} {COMMENT} {
           return COMMENT;
       }
 
@@ -263,6 +263,7 @@ COMMENT = "#"{LINE}
     ")"     { return RPARENTH; }
     ","     { return COMMA; }
     ":"     { return COLON; }
+    "#"     { return HASH; }
     "."     { return DOT; }
 
     {ANY_CHAR} {
@@ -287,6 +288,10 @@ COMMENT = "#"{LINE}
     [Ii][Nn][Dd][Ee][Xx] { return INDEX_KEYWORD; }
 
     {IDENTIFIER} { return IDENTIFIER; }
+
+    "#" {
+          return COLON;
+      }
 
     ":" {
           yybegin(WAITING_VALUE_STATE);

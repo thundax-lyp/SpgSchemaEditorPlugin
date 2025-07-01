@@ -1,24 +1,21 @@
-package org.openspg.idea.schema.annotator;
+package org.openspg.idea.conceptRule.annotator;
 
 import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.Annotator;
 import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
 import org.openspg.idea.common.annotator.AnnotateProcessor;
-import org.openspg.idea.schema.annotator.processor.SchemaEntitySemanticNameProcessor;
-import org.openspg.idea.schema.annotator.processor.SchemaHighlightingProcessor;
 
 import java.util.HashSet;
 import java.util.Set;
 
-final class SchemaAnnotator implements Annotator {
+final class ConceptRuleAnnotator implements Annotator {
 
     private final Set<AnnotateProcessor> myProcessors;
 
-    public SchemaAnnotator() {
+    public ConceptRuleAnnotator() {
         myProcessors = new HashSet<>();
-        myProcessors.add(new SchemaHighlightingProcessor());
-        myProcessors.add(new SchemaEntitySemanticNameProcessor());
+        myProcessors.add(new ConceptRuleHighlightingProcessor());
     }
 
     @Override
@@ -29,5 +26,4 @@ final class SchemaAnnotator implements Annotator {
             }
         }
     }
-
 }

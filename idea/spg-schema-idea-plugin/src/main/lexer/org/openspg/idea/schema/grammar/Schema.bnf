@@ -34,12 +34,15 @@ namespace ::= NAMESPACE_KEYWORD IDENTIFIER {
 // Chunk(文本块): EntityType
 // BigChunk("大文本块"): StandardType.Text
 // MultiChunk("多个文本块") -> Chunk, BigChunk
+// IND#belongTo(属于): TaxOfRiskApp
 basic_structure_declaration ::= structure_name_declaration LPARENTH structure_alias_declaration RPARENTH structure_type_declaration {
     methods=[getName toJson]
 }
 
 structure_name_declaration ::= structure_name
-structure_name ::= IDENTIFIER
+structure_name ::= (structure_semantic_name HASH)* structure_real_name
+structure_semantic_name ::= IDENTIFIER
+structure_real_name ::= IDENTIFIER
 
 structure_alias_declaration ::= structure_alias
 structure_alias ::= (IDENTIFIER | STRING_LITERAL | TEXT)+

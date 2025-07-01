@@ -15,7 +15,7 @@ public interface BasicElementTypes extends SchemaTypes {
     );
 
     TokenSet BASIC_OPERATION_BIT_SET = TokenSet.create(
-            RIGHT_ARROW, LPARENTH, RPARENTH, COMMA, COLON, DOT, DOUBLE_LBRACKET, DOUBLE_RBRACKET
+            RIGHT_ARROW, LPARENTH, RPARENTH, COMMA, HASH, COLON, DOT, DOUBLE_LBRACKET, DOUBLE_RBRACKET
     );
 
     TokenSet BASIC_STRING_LITERALS = TokenSet.create(STRING_LITERAL);
