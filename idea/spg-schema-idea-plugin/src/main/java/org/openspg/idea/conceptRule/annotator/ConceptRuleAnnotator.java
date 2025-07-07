@@ -5,6 +5,7 @@ import com.intellij.lang.annotation.Annotator;
 import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
 import org.openspg.idea.common.annotator.AnnotateProcessor;
+import org.openspg.idea.conceptRule.annotator.processor.ConceptRuleHighlightingProcessor;
 
 import java.util.HashSet;
 import java.util.Set;

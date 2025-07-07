@@ -37,6 +37,8 @@ public class ConceptRuleHighlightingColors {
             TextAttributesKey.createTextAttributesKey("OpenSGP_RULE_STRING", DefaultLanguageHighlighterColors.STRING);
     public static final TextAttributesKey VARIABLES =
             TextAttributesKey.createTextAttributesKey("OpenSGP_RULE_VARIABLES", DefaultLanguageHighlighterColors.LOCAL_VARIABLE);
+    public static final TextAttributesKey FUNCTION =
+            TextAttributesKey.createTextAttributesKey("OpenSGP_RULE_FUNCTION", DefaultLanguageHighlighterColors.FUNCTION_CALL);
 
     public static final TextAttributesKey BRACES =
             TextAttributesKey.createTextAttributesKey("OpenSGP_RULE_BRACES", DefaultLanguageHighlighterColors.BRACES);

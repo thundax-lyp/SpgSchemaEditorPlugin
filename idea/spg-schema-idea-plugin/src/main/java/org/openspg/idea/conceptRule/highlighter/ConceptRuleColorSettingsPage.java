@@ -44,6 +44,8 @@ final class ConceptRuleColorSettingsPage implements ColorSettingsPage {
                     ConceptRuleBundle.message("ConceptRuleColorSettings.string"), STRING),
             new AttributesDescriptor(
                     ConceptRuleBundle.message("ConceptRuleColorSettings.variables"), VARIABLES),
+            new AttributesDescriptor(
+                    ConceptRuleBundle.message("ConceptRuleColorSettings.function"), FUNCTION),
 
             new AttributesDescriptor(
                     ConceptRuleBundle.message("ConceptRuleColorSettings.bracesAndOperators.braces"), BRACES),
