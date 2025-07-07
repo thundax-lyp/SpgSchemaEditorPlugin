@@ -24,7 +24,8 @@ public class ConceptRuleBlock extends AbstractBlock {
     );
 
     private static final Set<IElementType> NORMAL_INDENT_BLOCK_ELEMENT_TYPES = Set.of(
-            RULE_WRAPPER_BODY, BASE_RULE_DEFINE, RULE_EXPRESSION_BODY, PATH_PATTERN_LIST
+            RULE_WRAPPER_BODY, BASE_RULE_DEFINE, RULE_EXPRESSION_BODY, PATH_PATTERN_LIST, CREATE_ACTION_BODY,
+            ADD_EDGE_PARAM, ADD_TYPE, ADD_PROPS
     );
 
     private final Indent myIndent;

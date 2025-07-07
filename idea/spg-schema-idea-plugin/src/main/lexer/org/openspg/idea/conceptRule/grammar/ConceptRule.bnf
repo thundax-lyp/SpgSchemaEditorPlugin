@@ -33,6 +33,7 @@ rule_wrapper_body ::= WRAPPER_RULE_KEYWORD COLON OPEN_RULE_BLOCK base_predicated
 // all logic copy from file "openspg/KGDSL.g4"
 
 private debug_items_ ::= RESERVED
+
 private reserved_keywords ::= reserved_keywords_1 | reserved_keywords_2
 private reserved_keywords_1 ::= SEMICOLON | AS_KEYWORD | ALL_KEYWORD | SQL_KEYWORD | PATH_KEYWORD | MATCH_KEYWORD | RETURN_KEYWORD
 private reserved_keywords_2 ::= COMMENT_KEYWORD | PRIORITY_KEYWORD | DESCRIPTION_KEYWORD | DISTINCT_GET_KEYWORD | DEFINE_PRIORITY_KEYWORD
@@ -177,21 +178,21 @@ search_condition ::= logic_value_expression
 the_rule ::= rule_head LBRACE rule_expression_body RBRACE
 
 rule_head ::= CONSTRAINT_KEYWORD | RULE_KEYWORD
-   
+
 rule_expression_body ::= rule_expression*
 // rule expression
-rule_expression ::= project_rule_expression | logic_rule_expression
+rule_expression ::= project_rule_expression | logic_rule_expression | expression_set
 // project rule
-project_rule_expression ::= identifier (DOT property_name ) ? explain? EQ expression_set
+project_rule_expression ::= identifier (DOT property_name)? explain? EQ expression_set
 // logic rule
 logic_rule_expression ::= identifier explain? COLON expression_set
 
 // rule explain
 explain ::= LPARENTH unbroken_character_string_literal RPARENTH
 
-expression_set ::= value_expression|list_op_express|graph_group_op_express
+expression_set ::= graph_group_op_express | list_op_express | value_expression
 // 表达式
-value_expression ::= logic_value_expression|project_value_expression
+value_expression ::= logic_value_expression | project_value_expression
 
 // list的聚合语法，支持链式表达风格 {variable}.op(k:do(k))?*
 list_op_express ::= value_expression (DOT list_op?)*
@@ -253,10 +254,10 @@ list_constraint_op ::= 'constraint' LPARENTH lambda_expr RPARENTH
 
 //group的聚合风格 group(a,c).op(expr)
 group_op_fn ::= GROUP_KEYWORD
-graph_group_op_express ::= group_op_fn LPARENTH graph_alias_element_list RPARENTH (DOT graph_op )*
+graph_group_op_express ::= group_op_fn LPARENTH graph_alias_element_list RPARENTH (DOT graph_op)*
 
-graph_op ::= graph_common_agg_lookup | graph_common_agg_udf_express | graph_common_agg_express | graph_common_agg_if_express | graph_order_and_slice_op | graph_filter_op
-   
+graph_op ::= graph_common_agg_udf_express | graph_common_agg_lookup | graph_common_agg_express | graph_common_agg_if_express | graph_order_and_slice_op | graph_filter_op
+
 // 占位符
 graph_common_agg_lookup ::= function_name LPARENTH? RPARENTH?
 graph_common_agg_udf_express ::= function_name LPARENTH graph_alias (DOT property_name)? (COMMA function_args)? RPARENTH
@@ -300,7 +301,6 @@ add_props ::= identifier EQ complex_obj_expr
    
 add_node ::= (identifier EQ)? ADD_NODE_KEYWORD LPARENTH add_type COMMA add_props RPARENTH
 
-
 // rule 表达式
 and ::= AND_KEYWORD | ANDAND
 or ::= OR_KEYWORD | OROR
@@ -320,7 +320,7 @@ unsigned_literal ::= unsigned_numeric_literal|general_literal
 general_literal ::= predefined_type_literal|list_literal
 predefined_type_literal ::= boolean_literal|character_string_literal
 boolean_literal ::= truth_value
-character_string_literal ::= unbroken_character_string_literal ( separator unbroken_character_string_literal )*
+character_string_literal ::= unbroken_character_string_literal (separator unbroken_character_string_literal)*
 
 parameter_value_specification ::= DOLLAR_SYMBOL identifier
 
@@ -332,7 +332,7 @@ list_element ::= value_expression
 // rule operator
 expr ::= binary_expr | unary_expr | function_expr
 binary_expr ::= project_value_expression (binary_op project_value_expression)?
-binary_op ::= EQ | EQEQ | NE | LESS_THAN | GT | LE | GE | LIKE_KEYWORD | RLIKE_KEYWORD | IN_KEYWORD
+binary_op ::= EQ | EQEQ | NE | LT | GT | LE | GE | LIKE_KEYWORD | RLIKE_KEYWORD | IN_KEYWORD
 unary_expr ::= unary_op LPARENTH value_expression RPARENTH
 
 unary_op ::= EXIST_KEYWORD | ABS_KEYWORD | FLOOR_KEYWORD | CEIL_KEYWORD
@@ -349,7 +349,7 @@ logic_value_expression ::= logic_term (or logic_term)*
 logic_term ::= logic_item (and logic_item)*
 logic_item ::= logic_factor (xor logic_factor)*
 logic_factor ::= (not)? logic_test
-logic_test ::= (spo_rule | concept_name | expr) ( (IS_KEYWORD ( NOT_LATTER_KEYWORD )?|EQEQ|NE) truth_value )?
+logic_test ::= (spo_rule | concept_name | expr) ((IS_KEYWORD ( NOT_LATTER_KEYWORD )?|EQEQ|NE) truth_value )?
 truth_value ::= TRUE_KEYWORD|FALSE_KEYWORD|NULL_KEYWORD
 
 // 数值计算

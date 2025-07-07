@@ -13,6 +13,11 @@ import java.util.List;
 public final class SchemaMultiHostInjector implements MultiHostInjector {
 
     @Override
+    public @NotNull List<? extends Class<? extends PsiElement>> elementsToInjectIn() {
+        return List.of(SchemaPlainTextContent.class);
+    }
+
+    @Override
     public void getLanguagesToInject(@NotNull MultiHostRegistrar registrar, @NotNull PsiElement context) {
         if (context instanceof SchemaPlainTextContent content) {
             registrar.startInjecting(ConceptRuleLanguage.INSTANCE)
@@ -24,10 +29,5 @@ public final class SchemaMultiHostInjector implements MultiHostInjector {
                     )
                     .doneInjecting();
         }
-    }
-
-    @Override
-    public @NotNull List<? extends Class<? extends PsiElement>> elementsToInjectIn() {
-        return List.of(SchemaPlainTextContent.class);
     }
 }

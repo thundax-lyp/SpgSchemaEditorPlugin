@@ -216,10 +216,9 @@ ESCAPED_SYMBOLIC_NAME =         \`[^`]*\`
     "<->"   { return BOTH_ARROW; }
     "=>"    { return LAMBDA_ARROW; }
 
-//    ">="    { return GE; }
-//    "<="    { return LE; }
-//    "<>"    { return NE; }
-//    "::"    { return DOUBLE_COLON; }
+    ">="    { return GE; }
+    "<="    { return LE; }
+    "<>"    { return NE; }
 
     "&&"    { return ANDAND; }
 
@@ -244,8 +243,8 @@ ESCAPED_SYMBOLIC_NAME =         \`[^`]*\`
     "|"     { return VBAR; }
     "%"     { return PERC; }
 
-//    ">"     { return GT; }
-//    "<"     { return LT; }
+    ">"     { return GT; }
+    "<"     { return LT; }
 
 
 //    "$"     { return DOLLAR_SYMBOL; }
