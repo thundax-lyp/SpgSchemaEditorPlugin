@@ -17,7 +17,8 @@
 
     <change-notes><![CDATA[
         <ul>
-            <li><b>version 0.0.12</b><br>support OpenSPG 0.8.0</li>
+            <li><b>version 0.0.13</b> SchemaML: bug fixed</li>
+            <li><b>version 0.0.12</b> support OpenSPG 0.8.0</li>
             <li><b>version 0.0.11</b> SchemaML: add RuleML injection</li>
             <li><b>version 0.0.10</b> RuleML: add formatter and commenter</li>
             <li><b>version 0.0.9</b> RuleML: add structure view</li>
