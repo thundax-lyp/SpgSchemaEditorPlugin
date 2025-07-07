@@ -80,17 +80,15 @@ public final class SchemaFormattingModelBuilder implements FormattingModelBuilde
 
     private static SpacingBuilder initSpaceBuilderByColon(SpacingBuilder builder, CommonCodeStyleSettings settings) {
         boolean spaceAfterColon = settings.SPACE_AFTER_COLON;
-        boolean spaceBeforeColon = settings.SPACE_BEFORE_COLON;
 
         TokenSet tokenSet = TokenSet.create(COLON, RIGHT_ARROW);
-        if (spaceBeforeColon && !spaceAfterColon) {
-            builder = builder.before(tokenSet).spaces(1);
-        } else if (spaceBeforeColon) {
-            builder = builder.around(tokenSet).spaces(1);
-        } else if (spaceAfterColon) {
+
+        builder = builder.before(TokenSet.create(COLON, STRUCTURE_TYPE_DECLARATION)).spaces(0);
+
+        if (spaceAfterColon) {
             builder = builder.after(tokenSet).spaces(1);
         } else {
-            builder = builder.before(tokenSet).spaces(0);
+            builder = builder.after(tokenSet).spaces(0);
         }
         return builder;
     }

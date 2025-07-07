@@ -32,7 +32,6 @@ public final class SchemaLanguageCodeStyleSettingsProvider extends LanguageCodeS
             consumer.showStandardOptions("SPACE_AFTER_COMMA");
             consumer.showStandardOptions("SPACE_BEFORE_COMMA");
             consumer.showStandardOptions("SPACE_AFTER_COLON");
-            consumer.showStandardOptions("SPACE_BEFORE_COLON");
             consumer.showStandardOptions("SPACE_WITHIN_BRACKETS");
 
         } else if (settingsType == SettingsType.INDENT_SETTINGS) {
