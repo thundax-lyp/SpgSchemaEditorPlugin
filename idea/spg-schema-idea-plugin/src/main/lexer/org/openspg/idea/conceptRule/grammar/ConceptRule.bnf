@@ -27,16 +27,17 @@ namespace_value ::= UNESCAPED_SYMBOLIC_NAME | STRING_LITERAL | ESCAPED_SYMBOLIC_
 
 rule_wrapper ::= rule_wrapper_head (rule_wrapper_body)?
 rule_wrapper_head ::= rule_wrapper_pattern
-rule_wrapper_pattern ::= (label_expression (COLON label_expression)+) | (label_expression COLON)
+rule_wrapper_pattern ::= label_expression (COLON label_expression)+ | label_expression COLON
 rule_wrapper_body ::= WRAPPER_RULE_KEYWORD COLON OPEN_RULE_BLOCK base_predicated_define* CLOSE_RULE_BLOCK
 
 // all logic copy from file "openspg/KGDSL.g4"
 
 private debug_items_ ::= RESERVED
 
-private reserved_keywords ::= reserved_keywords_1 | reserved_keywords_2
-private reserved_keywords_1 ::= SEMICOLON | AS_KEYWORD | ALL_KEYWORD | SQL_KEYWORD | PATH_KEYWORD | MATCH_KEYWORD | RETURN_KEYWORD
-private reserved_keywords_2 ::= COMMENT_KEYWORD | PRIORITY_KEYWORD | DESCRIPTION_KEYWORD | DISTINCT_GET_KEYWORD | DEFINE_PRIORITY_KEYWORD
+private reserved_keywords ::=
+                SEMICOLON | AS_KEYWORD | ALL_KEYWORD | SQL_KEYWORD | PATH_KEYWORD
+                | MATCH_KEYWORD | RETURN_KEYWORD | COMMENT_KEYWORD | PRIORITY_KEYWORD
+                | DESCRIPTION_KEYWORD | DISTINCT_GET_KEYWORD | DEFINE_PRIORITY_KEYWORD
 
 //#############################################################################
 // 词法分析
