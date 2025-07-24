@@ -3,17 +3,17 @@
     <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
     <id>org.openspg.schema-highlighter</id>
 
-    <!-- Public plugin name should be written in Title Case.
-         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
     <name>OpenSPG Schema Mark Language Highlighter</name>
 
-    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
     <vendor email="thundax@qq.com" url="https://github.com/OpenSPG">OpenSPG</vendor>
 
-    <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
-         Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
-         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
-    <description><![CDATA[OpenSPG Schema mark language syntax highlighting]]></description>
+    <description><![CDATA[
+        <p>Provides support for OpenSPG Schema mark language</p>
+        <ul>
+            <li>Full support for OpenSPG Schema syntax: highlighting, completion, navigation, inspections, intentions, and much more</li>
+            <li>Dedicated file types: <code>.schema</code> and <code>.rule</code></li>
+        </ul>
+    ]]></description>
 
     <change-notes><![CDATA[
         <ul>
