@@ -32,7 +32,17 @@ public final class ConceptRuleLanguageCodeStyleSettingsProvider extends Language
                     "SPACE_AFTER_COLON",
                     "SPACE_BEFORE_COLON",
                     "SPACE_WITHIN_BRACKETS",
-                    "SPACE_WITHIN_PARENTHESES"
+                    "SPACE_WITHIN_PARENTHESES",
+                    "SPACE_AROUND_EQUALITY_OPERATORS",
+                    "SPACE_AROUND_ASSIGNMENT_OPERATORS"
+            );
+            consumer.renameStandardOption(
+                    "SPACE_AROUND_EQUALITY_OPERATORS",
+                    ConceptRuleBundle.message("ConceptRuleCodeStyleSettings.space.around.binary.operators")
+            );
+            consumer.renameStandardOption(
+                    "SPACE_AROUND_ASSIGNMENT_OPERATORS",
+                    ConceptRuleBundle.message("ConceptRuleCodeStyleSettings.space.around.assigment.operators")
             );
 
         } else if (settingsType == SettingsType.BLANK_LINES_SETTINGS) {
@@ -72,6 +82,8 @@ public final class ConceptRuleLanguageCodeStyleSettingsProvider extends Language
         commonSettings.SPACE_AFTER_COLON = DEFAULT_SPACE_AFTER_COLON;
         commonSettings.SPACE_WITHIN_BRACKETS = DEFAULT_SPACE_WITHIN_BRACKETS;
         commonSettings.SPACE_WITHIN_PARENTHESES = DEFAULT_SPACE_WITHIN_PARENTHESES;
+        commonSettings.SPACE_AROUND_ASSIGNMENT_OPERATORS = DEFAULT_SPACE_AROUND_ASSIGNMENT_OPERATORS;
+        commonSettings.SPACE_AROUND_EQUALITY_OPERATORS = DEFAULT_SPACE_AROUND_EQUALITY_OPERATORS;
 
         indentOptions.INDENT_SIZE = DEFAULT_INDENT_SIZE;
     }
