@@ -36,15 +36,7 @@ public final class SchemaLineMarkerProvider extends RelatedItemLineMarkerProvide
                 .setTargets(targetElements)
                 .setTooltipText(SchemaBundle.message("SchemaLineMarkerProvider.navigate.to.usages"));
 
-        result.add(
-                builder.createLineMarkerInfo(
-
-                        entityHead.getBasicStructureDeclaration()
-                                .getStructureNameDeclaration()
-                                .getStructureName()
-                                .getFirstChild()
-                )
-        );
+        result.add(builder.createLineMarkerInfo(PsiTreeUtil.getDeepestFirst(entityHead)));
     }
 
 }
