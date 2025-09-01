@@ -8,7 +8,9 @@ import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.openspg.idea.common.annotator.AnnotateProcessor;
 import org.openspg.idea.conceptRule.highlighter.ConceptRuleHighlightingColors;
-import org.openspg.idea.conceptRule.lang.psi.*;
+import org.openspg.idea.conceptRule.lang.psi.ConceptRuleFunctionName;
+import org.openspg.idea.conceptRule.lang.psi.ConceptRuleLabelName;
+import org.openspg.idea.conceptRule.lang.psi.ConceptRuleRuleWrapperPattern;
 
 public class ConceptRuleHighlightingProcessor implements AnnotateProcessor {
 
