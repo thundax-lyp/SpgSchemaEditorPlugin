@@ -1,0 +1,224 @@
+{
+    "code": 0,
+    "message": "success",
+    "data": {
+        "entities": [
+            {
+                "name": "Node1",
+                "aliasName": "节点1-这里是新增的文本",
+                "types": [
+                    "EntityType",
+                    "Node2"
+                ],
+                "properties": [
+                    {
+                        "name": "desc",
+                        "value": "Entity Type Description"
+                    },
+                    {
+                        "name": "properties",
+                        "children": [
+                            {
+                                "name": "belongTo",
+                                "aliasName": "属于",
+                                "types": [
+                                    "Node1"
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "id": "node1"
+            },
+            {
+                "name": "Node2",
+                "aliasName": "节点2",
+                "types": [
+                    "EntityType"
+                ],
+                "properties": [
+                    {
+                        "name": "desc",
+                        "value": "Entity Type Description"
+                    },
+                    {
+                        "name": "properties",
+                        "children": [
+                            {
+                                "name": "belongTo",
+                                "aliasName": "属于",
+                                "types": [
+                                    "Node1"
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "id": "node2"
+            },
+            {
+                "name": "Node3",
+                "aliasName": "节点3",
+                "types": [
+                    "EntityType",
+                    "Node2",
+                    "Node6"
+                ],
+                "properties": [
+                    {
+                        "name": "desc",
+                        "value": "Entity Type Description"
+                    },
+                    {
+                        "name": "properties",
+                        "children": [
+                            {
+                                "name": "belongTo",
+                                "aliasName": "属于",
+                                "types": [
+                                    "Node1"
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "id": "node3"
+            },
+            {
+                "name": "Node4",
+                "aliasName": "节点4",
+                "types": [
+                    "EntityType",
+                    "Node3",
+                    "Node6"
+                ],
+                "properties": [
+                    {
+                        "name": "desc",
+                        "value": "Entity Type Description"
+                    },
+                    {
+                        "name": "properties",
+                        "children": [
+                            {
+                                "name": "belongTo",
+                                "aliasName": "属于",
+                                "types": [
+                                    "Node1"
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "id": "node4-new"
+            },
+            {
+                "name": "Node5",
+                "aliasName": "节点5",
+                "types": [
+                    "EntityType"
+                ],
+                "properties": [
+                    {
+                        "name": "desc",
+                        "value": "Entity Type Description"
+                    },
+                    {
+                        "name": "properties",
+                        "children": [
+                            {
+                                "name": "belongTo",
+                                "aliasName": "属于",
+                                "types": [
+                                    "Integer"
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "id": "node5"
+            },
+            {
+                "name": "Node6",
+                "aliasName": "节点6",
+                "types": [
+                    "EntityType",
+                    "Node1",
+                    "Node5"
+                ],
+                "properties": [
+                    {
+                        "name": "desc",
+                        "value": "Entity Type Description"
+                    },
+                    {
+                        "name": "properties",
+                        "children": [
+                            {
+                                "name": "belongTo",
+                                "aliasName": "属于",
+                                "types": [
+                                    "Node2"
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "id": "node6"
+            },
+            {
+                "name": "Node7",
+                "aliasName": "节点7",
+                "types": [
+                    "EntityType"
+                ],
+                "properties": [
+                    {
+                        "name": "desc",
+                        "value": "Entity Type Description"
+                    },
+                    {
+                        "name": "properties",
+                        "children": [
+                            {
+                                "name": "belongTo",
+                                "aliasName": "属于",
+                                "types": [
+                                    "Node2"
+                                ],
+                                "properties": [
+                                    {
+                                        "name": "properties",
+                                        "children": [
+                                            {
+                                                "name": "belongTo",
+                                                "aliasName": "属于",
+                                                "types": [
+                                                    "Text"
+                                                ],
+                                                "properties": [
+                                                    {
+                                                        "name": "index",
+                                                        "value": "Text"
+                                                    },
+                                                    {
+                                                        "name": "index",
+                                                        "value": "TextAndVector"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "id": "node7"
+            }
+        ],
+        "namespace": {
+            "value": "SampleDoc-新增Node4"
+        }
+    }
+}
