@@ -48,20 +48,25 @@ const TurboFlow = (props: TurboFlowProps) => {
         const normalizedNodes: Array<Node<TurboNodeData>> = []
         const normalizedEdges: Array<Edge<TurboEdgeData>> = []
 
-        initialEntities.forEach(entity => {
+        initialEntities.forEach((entity, index) => {
             const {id = ''} = entity
             if (!normalizedNodes.find(x => x.id === id)) {
                 const normalizedNode: Node<TurboNodeData> = {
-                    id, position: {x: 0, y: 0}, type: 'turbo', data: {
+                    id, position: {x: 0.01 * index, y: 0.01 * index}, type: 'turbo', data: {
                         entity,
                     },
                 }
-                const cachedNode = nodes.find(x => x.id === id)
-                if (cachedNode) {
-                    normalizedNode.position = cachedNode.position
-                    normalizedNode.data.width = cachedNode.data.width
-                    normalizedNode.data.height = cachedNode.data.height
-                }
+                // NOTICE:
+                // all position of nodes will be changed after fitView()
+                // so cached data will be wrong for layout engine.
+                // we need a virtual position system between layout engine and zoom in/out screen
+                //
+                // const cachedNode = nodes.find(x => x.id === id)
+                // if (cachedNode) {
+                //     normalizedNode.position = cachedNode.position
+                //     normalizedNode.data.width = cachedNode.data.width
+                //     normalizedNode.data.height = cachedNode.data.height
+                // }
                 normalizedNodes.push(normalizedNode)
             }
         })
