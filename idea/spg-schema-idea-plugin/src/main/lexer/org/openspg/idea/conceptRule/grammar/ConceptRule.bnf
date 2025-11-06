@@ -94,32 +94,30 @@ graph_structure_body ::= graph_structure_one_line+
 graph_structure_one_line ::= define_edge | define_vertex
 
 // 定义边 start
-define_edge ::= define_one_edge
-
-private define_one_edge ::= vertex_from RIGHT_ARROW vertex_to (LBRACKET label_property_list RBRACKET)? (REPEAT_KEYWORD repeat_time)? ('as' edge_name)? | vertex_from BOTH_ARROW vertex_to (LBRACKET label_property_list RBRACKET)? (REPEAT_KEYWORD repeat_time)? ('as' edge_name)?
-
+define_edge ::= vertex_from (RIGHT_ARROW | BOTH_ARROW) vertex_to (LBRACKET label_property_list RBRACKET)? (REPEAT_KEYWORD repeat_time)? ('as' edge_name)?
 repeat_time ::= (LPARENTH lower_bound COMMA upper_bound RPARENTH)
-
 vertex_from ::= vertex_name
-
 vertex_to ::= vertex_name
-
 edge_name ::= identifier
 // 定义边 end
 
 // 定义点 start
-define_vertex ::= define_one_vertex | define_multiple_vertex
-
-define_one_vertex ::= vertex_name (LBRACKET label_property_list RBRACKET)?
-
-define_multiple_vertex ::= vertex_name (COMMA vertex_name)* (LBRACKET label_property_list RBRACKET)?
+define_vertex ::= vertex_name (COMMA vertex_name)* (LBRACKET label_property_list RBRACKET)?
 
 vertex_name ::= identifier
 
-label_property_list ::= label_name (COMMA label_name)* (COMMA property_key EQ property_value)* | property_key EQ property_value (COMMA property_key EQ property_value)*
+// WARN: An error occurs when parse ```labelA labelA propA.v propB.v```, propA is parsed as 'label_name'.
+//       so i make a new expression to solve this parsing problem, and syntax checking is continued in 'annotation'
 
+// label_property_list
+//    : label_name (',' label_name)* (',' property_key '=' property_value)*
+//    | property_key '=' property_value (',' property_key '=' property_value)*
+//    ;
+
+label_property_list ::= label_property (COMMA label_property)*
+label_property ::= property_expression | label_name
+property_expression ::= property_key EQ property_value
 property_key ::= identifier
-
 property_value ::= numeric_literal | identifier | character_string_literal | parameter_value_specification
 
 // path pattern expression, for iso gql
@@ -350,7 +348,7 @@ logic_value_expression ::= logic_term (or logic_term)*
 logic_term ::= logic_item (and logic_item)*
 logic_item ::= logic_factor (xor logic_factor)*
 logic_factor ::= (not)? logic_test
-logic_test ::= (spo_rule | concept_name | expr) ((IS_KEYWORD ( NOT_LATTER_KEYWORD )?|EQEQ|NE) truth_value )?
+logic_test ::= (spo_rule | concept_name | expr) ((IS_KEYWORD ( NOT_KEYWORD )?|EQEQ|NE) truth_value )?
 truth_value ::= TRUE_KEYWORD|FALSE_KEYWORD|NULL_KEYWORD
 
 // 数值计算
