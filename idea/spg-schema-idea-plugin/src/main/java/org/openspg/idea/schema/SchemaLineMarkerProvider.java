@@ -5,7 +5,6 @@ import com.intellij.codeInsight.daemon.RelatedItemLineMarkerProvider;
 import com.intellij.codeInsight.navigation.NavigationGutterIconBuilder;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.util.PsiTreeUtil;
-import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.openspg.idea.schema.lang.psi.SchemaEntityHead;
 import org.openspg.idea.schema.lang.psi.SchemaVariableStructureType;
@@ -28,7 +27,7 @@ public final class SchemaLineMarkerProvider extends RelatedItemLineMarkerProvide
 
         PsiElement[] targetElements = PsiTreeUtil.findChildrenOfType(entityHead.getContainingFile(), SchemaVariableStructureType.class)
                 .stream()
-                .filter(variableStructureType -> StringUtils.equals(entityName, variableStructureType.getText()))
+                .filter(variableStructureType -> variableStructureType.getText().equals(entityName))
                 .toArray(PsiElement[]::new);
 
         NavigationGutterIconBuilder<PsiElement> builder = NavigationGutterIconBuilder

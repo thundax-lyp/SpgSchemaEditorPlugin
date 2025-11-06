@@ -7,7 +7,6 @@ import com.intellij.psi.PsiElementResolveResult;
 import com.intellij.psi.PsiPolyVariantReferenceBase;
 import com.intellij.psi.ResolveResult;
 import com.intellij.psi.util.PsiTreeUtil;
-import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.openspg.idea.schema.SchemaIcons;
 import org.openspg.idea.schema.lang.psi.*;
@@ -29,7 +28,7 @@ public class SchemaVariableStructureTypeReference extends PsiPolyVariantReferenc
                 .map(SchemaEntityHead::getBasicStructureDeclaration)
                 .map(SchemaBasicStructureDeclaration::getStructureNameDeclaration)
                 .map(SchemaStructureNameDeclaration::getStructureName)
-                .filter(x -> StringUtils.equals(x.getText(), this.myEntityName))
+                .filter(x -> x.getText().equals(this.myEntityName))
                 .map(PsiElementResolveResult::new)
                 .toArray(ResolveResult[]::new);
     }
