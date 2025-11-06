@@ -5,13 +5,11 @@ import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.util.PsiTreeUtil;
-import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.openspg.idea.common.annotator.AnnotateProcessor;
 import org.openspg.idea.conceptRule.ConceptRuleBundle;
 import org.openspg.idea.conceptRule.highlighter.ConceptRuleHighlightingColors;
 import org.openspg.idea.conceptRule.lang.psi.*;
-import org.openspg.idea.schema.SchemaBundle;
 
 import java.util.List;
 
