@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "org.openspg.idea"
-version = "0.0.15"
+version = "0.0.16"
 
 repositories {
     mavenCentral()
@@ -29,7 +29,7 @@ sourceSets {
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
 intellij {
     version.set("2023.1")
-    type.set("IC") // Target IDE Platform
+    type.set("IC")
 
     plugins.set(listOf("com.intellij.java"))
 }
@@ -46,7 +46,7 @@ tasks {
 
     patchPluginXml {
         sinceBuild.set("231")
-        untilBuild.set("")
+        untilBuild.set("252.*")
     }
 
     signPlugin {
