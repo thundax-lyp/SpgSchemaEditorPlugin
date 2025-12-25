@@ -122,7 +122,7 @@
 
         <lang.parserDefinition
                 language="OpenSPG Concept Rule"
-                implementationClass="org.openspg.idea.conceptRule.grammar.ConceptRuleParserDefinition"/>
+                implementationClass="org.openspg.idea.conceptRule.parser.ConceptRuleParserDefinition"/>
 
         <annotator
                 language="OpenSPG Concept Rule"
