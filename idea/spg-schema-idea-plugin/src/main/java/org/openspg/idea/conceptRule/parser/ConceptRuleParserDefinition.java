@@ -1,4 +1,4 @@
-package org.openspg.idea.conceptRule.grammar;
+package org.openspg.idea.conceptRule.parser;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.ParserDefinition;
@@ -13,8 +13,7 @@ import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
 import org.openspg.idea.conceptRule.ConceptRuleLanguage;
-import org.openspg.idea.conceptRule.grammar.psi.ConceptRuleTypes;
-import org.openspg.idea.conceptRule.lang.parser.ConceptRuleParser;
+import org.openspg.idea.conceptRule.psi.ConceptRuleTypes;
 import org.openspg.idea.conceptRule.lexer.ConceptRuleLexerAdapter;
 import org.openspg.idea.conceptRule.psi.ConceptRuleFile;
 

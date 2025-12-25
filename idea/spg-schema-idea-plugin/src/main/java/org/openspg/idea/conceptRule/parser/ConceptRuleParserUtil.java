@@ -1,4 +1,4 @@
-package org.openspg.idea.conceptRule.grammar;
+package org.openspg.idea.conceptRule.parser;
 
 import com.intellij.lang.parser.GeneratedParserUtilBase;
 
