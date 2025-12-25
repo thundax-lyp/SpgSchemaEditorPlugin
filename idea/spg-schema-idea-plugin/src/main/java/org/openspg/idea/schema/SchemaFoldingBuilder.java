@@ -10,7 +10,9 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.openspg.idea.schema.lang.psi.*;
+import org.openspg.idea.schema.psi.SchemaEntity;
+import org.openspg.idea.schema.psi.SchemaPlainTextContent;
+import org.openspg.idea.schema.psi.SchemaProperty;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -21,10 +23,7 @@ public class SchemaFoldingBuilder extends FoldingBuilderEx implements DumbAware 
     private final Set<FoldingAdapter<? extends PsiElement>> adapters = Set.of(
             new SchemaCommentFoldingAdapter(),
             new SchemaEntityFoldingAdapter(),
-            new SchemaEntityMetaFoldingAdapter(),
             new SchemaPropertyFoldingAdapter(),
-            new SchemaPropertyMetaFoldingAdapter(),
-            new SchemaSubPropertyFoldingAdapter(),
             new SchemaPlainTextContentFoldingAdapter()
     );
 
@@ -94,44 +93,11 @@ public class SchemaFoldingBuilder extends FoldingBuilderEx implements DumbAware 
         }
     }
 
-    public static class SchemaEntityMetaFoldingAdapter extends FoldingAdapter<SchemaEntityMeta> {
-        @Override
-        protected String getPlaceholderText(@NotNull SchemaEntityMeta element) {
-            String placeHolder = element.getEntityMetaHead().getText();
-            if (!element.isBodyEmpty()) {
-                placeHolder += " {...}";
-            }
-            return placeHolder;
-        }
-    }
-
     public static class SchemaPropertyFoldingAdapter extends FoldingAdapter<SchemaProperty> {
         @Override
         protected String getPlaceholderText(@NotNull SchemaProperty element) {
             String placeHolder = element.getPropertyHead().getText();
             if (!element.isBodyEmpty()) {
-                placeHolder += " {...}";
-            }
-            return placeHolder;
-        }
-    }
-
-    public static class SchemaPropertyMetaFoldingAdapter extends FoldingAdapter<SchemaPropertyMeta> {
-        @Override
-        protected String getPlaceholderText(@NotNull SchemaPropertyMeta element) {
-            String placeHolder = element.getPropertyMetaHead().getText();
-            if (element.getPropertyMetaBody() != null && !element.getPropertyMetaBody().getSubPropertyList().isEmpty()) {
-                placeHolder += " {...}";
-            }
-            return placeHolder;
-        }
-    }
-
-    public static class SchemaSubPropertyFoldingAdapter extends FoldingAdapter<SchemaSubProperty> {
-        @Override
-        protected String getPlaceholderText(@NotNull SchemaSubProperty element) {
-            String placeHolder = element.getSubPropertyHead().getText();
-            if (element.getSubPropertyBody() != null && !element.getSubPropertyBody().getSubPropertyMetaList().isEmpty()) {
                 placeHolder += " {...}";
             }
             return placeHolder;
