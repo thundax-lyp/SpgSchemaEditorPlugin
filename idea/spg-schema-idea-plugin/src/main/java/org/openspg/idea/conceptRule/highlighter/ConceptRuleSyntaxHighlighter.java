@@ -8,8 +8,8 @@ import com.intellij.openapi.fileTypes.SyntaxHighlighterBase;
 import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
-import org.openspg.idea.conceptRule.grammar.psi.ConceptRuleTypes;
 import org.openspg.idea.conceptRule.lexer.ConceptRuleLexerAdapter;
+import org.openspg.idea.conceptRule.psi.ConceptRuleTypes;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,7 +49,7 @@ public class ConceptRuleSyntaxHighlighter extends SyntaxHighlighterBase {
         ourMap.put(ConceptRuleTypes.SEMICOLON, ConceptRuleHighlightingColors.SEMICOLON);
 
         ourMap.put(ConceptRuleTypes.NAMESPACE_KEYWORD, ConceptRuleHighlightingColors.NAMESPACE_KEY);
-        ourMap.put(ConceptRuleTypes.NAMESPACE_VALUE, ConceptRuleHighlightingColors.NAMESPACE_VALUE);
+        ourMap.put(ConceptRuleTypes.NAMESPACE_VARIABLE, ConceptRuleHighlightingColors.NAMESPACE_VALUE);
 
         ourMap.put(ConceptRuleTypes.WRAPPER_RULE_KEYWORD, ConceptRuleHighlightingColors.WRAPPER_FIELD);
 
