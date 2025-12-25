@@ -36,7 +36,6 @@ public class ConceptRuleStructureAwareNavbar extends StructureAwareNavBarModelEx
             return ruleWrapper
                     .getRuleWrapperHead()
                     .getText()
-                    .substring("Define".length())
                     .trim();
         }
 

@@ -1,9 +1,11 @@
 package org.openspg.idea.conceptRule.structureView.viewElement;
 
 import com.intellij.ide.util.treeView.smartTree.TreeElement;
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
+import org.openspg.idea.conceptRule.psi.ConceptRuleConceptRuleDeclaration;
 import org.openspg.idea.conceptRule.psi.ConceptRuleRuleWrapperDeclaration;
 
 import java.util.ArrayList;
@@ -23,12 +25,20 @@ public class ConceptRuleFileStructureViewElement extends AbstractConceptRuleStru
 
     @Override
     public TreeElement @NotNull [] getChildren() {
-        List<ConceptRuleRuleWrapperDeclaration> elements = PsiTreeUtil.getChildrenOfTypeAsList(myElement, ConceptRuleRuleWrapperDeclaration.class);
+        List<PsiElement> elements = PsiTreeUtil.getChildrenOfAnyType(
+                myElement,
+                ConceptRuleRuleWrapperDeclaration.class,
+                ConceptRuleConceptRuleDeclaration.class
+        );
 
         List<TreeElement> treeElements = new ArrayList<>(elements.size());
 
-        for (ConceptRuleRuleWrapperDeclaration element : elements) {
-            treeElements.add(new ConceptRuleRuleWrapperDeclarationStructureViewElement(element));
+        for (PsiElement element : elements) {
+            if (element instanceof ConceptRuleRuleWrapperDeclaration ruleWrapper) {
+                treeElements.add(new ConceptRuleRuleWrapperDeclarationStructureViewElement(ruleWrapper));
+            } else if (element instanceof ConceptRuleConceptRuleDeclaration conceptRule) {
+                treeElements.add(new ConceptRuleConceptRuleDeclarationStructureViewElement(conceptRule));
+            }
         }
 
         return treeElements.toArray(new TreeElement[0]);
