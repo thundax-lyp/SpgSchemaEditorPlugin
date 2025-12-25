@@ -1,4 +1,4 @@
-package org.openspg.idea.conceptRule.lang.lexer;
+package org.openspg.idea.conceptRule.lexer;
 
 import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IElementType;
@@ -7,7 +7,7 @@ import com.intellij.psi.tree.IElementType;
 %%
 
 %class ConceptRuleLexer
-%implements com.intellij.lexer.FlexLexer, org.openspg.idea.conceptRule.grammar.psi.ConceptRuleTypes
+%implements com.intellij.lexer.FlexLexer, org.openspg.idea.conceptRule.psi.ConceptRuleTypes
 %unicode
 %public
 %column
@@ -139,25 +139,25 @@ ESCAPED_SYMBOLIC_NAME =         \`[^`]*\`
     }
     [Aa][Ll][Ll]                      { return ALL_KEYWORD;          }
     [Aa][Nn][Dd]                      { return AND_KEYWORD;          }
-    [Aa][Ss]                          { return AS_KEYWORD;           }
     [Aa][Ss][Cc]                      { return ASC_KEYWORD;          }
-    [Aa][Vv][Gg]                      { return AVG_KEYWORD;          }
+    [Aa][Ss]                          { return AS_KEYWORD;           }
     [Aa][Vv][Gg][Ii][Ff]              { return AVGIF_KEYWORD;        }
-    [Cc][Ee][Ii][Ll]                  { return CEIL_KEYWORD;         }
+    [Aa][Vv][Gg]                      { return AVG_KEYWORD;          }
     [Cc][Ee][Ii][Ll][Ii][Nn][Gg]      { return CEIL_KEYWORD;         }
+    [Cc][Ee][Ii][Ll]                  { return CEIL_KEYWORD;         }
     [Cc][Oo][Mm][Mm][Ee][Nn][Tt]      { return COMMENT_KEYWORD;      }
     [Cc][Oo][Nn][Cc][Aa][Tt][Aa][Gg][Gg][Ii][Ff] {
         return CONCATAGGIF_KEYWORD;
     }
-    [Cc][Oo][Uu][Nn][Tt]              { return COUNT_KEYWORD;        }
     [Cc][Oo][Uu][Nn][Tt][Ii][Ff]      { return COUNTIF_KEYWORD;      }
+    [Cc][Oo][Uu][Nn][Tt]              { return COUNT_KEYWORD;        }
     [Dd][Ee][Ff][Ii][Nn][Ee][_][Pp][Rr][Ii][Oo][Rr][Ii][Tt][Yy] {
         return DEFINE_PRIORITY_KEYWORD;
     }
-    [Dd][Ee][Ss][Cc]                  { return DESC_KEYWORD;         }
     [Dd][Ee][Ss][Cc][Rr][Ii][Pp][Tt][Ii][Oo][Nn] {
         return DESCRIPTION_KEYWORD;
     }
+    [Dd][Ee][Ss][Cc]                  { return DESC_KEYWORD;         }
     [Dd][Ii][Ss][Tt][Ii][Nn][Cc][Tt][Gg][Ee][Tt] {
         return DISTINCT_GET_KEYWORD;
     }
@@ -177,10 +177,10 @@ ESCAPED_SYMBOLIC_NAME =         \`[^`]*\`
     [Ll][Ii][Kk][Ee]                  { return LIKE_KEYWORD;         }
     [Ll][Ii][Mm][Ii][Tt]              { return LIMIT_KEYWORD;        }
     [Mm][Aa][Tt][Cc][Hh]              { return MATCH_KEYWORD;        }
-    [Mm][Aa][Xx]                      { return MAX_KEYWORD;          }
     [Mm][Aa][Xx][Ii][Ff]              { return MAXIF_KEYWORD;        }
-    [Mm][Ii][Nn]                      { return MIN_KEYWORD;          }
+    [Mm][Aa][Xx]                      { return MAX_KEYWORD;          }
     [Mm][Ii][Nn][Ii][Ff]              { return MINIF_KEYWORD;        }
+    [Mm][Ii][Nn]                      { return MIN_KEYWORD;          }
     [Nn][Oo][Dd][Ee][Ss]              { return NODES_KEYWORD;        }
     [Nn][Oo][Tt]                      { return NOT_KEYWORD;          }
     [Nn][Uu][Ll][Ll]                  { return NULL_KEYWORD;         }
@@ -197,8 +197,8 @@ ESCAPED_SYMBOLIC_NAME =         \`[^`]*\`
     [Rr][Ll][Ii][Kk][Ee]              { return RLIKE_KEYWORD;        }
     [Ss][Ll][Ii][Cc][Ee]              { return SLICE_KEYWORD;        }
     [Ss][Qq][Ll]                      { return SQL_KEYWORD;          }
-    [Ss][Uu][Mm]                      { return SUM_KEYWORD;          }
     [Ss][Uu][Mm][Ii][Ff]              { return SUMIF_KEYWORD;        }
+    [Ss][Uu][Mm]                      { return SUM_KEYWORD;          }
     [Tt][Aa][Ii][Ll]                  { return TAIL_KEYWORD;         }
     [Tt][Rr][Uu][Ee]                  { return TRUE_KEYWORD;         }
     [Ww][Hh][Ee][Rr][Ee]              { return WHERE_KEYWORD;        }

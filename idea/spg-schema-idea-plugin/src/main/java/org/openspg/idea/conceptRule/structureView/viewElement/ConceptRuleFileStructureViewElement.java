@@ -4,7 +4,7 @@ import com.intellij.ide.util.treeView.smartTree.TreeElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
-import org.openspg.idea.conceptRule.lang.psi.ConceptRuleRuleWrapper;
+import org.openspg.idea.conceptRule.psi.ConceptRuleRuleWrapperDeclaration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,12 +23,12 @@ public class ConceptRuleFileStructureViewElement extends AbstractConceptRuleStru
 
     @Override
     public TreeElement @NotNull [] getChildren() {
-        List<ConceptRuleRuleWrapper> elements = PsiTreeUtil.getChildrenOfTypeAsList(myElement, ConceptRuleRuleWrapper.class);
+        List<ConceptRuleRuleWrapperDeclaration> elements = PsiTreeUtil.getChildrenOfTypeAsList(myElement, ConceptRuleRuleWrapperDeclaration.class);
 
         List<TreeElement> treeElements = new ArrayList<>(elements.size());
 
-        for (ConceptRuleRuleWrapper element : elements) {
-            treeElements.add(new ConceptRuleRuleWrapperStructureViewElement(element));
+        for (ConceptRuleRuleWrapperDeclaration element : elements) {
+            treeElements.add(new ConceptRuleRuleWrapperDeclarationStructureViewElement(element));
         }
 
         return treeElements.toArray(new TreeElement[0]);

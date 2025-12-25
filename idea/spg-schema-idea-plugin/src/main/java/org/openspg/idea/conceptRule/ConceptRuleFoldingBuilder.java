@@ -10,7 +10,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.openspg.idea.conceptRule.lang.psi.*;
+import org.openspg.idea.conceptRule.psi.*;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -20,11 +20,11 @@ public class ConceptRuleFoldingBuilder extends FoldingBuilderEx implements DumbA
 
     private final Set<FoldingAdapter<? extends PsiElement>> adapters = Set.of(
             new ConceptRuleCommentFoldingAdapter(),
-            new ConceptRuleRuleWrapperFoldingAdapter(),
-            new ConceptRuleTheDefineStructureFoldingAdapter(),
-            new ConceptRuleTheGraphStructureFoldingAdapter(),
-            new ConceptRuleTheRuleFoldingAdapter(),
-            new ConceptRuleCreateActionFoldingAdapter()
+            new ConceptRuleRuleWrapperDeclarationFoldingAdapter(),
+            new ConceptRuleConceptRuleDeclarationFoldingAdapter(),
+            new ConceptRuleTheGraphStructureDeclarationFoldingAdapter(),
+            new ConceptRuleTheRuleDeclarationFoldingAdapter(),
+            new ConceptRuleTheActionDeclarationFoldingAdapter()
     );
 
     @Override
@@ -82,42 +82,38 @@ public class ConceptRuleFoldingBuilder extends FoldingBuilderEx implements DumbA
         }
     }
 
-    public static class ConceptRuleRuleWrapperFoldingAdapter extends FoldingAdapter<ConceptRuleRuleWrapper> {
+    public static class ConceptRuleRuleWrapperDeclarationFoldingAdapter extends FoldingAdapter<ConceptRuleRuleWrapperDeclaration> {
         @Override
-        protected String getPlaceholderText(@NotNull ConceptRuleRuleWrapper element) {
-            String placeHolder = element.getRuleWrapperHead().getText();
-            if (element.getRuleWrapperBody() != null) {
-                placeHolder += " ...";
-            }
-            return placeHolder;
+        protected String getPlaceholderText(@NotNull ConceptRuleRuleWrapperDeclaration element) {
+            return element.getRuleWrapperHead().getText() + " ...";
         }
     }
 
-    public static class ConceptRuleTheDefineStructureFoldingAdapter extends FoldingAdapter<ConceptRuleTheDefineStructure> {
+    public static class ConceptRuleConceptRuleDeclarationFoldingAdapter extends FoldingAdapter<ConceptRuleConceptRuleDeclaration> {
         @Override
-        protected String getPlaceholderText(@NotNull ConceptRuleTheDefineStructure element) {
-            return "Define " + element.getPredicatedDefine().getText() + " {...}";
+        protected String getPlaceholderText(@NotNull ConceptRuleConceptRuleDeclaration element) {
+            return element.getConceptRuleHead().getText() + " {...}";
         }
     }
 
-    public static class ConceptRuleTheGraphStructureFoldingAdapter extends FoldingAdapter<ConceptRuleTheGraphStructure> {
+    public static class ConceptRuleTheGraphStructureDeclarationFoldingAdapter extends FoldingAdapter<ConceptRuleTheGraphStructureDeclaration> {
         @Override
-        protected String getPlaceholderText(@NotNull ConceptRuleTheGraphStructure element) {
-            return element.getGraphStructureHead().getText() + " {...}";
+        protected String getPlaceholderText(@NotNull ConceptRuleTheGraphStructureDeclaration element) {
+            return element.getTheGraphStructureHead().getText() + " {...}";
         }
     }
 
-    public static class ConceptRuleTheRuleFoldingAdapter extends FoldingAdapter<ConceptRuleTheRule> {
+    public static class ConceptRuleTheRuleDeclarationFoldingAdapter extends FoldingAdapter<ConceptRuleTheRuleDeclaration> {
         @Override
-        protected String getPlaceholderText(@NotNull ConceptRuleTheRule element) {
-            return element.getRuleHead().getText() + " {...}";
+        protected String getPlaceholderText(@NotNull ConceptRuleTheRuleDeclaration element) {
+            return element.getTheRuleHead().getText() + " {...}";
         }
     }
 
-    public static class ConceptRuleCreateActionFoldingAdapter extends FoldingAdapter<ConceptRuleCreateAction> {
+    public static class ConceptRuleTheActionDeclarationFoldingAdapter extends FoldingAdapter<ConceptRuleTheActionDeclaration> {
         @Override
-        protected String getPlaceholderText(@NotNull ConceptRuleCreateAction element) {
-            return element.getCreateActionSymbol().getText() + " {...}";
+        protected String getPlaceholderText(@NotNull ConceptRuleTheActionDeclaration element) {
+            return element.getTheActionHead().getText() + " {...}";
         }
     }
 

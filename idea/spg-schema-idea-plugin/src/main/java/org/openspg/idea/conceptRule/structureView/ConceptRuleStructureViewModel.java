@@ -8,7 +8,7 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.psi.PsiFile;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.openspg.idea.conceptRule.lang.psi.ConceptRuleRuleWrapper;
+import org.openspg.idea.conceptRule.psi.ConceptRuleRuleWrapperDeclaration;
 import org.openspg.idea.conceptRule.structureView.viewElement.ConceptRuleFileStructureViewElement;
 
 public class ConceptRuleStructureViewModel extends StructureViewModelBase implements
@@ -37,7 +37,7 @@ public class ConceptRuleStructureViewModel extends StructureViewModelBase implem
     @Override
     protected Class<?> @NotNull [] getSuitableClasses() {
         return new Class[]{
-                ConceptRuleRuleWrapper.class,
+                ConceptRuleRuleWrapperDeclaration.class,
         };
     }
 

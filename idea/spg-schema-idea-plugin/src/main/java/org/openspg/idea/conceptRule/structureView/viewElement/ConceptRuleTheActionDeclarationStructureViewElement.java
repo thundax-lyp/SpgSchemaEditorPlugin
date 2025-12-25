@@ -3,25 +3,25 @@ package org.openspg.idea.conceptRule.structureView.viewElement;
 import com.intellij.ide.projectView.PresentationData;
 import com.intellij.ide.util.treeView.smartTree.TreeElement;
 import org.jetbrains.annotations.NotNull;
-import org.openspg.idea.conceptRule.lang.psi.ConceptRuleTheRule;
+import org.openspg.idea.conceptRule.psi.ConceptRuleTheActionDeclaration;
 import org.openspg.idea.schema.SchemaIcons;
 
 
-public class ConceptRuleTheRuleStructureViewElement extends AbstractConceptRuleStructureViewElement<ConceptRuleTheRule> {
+public class ConceptRuleTheActionDeclarationStructureViewElement extends AbstractConceptRuleStructureViewElement<ConceptRuleTheActionDeclaration> {
 
-    public ConceptRuleTheRuleStructureViewElement(ConceptRuleTheRule element) {
+    public ConceptRuleTheActionDeclarationStructureViewElement(ConceptRuleTheActionDeclaration element) {
         super(element);
     }
 
     @Override
     public String getNullableAlphaSortKey() {
-        return myElement.getRuleHead().getText();
+        return myElement.getTheActionHead().getText();
     }
 
     @Override
-    protected PresentationData createPresentation(ConceptRuleTheRule element) {
+    protected PresentationData createPresentation(ConceptRuleTheActionDeclaration element) {
         return new PresentationData(
-                element.getRuleHead().getText(),
+                element.getTheActionHead().getText(),
                 null,
                 SchemaIcons.Nodes.Entity,
                 null

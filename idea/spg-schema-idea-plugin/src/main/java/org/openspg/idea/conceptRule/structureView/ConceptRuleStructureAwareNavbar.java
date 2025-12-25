@@ -5,9 +5,9 @@ import com.intellij.lang.Language;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.openspg.idea.conceptRule.ConceptRuleLanguage;
-import org.openspg.idea.conceptRule.lang.psi.ConceptRuleNamespace;
-import org.openspg.idea.conceptRule.lang.psi.ConceptRuleRuleWrapper;
 import org.openspg.idea.conceptRule.psi.ConceptRuleFile;
+import org.openspg.idea.conceptRule.psi.ConceptRuleNamespaceDeclaration;
+import org.openspg.idea.conceptRule.psi.ConceptRuleRuleWrapperDeclaration;
 import org.openspg.idea.schema.SchemaIcons;
 
 import javax.swing.*;
@@ -26,18 +26,18 @@ public class ConceptRuleStructureAwareNavbar extends StructureAwareNavBarModelEx
             return file.getName();
         }
 
-        if (object instanceof ConceptRuleNamespace namespace) {
+        if (object instanceof ConceptRuleNamespaceDeclaration namespace) {
             return namespace
-                    .getNamespaceValue()
+                    .getNamespaceVariable()
                     .getText();
         }
 
-        if (object instanceof ConceptRuleRuleWrapper ruleWrapper) {
-            //TODO
+        if (object instanceof ConceptRuleRuleWrapperDeclaration ruleWrapper) {
             return ruleWrapper
                     .getRuleWrapperHead()
-                    .getRuleWrapperPattern()
-                    .getText();
+                    .getText()
+                    .substring("Define".length())
+                    .trim();
         }
 
         return null;
@@ -46,7 +46,7 @@ public class ConceptRuleStructureAwareNavbar extends StructureAwareNavBarModelEx
     @Override
     @Nullable
     public Icon getIcon(Object object) {
-        if (object instanceof ConceptRuleRuleWrapper) {
+        if (object instanceof ConceptRuleRuleWrapperDeclaration) {
             return SchemaIcons.Nodes.Entity;
         }
 

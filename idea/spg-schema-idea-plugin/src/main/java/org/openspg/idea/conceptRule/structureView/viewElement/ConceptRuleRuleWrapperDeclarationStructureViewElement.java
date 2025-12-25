@@ -2,9 +2,8 @@ package org.openspg.idea.conceptRule.structureView.viewElement;
 
 import com.intellij.ide.projectView.PresentationData;
 import com.intellij.ide.util.treeView.smartTree.TreeElement;
-import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
-import org.openspg.idea.conceptRule.lang.psi.*;
+import org.openspg.idea.conceptRule.psi.*;
 import org.openspg.idea.schema.SchemaIcons;
 
 import java.util.ArrayList;
@@ -12,35 +11,34 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class ConceptRuleRuleWrapperStructureViewElement extends AbstractConceptRuleStructureViewElement<ConceptRuleRuleWrapper> {
+public class ConceptRuleRuleWrapperDeclarationStructureViewElement extends AbstractConceptRuleStructureViewElement<ConceptRuleRuleWrapperDeclaration> {
 
-    public ConceptRuleRuleWrapperStructureViewElement(ConceptRuleRuleWrapper element) {
+    public ConceptRuleRuleWrapperDeclarationStructureViewElement(ConceptRuleRuleWrapperDeclaration element) {
         super(element);
     }
 
     @Override
     public String getNullableAlphaSortKey() {
-        return myElement.getRuleWrapperHead().getRuleWrapperPattern().getText();
+        return myElement.getRuleWrapperHead().getText();
     }
 
     @Override
-    protected PresentationData createPresentation(ConceptRuleRuleWrapper element) {
+    protected PresentationData createPresentation(ConceptRuleRuleWrapperDeclaration element) {
         List<String> labels = new ArrayList<>();
         List<String> locations = new ArrayList<>();
 
         myElement.getRuleWrapperHead()
-                .getRuleWrapperPattern()
                 .getLabelExpressionList()
                 .stream()
                 .flatMap(x -> x.getLabelNameList().stream())
-                .flatMap(labelNameElement -> {
-                    if (labelNameElement.getEntityType() != null) {
-                        return Stream.of(labelNameElement.getEntityType());
+                .flatMap(labelName -> {
+                    if (labelName.getConceptType() != null) {
+                        return Stream.of(labelName.getConceptType());
                     }
-                    return labelNameElement.getConceptNameList().stream();
+                    return labelName.getConceptNameList().stream();
                 })
                 .forEach(psiElement -> {
-                    if (psiElement instanceof ConceptRuleEntityType entityType) {
+                    if (psiElement instanceof ConceptRuleConceptType entityType) {
                         String label = entityType.getIdentifierList()
                                 .stream()
                                 .map(ConceptRuleIdentifier::getLabel)
@@ -52,7 +50,7 @@ public class ConceptRuleRuleWrapperStructureViewElement extends AbstractConceptR
                         }
 
                     } else if (psiElement instanceof ConceptRuleConceptName conceptName) {
-                        String label = conceptName.getMetaConceptType()
+                        String label = conceptName.getConceptType()
                                 .getIdentifierList()
                                 .stream()
                                 .map(ConceptRuleIdentifier::getLabel)
@@ -77,16 +75,19 @@ public class ConceptRuleRuleWrapperStructureViewElement extends AbstractConceptR
 
     @Override
     public TreeElement @NotNull [] getChildren() {
-        ConceptRuleRuleWrapperBody ruleWrapperBodyElement = myElement.getRuleWrapperBody();
-        if (ruleWrapperBodyElement == null) {
+        List<ConceptRuleConceptRuleDeclaration> elements = myElement.getRuleWrapperBody()
+                .getRuleWrapperRuleDeclarationList()
+                .stream()
+                .flatMap(x -> x.getRuleWrapperRuleBody().getConceptRuleDeclarationList().stream())
+                .toList();
+
+        if (elements.isEmpty()) {
             return TreeElement.EMPTY_ARRAY;
         }
 
-        List<ConceptRuleTheDefineStructure> elements = PsiTreeUtil.getChildrenOfTypeAsList(ruleWrapperBodyElement, ConceptRuleTheDefineStructure.class);
-
         List<TreeElement> treeElements = new ArrayList<>(elements.size());
-        for (ConceptRuleTheDefineStructure element : elements) {
-            treeElements.add(new ConceptRuleTheDefineStructureStructureViewElement(element));
+        for (ConceptRuleConceptRuleDeclaration element : elements) {
+            treeElements.add(new ConceptRuleConceptRuleDeclarationStructureViewElement(element));
         }
 
         return treeElements.toArray(new TreeElement[0]);
