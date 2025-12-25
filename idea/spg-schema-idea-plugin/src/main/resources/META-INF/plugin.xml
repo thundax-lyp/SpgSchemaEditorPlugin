@@ -59,7 +59,7 @@
 
         <lang.parserDefinition
                 language="OpenSPG Schema"
-                implementationClass="org.openspg.idea.schema.grammar.SchemaParserDefinition"/>
+                implementationClass="org.openspg.idea.schema.parser.SchemaParserDefinition"/>
 
         <annotator
                 language="OpenSPG Schema"

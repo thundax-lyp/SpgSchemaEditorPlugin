@@ -6,9 +6,9 @@ import com.intellij.patterns.PlatformPatterns;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.ProcessingContext;
 import org.jetbrains.annotations.NotNull;
-import org.openspg.idea.schema.lang.psi.SchemaEntity;
-import org.openspg.idea.schema.lang.psi.SchemaEntityHead;
-import org.openspg.idea.schema.lang.psi.SchemaVariableStructureType;
+import org.openspg.idea.schema.psi.SchemaEntity;
+import org.openspg.idea.schema.psi.SchemaEntityHead;
+import org.openspg.idea.schema.psi.SchemaVariableStructureType;
 
 final class SchemaCompletionContributor extends CompletionContributor {
 

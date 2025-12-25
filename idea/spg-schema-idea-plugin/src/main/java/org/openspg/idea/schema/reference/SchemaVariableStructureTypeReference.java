@@ -9,7 +9,7 @@ import com.intellij.psi.ResolveResult;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.openspg.idea.schema.SchemaIcons;
-import org.openspg.idea.schema.lang.psi.*;
+import org.openspg.idea.schema.psi.*;
 
 public class SchemaVariableStructureTypeReference extends PsiPolyVariantReferenceBase<SchemaVariableStructureType> {
 
@@ -22,8 +22,9 @@ public class SchemaVariableStructureTypeReference extends PsiPolyVariantReferenc
 
     @Override
     public ResolveResult @NotNull [] multiResolve(boolean incompleteCode) {
-        return PsiTreeUtil.findChildrenOfType(myElement.getContainingFile(), SchemaEntity.class)
+        return PsiTreeUtil.findChildrenOfType(myElement.getContainingFile(), SchemaRootEntity.class)
                 .stream()
+                .map(SchemaRootEntity::getEntity)
                 .map(SchemaEntity::getEntityHead)
                 .map(SchemaEntityHead::getBasicStructureDeclaration)
                 .map(SchemaBasicStructureDeclaration::getStructureNameDeclaration)
@@ -35,7 +36,7 @@ public class SchemaVariableStructureTypeReference extends PsiPolyVariantReferenc
 
     @Override
     public Object @NotNull [] getVariants() {
-        return PsiTreeUtil.getChildrenOfTypeAsList(myElement.getContainingFile(), SchemaEntity.class)
+        return PsiTreeUtil.getChildrenOfTypeAsList(myElement.getContainingFile(), SchemaRootEntity.class)
                 .stream()
                 .map(x -> LookupElementBuilder
                         .create(x)

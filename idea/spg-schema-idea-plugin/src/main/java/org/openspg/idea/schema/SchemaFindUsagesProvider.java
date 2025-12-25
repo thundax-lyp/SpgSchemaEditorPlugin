@@ -8,9 +8,9 @@ import com.intellij.psi.PsiNamedElement;
 import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.openspg.idea.schema.grammar.psi.SchemaTypes;
-import org.openspg.idea.schema.lang.psi.SchemaEntityHead;
 import org.openspg.idea.schema.lexer.SchemaLexerAdapter;
+import org.openspg.idea.schema.psi.SchemaEntityHead;
+import org.openspg.idea.schema.psi.SchemaTypes;
 
 public class SchemaFindUsagesProvider implements FindUsagesProvider {
 

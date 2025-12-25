@@ -1,4 +1,4 @@
-package org.openspg.idea.schema.grammar;
+package org.openspg.idea.schema.parser;
 
 import com.intellij.lang.parser.GeneratedParserUtilBase;
 

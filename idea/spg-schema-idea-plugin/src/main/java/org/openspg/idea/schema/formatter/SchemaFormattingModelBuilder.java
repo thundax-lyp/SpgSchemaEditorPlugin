@@ -7,7 +7,7 @@ import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
 import org.openspg.idea.schema.SchemaLanguage;
 
-import static org.openspg.idea.schema.grammar.psi.SchemaTypes.*;
+import static org.openspg.idea.schema.psi.SchemaTypes.*;
 
 public final class SchemaFormattingModelBuilder implements FormattingModelBuilder {
 
@@ -37,7 +37,7 @@ public final class SchemaFormattingModelBuilder implements FormattingModelBuilde
                 .spacing(0, 0, blankLinesAfterNamespace, false, 0);
 
         int blankLinesAfterEntity = Math.max(0, commonSetting.BLANK_LINES_AFTER_IMPORTS) + 1;
-        builder = builder.after(TokenSet.create(ENTITY))
+        builder = builder.after(TokenSet.create(ROOT_ENTITY))
                 .spacing(0, 0, blankLinesAfterEntity, false, 0);
 
         builder = builder
@@ -53,7 +53,7 @@ public final class SchemaFormattingModelBuilder implements FormattingModelBuilde
 
         // non-blank tokens
         TokenSet nonBlankLineTokens = TokenSet.create(
-                ENTITY_HEAD, ENTITY_META, ENTITY_META_HEAD, PROPERTY, PROPERTY_HEAD, PROPERTY_META, PROPERTY_META_HEAD, SUB_PROPERTY
+                ENTITY, ENTITY_HEAD, PROPERTY, PROPERTY_HEAD
         );
         builder = builder
                 .after(nonBlankLineTokens)

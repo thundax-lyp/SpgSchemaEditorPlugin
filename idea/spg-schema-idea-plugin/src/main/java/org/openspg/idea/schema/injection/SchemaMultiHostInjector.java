@@ -6,7 +6,7 @@ import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
 import org.openspg.idea.conceptRule.ConceptRuleLanguage;
-import org.openspg.idea.schema.lang.psi.SchemaPlainTextContent;
+import org.openspg.idea.schema.psi.SchemaPlainTextContent;
 
 import java.util.List;
 

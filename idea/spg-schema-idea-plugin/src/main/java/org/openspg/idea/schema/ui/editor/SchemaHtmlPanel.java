@@ -11,7 +11,7 @@ import org.cef.handler.*;
 import org.cef.misc.BoolRef;
 import org.cef.network.CefRequest;
 import org.jetbrains.ide.BuiltInServerManager;
-import org.openspg.idea.schema.lang.psi.SchemaEntity;
+import org.openspg.idea.schema.psi.SchemaEntity;
 import org.openspg.idea.schema.ui.editor.jcef.FetchSchemaApiSupplier;
 import org.openspg.idea.schema.ui.editor.jcef.FetchThemeCssSupplier;
 import org.openspg.idea.schema.ui.editor.jcef.FocusEntityApiSupplier;

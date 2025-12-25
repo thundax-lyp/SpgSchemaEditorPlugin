@@ -1,7 +1,7 @@
 package org.openspg.idea.schema.psi.impl;
 
 import com.intellij.psi.tree.TokenSet;
-import org.openspg.idea.schema.grammar.psi.SchemaTypes;
+import org.openspg.idea.schema.psi.SchemaTypes;
 
 
 public interface BasicElementTypes extends SchemaTypes {

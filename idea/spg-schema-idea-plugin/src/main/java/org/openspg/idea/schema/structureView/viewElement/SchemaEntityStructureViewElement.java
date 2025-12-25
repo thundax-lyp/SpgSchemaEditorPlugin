@@ -5,11 +5,10 @@ import com.intellij.ide.util.treeView.smartTree.TreeElement;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.openspg.idea.schema.SchemaIcons;
-import org.openspg.idea.schema.lang.psi.SchemaEntity;
-import org.openspg.idea.schema.lang.psi.SchemaEntityHead;
-import org.openspg.idea.schema.lang.psi.SchemaEntityMeta;
+import org.openspg.idea.schema.psi.SchemaEntity;
+import org.openspg.idea.schema.psi.SchemaEntityHead;
+import org.openspg.idea.schema.psi.SchemaProperty;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SchemaEntityStructureViewElement extends AbstractSchemaStructureViewElement<SchemaEntity> {
@@ -36,15 +35,8 @@ public class SchemaEntityStructureViewElement extends AbstractSchemaStructureVie
 
     @Override
     public TreeElement @NotNull [] getChildren() {
-        List<SchemaEntityMeta> elements = PsiTreeUtil.getChildrenOfTypeAsList(myElement, SchemaEntityMeta.class);
-
-        List<TreeElement> treeElements = new ArrayList<>(elements.size());
-
-        for (SchemaEntityMeta element : elements) {
-            treeElements.add(new SchemaEntityMetaStructureViewElement(element));
-        }
-
-        return treeElements.toArray(new TreeElement[0]);
+        List<SchemaProperty> elements = PsiTreeUtil.getChildrenOfTypeAsList(myElement, SchemaProperty.class);
+        return this.buildPropertyTreeElements(elements);
     }
 
 }

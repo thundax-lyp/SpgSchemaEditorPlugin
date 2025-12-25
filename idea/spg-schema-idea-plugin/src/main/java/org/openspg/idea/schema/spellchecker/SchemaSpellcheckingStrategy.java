@@ -8,7 +8,7 @@ import com.intellij.psi.tree.TokenSet;
 import com.intellij.spellchecker.tokenizer.SpellcheckingStrategy;
 import com.intellij.spellchecker.tokenizer.Tokenizer;
 import org.jetbrains.annotations.NotNull;
-import org.openspg.idea.schema.grammar.psi.SchemaTypes;
+import org.openspg.idea.schema.psi.SchemaTypes;
 
 public class SchemaSpellcheckingStrategy extends SpellcheckingStrategy implements DumbAware {
 

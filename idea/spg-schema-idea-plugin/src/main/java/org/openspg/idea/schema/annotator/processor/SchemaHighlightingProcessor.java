@@ -8,7 +8,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.openspg.idea.common.annotator.AnnotateProcessor;
 import org.openspg.idea.schema.highlighter.SchemaHighlightingColors;
-import org.openspg.idea.schema.lang.psi.*;
+import org.openspg.idea.schema.psi.*;
 
 public class SchemaHighlightingProcessor implements AnnotateProcessor {
 

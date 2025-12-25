@@ -1,15 +1,15 @@
 {
-    parserClass="org.openspg.idea.schema.lang.parser.SchemaParser"
-    parserUtilClass="org.openspg.idea.schema.grammar.SchemaParserUtil"
+    parserClass="org.openspg.idea.schema.parser._SchemaParser"
+    parserUtilClass="org.openspg.idea.schema.parser.SchemaParserUtil"
 
     extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
 
     psiClassPrefix="Schema"
     psiImplClassSuffix="Impl"
-    psiPackage="org.openspg.idea.schema.lang.psi"
-    psiImplPackage="org.openspg.idea.schema.lang.psi.impl"
+    psiPackage="org.openspg.idea.schema.psi"
+    psiImplPackage="org.openspg.idea.schema.psi.impl"
 
-    elementTypeHolderClass="org.openspg.idea.schema.grammar.psi.SchemaTypes"
+    elementTypeHolderClass="org.openspg.idea.schema.psi.SchemaTypes"
     elementTypeClass="org.openspg.idea.schema.SchemaElementType"
     tokenTypeClass="org.openspg.idea.schema.psi.SchemaTokenType"
 
@@ -18,10 +18,7 @@
 
 schemaFile ::= item_*
 
-private item_ ::= namespace | entity | COMMENT | LINE_COMMENT | indents_
-
-private indents_ ::= INDENT | INDENT_META | INDENT_PROP | INDENT_PROPMETA | INDENT_SUBPROP | INDENT_SUBPROPMETA
-                    | DOUBLE_LBRACKET | DOUBLE_RBRACKET
+private item_ ::= namespace | root_entity | COMMENT | LINE_COMMENT
 
 namespace ::= NAMESPACE_KEYWORD IDENTIFIER {
     methods=[getNamespace toJson]
@@ -99,89 +96,32 @@ plain_text_content ::= PLAIN_TEXT+ {
 
 /**
  * Entity
+ *
  * Example:
  * Chunk(文本块): EntityType
  * Chunk(文本块)->EntityType, ConceptType:
  */
+root_entity ::= entity
+
 entity ::= entity_head entity_body? {
     methods=[getName isBodyEmpty toJson]
 }
-
 entity_head ::= basic_structure_declaration {
     mixin="org.openspg.idea.schema.psi.impl.SchemaNamedElementImpl"
     implements="org.openspg.idea.schema.psi.SchemaNamedElement"
     methods=[getName setName getNameIdentifier]
 }
-
-entity_body ::= entity_meta+
+entity_body ::= INDENT property+ DEDENT
 
 /**
- * EntityMeta
+ * Property
+ *
  * Example:
  * Chunk(文本块): EntityType
  *     desc: 文本块
  */
-entity_meta ::= entity_meta_head entity_meta_body? {
-    methods=[isBodyEmpty toJson]
-}
-entity_meta_head ::= INDENT_META basic_property_declaration
-entity_meta_body ::= property+
-
-/**
- * Property
- * Example:
- * Chunk(文本块): EntityType
- *     properties :
- *         belongTo(属于) : Story
- */
 property ::= property_head property_body? {
     methods=[isBodyEmpty toJson]
 }
-property_head ::= INDENT_PROP basic_structure_declaration
-property_body ::= property_meta+
-
-/**
- * PropertyMeta
- * Example:
- * Chunk(文本块): EntityType
- *     properties :
- *         belongTo(属于) : Story
- *             desc: 属于
- */
-property_meta ::= property_meta_head property_meta_body? {
-    methods=[toJson]
-}
-property_meta_head ::= INDENT_PROPMETA basic_property_declaration
-property_meta_body ::= sub_property+
-
-/**
- * SubProperty
- * Example:
- * Disease(疾病): EntityType
- *     properties:
- *         commonSymptom(常见症状): Symptom
- *             properties:
- *                 desc(描述): Text
- */
-sub_property ::= sub_property_head sub_property_body? {
-    methods=[toJson]
-}
-sub_property_head ::= (INDENT_SUBPROP basic_structure_declaration) {
-    methods=[getPropertyName getPropertyAliasName getPropertyClassList]
-}
-sub_property_body ::= sub_property_meta+
-
-/**
- * SubPropertyMeta
- * Example:
- * Disease(疾病): EntityType
- *     properties:
- *         commonSymptom(常见症状): Symptom
- *             properties:
- *                 desc(描述): Text
- *                     index: Text
- */
-sub_property_meta ::= (INDENT_SUBPROPMETA basic_property_declaration) {
-    methods=[getName getValue toJson]
-}
-
+property_head ::= basic_property_declaration
+property_body ::= INDENT entity+ DEDENT

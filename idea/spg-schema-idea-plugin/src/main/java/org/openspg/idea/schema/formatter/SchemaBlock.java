@@ -15,12 +15,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import static org.openspg.idea.schema.grammar.psi.SchemaTypes.*;
+import static org.openspg.idea.schema.psi.SchemaTypes.*;
 
 public class SchemaBlock extends AbstractBlock implements SettingsAwareBlock {
 
     private static final Set<IElementType> NONBLOCK_ELEMENT_TYPES = Set.of(
-            TokenType.WHITE_SPACE, TokenType.NEW_LINE_INDENT, TokenType.BAD_CHARACTER
+            TokenType.WHITE_SPACE, TokenType.NEW_LINE_INDENT, TokenType.BAD_CHARACTER, INDENT, DEDENT
     );
 
     private static final Set<IElementType> INJECTED_ELEMENT_TYPES = Set.of(
@@ -28,7 +28,7 @@ public class SchemaBlock extends AbstractBlock implements SettingsAwareBlock {
     );
 
     private static final Set<IElementType> NORMAL_INDENT_BLOCK_ELEMENT_TYPES = Set.of(
-            ENTITY_META, PROPERTY, PROPERTY_META, SUB_PROPERTY, SUB_PROPERTY_META, PLAIN_TEXT_CONTENT
+            ENTITY, PROPERTY, PLAIN_TEXT_CONTENT
     );
 
     private final Indent myIndent;
@@ -50,7 +50,7 @@ public class SchemaBlock extends AbstractBlock implements SettingsAwareBlock {
             @Nullable Alignment alignment,
             @Nullable SpacingBuilder spacingBuilder,
             @Nullable Indent indent
-            ) {
+    ) {
         super(node, wrap, alignment);
         mySpacingBuilder = spacingBuilder;
         myIndent = indent;
@@ -90,7 +90,9 @@ public class SchemaBlock extends AbstractBlock implements SettingsAwareBlock {
 
         Indent indent = null;
         if (NORMAL_INDENT_BLOCK_ELEMENT_TYPES.contains(type)) {
-            indent = Indent.getNormalIndent();
+            if (node.getTreeParent().getElementType() != ROOT_ENTITY) {
+                indent = Indent.getNormalIndent();
+            }
         }
 
         return new SchemaBlock(

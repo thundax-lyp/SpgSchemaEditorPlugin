@@ -1,13 +1,15 @@
-package org.openspg.idea.schema.lang.lexer;
+package org.openspg.idea.schema.lexer;
 
 import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IElementType;
 
+import java.util.*;
+
 /* Auto generated File */
 %%
 
-%class SchemaLexer
-%implements com.intellij.lexer.FlexLexer, org.openspg.idea.schema.grammar.psi.SchemaTypes
+%class _SchemaLexer
+%implements com.intellij.lexer.FlexLexer, org.openspg.idea.schema.psi.SchemaTypes
 %unicode
 %public
 %column
@@ -20,20 +22,21 @@ import com.intellij.psi.tree.IElementType;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 %{
-    /**
-     * The number of open but not closed braces.
-     * Note: lexer does not distinguish braces from brackets while counting them.
-     */
-    private int myBraceCount = 0;
+    private final static int TAB_SIZE = 4;
 
-    private final int[] indentPos = {0, 0, 0, 0, 0, 0};
-    private final int[] indentState = {DEFINITION_STATE, KV_STATE, DEFINITION_STATE, KV_STATE, DEFINITION_STATE, KV_STATE};
-    private final IElementType[] indentToken = {INDENT, INDENT_META, INDENT_PROP, INDENT_PROPMETA, INDENT_SUBPROP, INDENT_SUBPROPMETA};
-    private final int maxIndentLevel = 6;
-    private int currentIndentLevel = 0;
-    private int lastIndentLevel = 0;
+    private final List<Integer> indentList = new ArrayList<>();
+    private final Queue<IElementType> tokenQueue = new LinkedList<>();
 
-    //-------------------------------------------------------------------------------------------------------------------
+    protected IElementType pollQueuedToken() {
+        return this.tokenQueue.poll();
+    }
+
+    protected void flushIndent() {
+        while (!this.indentList.isEmpty()) {
+            this.tokenQueue.add(DEDENT);
+            this.indentList.remove(0);
+        }
+    }
 
     /** @param offset offset from currently matched token start (could be negative) */
     private char getCharAtOffset(final int offset) {
@@ -46,34 +49,38 @@ import com.intellij.psi.tree.IElementType;
         return prev == (char)-1 || prev == '\n';
     }
 
-    private int getIndentLevel() {
+    private int getIndent() {
         assert isAfterEol();
-        int currentIndentPos = yylength();
-        for (int i = 0; i < yylength(); i+=1) {
+        int indent = yylength();
+        for (int i = 0; i < yylength(); i += 1) {
             if (getCharAtOffset(i) == '\t') {
-                currentIndentPos += 1;
+                indent = Math.floorDiv(indent + TAB_SIZE, TAB_SIZE) * TAB_SIZE;
             }
         }
+        return indent;
+    }
 
-        int lastIndentPos = this.indentPos[this.currentIndentLevel];
-        if (currentIndentPos > lastIndentPos) {
-            if (this.currentIndentLevel == maxIndentLevel) {
-                return -1;
-            }
-            this.currentIndentLevel ++;
-            this.indentPos[this.currentIndentLevel] = currentIndentPos;
-            return this.currentIndentLevel;
+    private IElementType processIndent() {
+        int currIndent = getIndent();
+        int lastIndent = this.indentList.isEmpty() ? 0 : this.indentList.get(this.indentList.size() - 1);
+        if (currIndent > lastIndent) {
+            this.indentList.add(currIndent);
+            this.tokenQueue.add(INDENT);
+            return TokenType.WHITE_SPACE;
+        } else if (currIndent == lastIndent) {
+            return TokenType.WHITE_SPACE;
+        }
 
-        } else if (currentIndentPos < lastIndentPos) {
-            for (int i = 0; i < this.currentIndentLevel; i++) {
-                if (this.indentPos[i] == currentIndentPos) {
-                    this.currentIndentLevel = i;
-                    return this.currentIndentLevel;
+        for (int level = 0; level < this.indentList.size(); level ++) {
+            if (this.indentList.get(level) == currIndent) {
+                while (this.indentList.size() > level + 1) {
+                    this.indentList.remove(this.indentList.size() - 1);
+                    this.tokenQueue.add(DEDENT);
                 }
+                return TokenType.WHITE_SPACE;
             }
-            return -1;
         }
-        return this.currentIndentLevel;
+        return null;
     }
 
     private void goToState(int state) {
@@ -136,7 +143,7 @@ COMMENT = "#"{LINE}
 <YYINITIAL, LINE_START_STATE> {
     // It is a text, go next state and process it there
     "namespace" {
-          this.currentIndentLevel = 0;
+          this.flushIndent();
           goToState(NAMESPACE_STATE);
       }
 
@@ -149,21 +156,17 @@ COMMENT = "#"{LINE}
       }
 
     {WHITE_SPACE} {
-          int indentLevel = this.getIndentLevel();
-          if (indentLevel < 0) {
-              goToState(ERROR_STATE);
-          } else {
-//              yybegin(this.indentState[indentLevel]);
-//              yypushback(yylength());
-//              return this.indentToken[indentLevel];
-                yybegin(INDENT_STATE);
-                return TokenType.WHITE_SPACE;
+          IElementType token = this.processIndent();
+          if (token != null) {
+              yybegin(INDENT_STATE);
+              return token;
           }
+          this.goToState(ERROR_STATE);
       }
 
     {ANY_CHAR} {
-          this.currentIndentLevel = 0;
-          goToState(DEFINITION_STATE);
+          this.flushIndent();
+          goToState(INDENT_STATE);
       }
 }
 //-------------------------------------------------------------------------------------------------------------------
@@ -171,10 +174,12 @@ COMMENT = "#"{LINE}
 //-------------------------------------------------------------------------------------------------------------------
 // indent: after whitespac
 <INDENT_STATE> {
+    {IDENTIFIER} ":" {
+          goToState(KV_STATE);
+      }
+
     {ANY_CHAR} {
-          yybegin(this.indentState[this.currentIndentLevel]);
-          yypushback(yylength());
-          return this.indentToken[this.currentIndentLevel];
+          goToState(DEFINITION_STATE);
       }
 }
 //-------------------------------------------------------------------------------------------------------------------

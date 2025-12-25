@@ -6,7 +6,6 @@ import com.intellij.psi.LanguageInjector;
 import com.intellij.psi.PsiLanguageInjectionHost;
 import org.jetbrains.annotations.NotNull;
 import org.openspg.idea.conceptRule.ConceptRuleLanguage;
-import org.openspg.idea.schema.lang.psi.SchemaPlainTextContent;
 
 public final class SchemaLanguageInjector implements LanguageInjector {
 

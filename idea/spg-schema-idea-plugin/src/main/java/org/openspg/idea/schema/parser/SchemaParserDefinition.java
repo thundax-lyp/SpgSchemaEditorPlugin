@@ -1,4 +1,4 @@
-package org.openspg.idea.schema.grammar;
+package org.openspg.idea.schema.parser;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.ParserDefinition;
@@ -13,10 +13,9 @@ import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
 import org.openspg.idea.schema.SchemaLanguage;
-import org.openspg.idea.schema.grammar.psi.SchemaTypes;
-import org.openspg.idea.schema.lang.parser.SchemaParser;
 import org.openspg.idea.schema.lexer.SchemaLexerAdapter;
 import org.openspg.idea.schema.psi.SchemaFile;
+import org.openspg.idea.schema.psi.SchemaTypes;
 
 public final class SchemaParserDefinition implements ParserDefinition {
 

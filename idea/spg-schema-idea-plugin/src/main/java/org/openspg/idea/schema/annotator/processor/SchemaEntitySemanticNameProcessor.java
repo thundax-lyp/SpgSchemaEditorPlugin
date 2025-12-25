@@ -7,7 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.openspg.idea.common.annotator.AnnotateProcessor;
 import org.openspg.idea.schema.SchemaBundle;
-import org.openspg.idea.schema.lang.psi.SchemaStructureSemanticName;
+import org.openspg.idea.schema.psi.SchemaStructureSemanticName;
 
 import java.util.Arrays;
 import java.util.HashSet;
