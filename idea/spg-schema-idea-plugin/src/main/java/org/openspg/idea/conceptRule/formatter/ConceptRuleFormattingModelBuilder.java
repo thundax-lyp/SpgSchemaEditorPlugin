@@ -6,9 +6,9 @@ import com.intellij.psi.codeStyle.CommonCodeStyleSettings;
 import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
 import org.openspg.idea.conceptRule.ConceptRuleLanguage;
-import org.openspg.idea.conceptRule.grammar.psi.ConceptRuleTypes;
+import org.openspg.idea.conceptRule.psi.ConceptRuleTypes;
 
-import static org.openspg.idea.conceptRule.grammar.psi.ConceptRuleTypes.*;
+import static org.openspg.idea.conceptRule.psi.ConceptRuleTypes.*;
 
 public final class ConceptRuleFormattingModelBuilder implements FormattingModelBuilder {
 
@@ -33,20 +33,20 @@ public final class ConceptRuleFormattingModelBuilder implements FormattingModelB
 
         CommonCodeStyleSettings commonSetting = settings.getCommonSettings(ConceptRuleLanguage.INSTANCE.getID());
 
-        // space between keyword `namespace` and `namespace value`
-        builder.between(NAMESPACE_KEYWORD, NAMESPACE_VALUE).spaces(1);
+        // space between keyword `namespace` and `namespace variable`
+        builder.between(NAMESPACE_KEYWORD, NAMESPACE_VARIABLE).spaces(1);
 
         // space predicated_define `Define` and `predicated_define`
-        builder.between(DEFINE_KEYWORD, PREDICATED_DEFINE).spaces(1);
+        builder.between(DEFINE_KEYWORD, NODE_PATTERN).spaces(1);
 
         // blank lines after namespace
         int blankLinesAfterNamespace = Math.max(0, commonSetting.BLANK_LINES_AFTER_PACKAGE) + 1;
-        builder = builder.after(TokenSet.create(NAMESPACE))
+        builder = builder.after(TokenSet.create(NAMESPACE_DECLARATION))
                 .spacing(0, 0, blankLinesAfterNamespace, false, 0);
 
         // blank lines after schema pattern
         int blankLinesAfterSchemaPattern = Math.max(0, commonSetting.BLANK_LINES_AFTER_IMPORTS) + 1;
-        builder = builder.after(TokenSet.create(RULE_WRAPPER))
+        builder = builder.after(TokenSet.create(RULE_WRAPPER_DECLARATION))
                 .spacing(0, 0, blankLinesAfterSchemaPattern, false, 0);
 
         builder = builder

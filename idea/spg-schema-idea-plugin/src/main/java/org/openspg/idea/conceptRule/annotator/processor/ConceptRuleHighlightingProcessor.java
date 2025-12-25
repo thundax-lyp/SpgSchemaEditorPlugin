@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import org.openspg.idea.common.annotator.AnnotateProcessor;
 import org.openspg.idea.conceptRule.ConceptRuleBundle;
 import org.openspg.idea.conceptRule.highlighter.ConceptRuleHighlightingColors;
-import org.openspg.idea.conceptRule.lang.psi.*;
+import org.openspg.idea.conceptRule.psi.*;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ public class ConceptRuleHighlightingProcessor implements AnnotateProcessor {
         TextAttributesKey textAttributesKey = null;
 
         if (element instanceof ConceptRuleLabelName
-                && PsiTreeUtil.getParentOfType(element, ConceptRuleRuleWrapperPattern.class) != null) {
+                && PsiTreeUtil.getParentOfType(element, ConceptRuleRuleWrapperDeclaration.class) != null) {
             textAttributesKey = ConceptRuleHighlightingColors.WRAPPER_PATTERN;
 
         } else if (element instanceof ConceptRuleFunctionName) {
