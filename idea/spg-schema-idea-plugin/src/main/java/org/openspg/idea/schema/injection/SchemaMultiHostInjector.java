@@ -19,13 +19,13 @@ public final class SchemaMultiHostInjector implements MultiHostInjector {
 
     @Override
     public void getLanguagesToInject(@NotNull MultiHostRegistrar registrar, @NotNull PsiElement context) {
-        if (context instanceof SchemaPlainTextContent content) {
+        if (context instanceof SchemaPlainTextContent plainTextContent) {
             registrar.startInjecting(ConceptRuleLanguage.INSTANCE)
                     .addPlace(
                             "",
                             "",
-                            content,
-                            TextRange.from(0, content.getTextLength())
+                            plainTextContent,
+                            TextRange.from(0, plainTextContent.getTextLength())
                     )
                     .doneInjecting();
         }

@@ -91,7 +91,6 @@ private plain_text_block ::= DOUBLE_LBRACKET plain_text_content? DOUBLE_RBRACKET
 plain_text_content ::= PLAIN_TEXT+ {
     mixin="org.openspg.idea.schema.psi.impl.SchemaPlainTextContentBase"
     implements="com.intellij.psi.PsiLanguageInjectionHost"
-    methods=[getInjectTextRange]
 }
 
 /**

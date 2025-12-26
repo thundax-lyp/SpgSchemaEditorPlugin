@@ -29,7 +29,7 @@ public final class SchemaFormattingModelBuilder implements FormattingModelBuilde
     private static SpacingBuilder createSpaceBuilder(CodeStyleSettings settings) {
         CommonCodeStyleSettings commonSetting = settings.getCommonSettings(SchemaLanguage.INSTANCE.getID());
 
-        // blank between 'namespace' and 'namespace-variable'
+        // space between 'namespace' and 'namespace-variable'
         SpacingBuilder builder = new SpacingBuilder(settings, SchemaLanguage.INSTANCE);
         builder = builder.after(NAMESPACE_KEYWORD).spaces(1);
 
