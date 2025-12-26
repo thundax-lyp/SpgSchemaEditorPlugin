@@ -14,7 +14,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * validate semantic name
+ * Validates allowed semantic names on schema structure elements.
  */
 public class SchemaEntitySemanticNameProcessor implements AnnotateProcessor {
 
@@ -22,6 +22,9 @@ public class SchemaEntitySemanticNameProcessor implements AnnotateProcessor {
             "SYNANT", "CAU", "SEQ", "IND", "INC", "USE"
     ));
 
+    /**
+     * Emits an error annotation when a semantic name is not in the allowlist.
+     */
     public boolean process(@NotNull final PsiElement element, @NotNull AnnotationHolder holder) {
         if (element instanceof SchemaStructureSemanticName) {
             String semanticName = element.getText().toUpperCase();

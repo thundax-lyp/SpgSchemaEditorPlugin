@@ -9,15 +9,17 @@ import org.openspg.idea.schema.SchemaBundle;
 import org.openspg.idea.schema.psi.SchemaEntity;
 
 /**
- * validate semantic name
+ * Validates schema entity nesting depth against a configured limit.
  */
 public class SchemaEntityDepthProcessor implements AnnotateProcessor {
 
     private static final int MAX_LEVEL = 3;
 
+    /**
+     * Emits an error annotation when an entity exceeds the max depth.
+     */
     public boolean process(@NotNull final PsiElement element, @NotNull AnnotationHolder holder) {
         if (element instanceof SchemaEntity entity) {
-            System.out.println("====" + entity.getLevel());
             if (entity.getLevel() >= MAX_LEVEL) {
                 holder.newAnnotation(HighlightSeverity.ERROR, element.getText())
                         .range(element.getTextRange())

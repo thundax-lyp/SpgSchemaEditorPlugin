@@ -10,8 +10,14 @@ import org.openspg.idea.common.annotator.AnnotateProcessor;
 import org.openspg.idea.schema.highlighter.SchemaHighlightingColors;
 import org.openspg.idea.schema.psi.*;
 
+/**
+ * Adds text-attribute annotations for key schema PSI elements.
+ */
 public class SchemaHighlightingProcessor implements AnnotateProcessor {
 
+    /**
+     * Resolves highlight styles for the element and emits annotations when matched.
+     */
     public boolean process(@NotNull final PsiElement element, @NotNull AnnotationHolder holder) {
         TextAttributesKey textAttributesKey = null;
 
