@@ -32,10 +32,10 @@ import java.util.*;
     }
 
     protected void flushIndent() {
-        while (!this.indentList.isEmpty()) {
+        for (int i = 0; i < this.indentList.size(); i++) {
             this.tokenQueue.add(DEDENT);
-            this.indentList.remove(0);
         }
+        this.indentList.clear();
     }
 
     /** @param offset offset from currently matched token start (could be negative) */
@@ -94,11 +94,6 @@ import java.util.*;
         return null;
     }
 
-    private void goToState(int state) {
-        yybegin(state);
-        yypushback(yylength());
-    }
-
     //-------------------------------------------------------------------------------------------------------------------
     private void trace(String tag) {
         int tokenStart = getTokenStart();
@@ -113,8 +108,6 @@ import java.util.*;
 // NB !(!a|b) is "a - b"
 // From the spec
 ANY_CHAR = [^]
-
-COMMENT =                       "#"{LINE}
 
 IDENTIFIER = [:jletter:] [:jletterdigit:]*
 LETTERDIGIT = [:jletterdigit:]+
@@ -155,7 +148,8 @@ COMMENT = "#"{LINE}
     // It is a text, go next state and process it there
     "namespace" {
           this.flushIndent();
-          goToState(NAMESPACE_STATE);
+          yybegin(NAMESPACE_STATE);
+          yypushback(yylength());
       }
 
     {BLANK_LINE} {
@@ -163,7 +157,8 @@ COMMENT = "#"{LINE}
       }
 
     {WHITE_SPACE}* {COMMENT} {
-          return LINE_COMMENT;
+          yybegin(LINE_COMMENT_STATE);
+          yypushback(yylength());
       }
 
     {WHITE_SPACE} {
@@ -172,12 +167,14 @@ COMMENT = "#"{LINE}
               yybegin(INDENT_STATE);
               return token;
           }
-          this.goToState(ERROR_STATE);
+          yybegin(ERROR_STATE);
+          yypushback(yylength());
       }
 
     {ANY_CHAR} {
           this.flushIndent();
-          goToState(INDENT_STATE);
+          yybegin(INDENT_STATE);
+          yypushback(yylength());
       }
 }
 //-------------------------------------------------------------------------------------------------------------------
@@ -186,11 +183,13 @@ COMMENT = "#"{LINE}
 // indent: after whitespac
 <INDENT_STATE> {
     {IDENTIFIER} ":" {
-          goToState(KV_STATE);
+          yybegin(KV_STATE);
+          yypushback(yylength());
       }
 
     {ANY_CHAR} {
-          goToState(DEFINITION_STATE);
+          yybegin(DEFINITION_STATE);
+          yypushback(yylength());
       }
 }
 //-------------------------------------------------------------------------------------------------------------------
@@ -205,7 +204,8 @@ COMMENT = "#"{LINE}
       }
 
     {WHITE_SPACE} {COMMENT} {
-          return COMMENT;
+          yybegin(LINE_COMMENT_STATE);
+          yypushback(yylength());
       }
 
     {WHITE_SPACE} {
@@ -306,7 +306,7 @@ COMMENT = "#"{LINE}
     {IDENTIFIER} { return IDENTIFIER; }
 
     "#" {
-          return COLON;
+          return HASH;
       }
 
     ":" {
@@ -324,7 +324,8 @@ COMMENT = "#"{LINE}
 // waiting value
 <WAITING_VALUE_STATE> {
     {PLAIN_TEXT_BLOCK} {
-          goToState(WAITING_BLOCK_VALUE_STATE);
+          yybegin(WAITING_BLOCK_VALUE_STATE);
+          yypushback(yylength());
       }
 
     [Ii][Ss][Aa] {
