@@ -2,16 +2,18 @@ package org.openspg.idea.schema.structureView.viewElement;
 
 import com.intellij.ide.projectView.PresentationData;
 import com.intellij.ide.util.treeView.smartTree.TreeElement;
-import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.openspg.idea.schema.SchemaIcons;
+import org.openspg.idea.schema.psi.SchemaBasicStructureDeclaration;
 import org.openspg.idea.schema.psi.SchemaEntity;
-import org.openspg.idea.schema.psi.SchemaEntityHead;
-import org.openspg.idea.schema.psi.SchemaProperty;
 
-import java.util.List;
+import javax.swing.*;
 
 public class SchemaEntityStructureViewElement extends AbstractSchemaStructureViewElement<SchemaEntity> {
+
+    private static final Icon[] ICONS = {
+            SchemaIcons.Nodes.Entity, SchemaIcons.Nodes.Property, SchemaIcons.Nodes.SubProperty,
+    };
 
     public SchemaEntityStructureViewElement(SchemaEntity element) {
         super(element);
@@ -24,19 +26,26 @@ public class SchemaEntityStructureViewElement extends AbstractSchemaStructureVie
 
     @Override
     protected PresentationData createPresentation(SchemaEntity element) {
-        SchemaEntityHead head = element.getEntityHead();
+        SchemaBasicStructureDeclaration declaration = element.getEntityHead().getBasicStructureDeclaration();
         return new PresentationData(
-                head.getBasicStructureDeclaration().getStructureNameDeclaration().getText(),
-                head.getBasicStructureDeclaration().getStructureAliasDeclaration().getText(),
-                SchemaIcons.Nodes.Entity,
+                declaration.getStructureNameDeclaration().getText(),
+                declaration.getStructureAliasDeclaration().getText(),
+                this.getIcon(element),
                 null
         );
     }
 
     @Override
     public TreeElement @NotNull [] getChildren() {
-        List<SchemaProperty> elements = PsiTreeUtil.getChildrenOfTypeAsList(myElement, SchemaProperty.class);
-        return this.buildPropertyTreeElements(elements);
+        if (myElement.getEntityBody() == null) {
+            return EMPTY_ARRAY;
+        }
+
+        return this.buildPropertyTreeElements(myElement.getEntityBody().getPropertyList());
     }
 
+    private Icon getIcon(SchemaEntity element) {
+        int level = Math.max(0, Math.min(element.getLevel(), ICONS.length - 1));
+        return ICONS[level];
+    }
 }
