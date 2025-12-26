@@ -17,6 +17,7 @@ public class SchemaEntityDepthProcessor implements AnnotateProcessor {
 
     public boolean process(@NotNull final PsiElement element, @NotNull AnnotationHolder holder) {
         if (element instanceof SchemaEntity entity) {
+            System.out.println("====" + entity.getLevel());
             if (entity.getLevel() >= MAX_LEVEL) {
                 holder.newAnnotation(HighlightSeverity.ERROR, element.getText())
                         .range(element.getTextRange())
