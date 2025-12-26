@@ -10,9 +10,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.openspg.idea.conceptRule.psi.ConceptRuleRuleWrapperBody;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import static org.openspg.idea.conceptRule.psi.ConceptRuleTypes.*;
 
@@ -24,7 +25,8 @@ public class ConceptRuleBlock extends AbstractBlock {
     );
 
     private static final Set<IElementType> NORMAL_INDENT_BLOCK_ELEMENT_TYPES = Set.of(
-            RULE_WRAPPER_BODY, PATH_PATTERN_LIST, THE_ACTION_BODY,
+            RULE_WRAPPER_BODY, RULE_WRAPPER_RULE_BODY, CONCEPT_RULE_BODY,
+            THE_GRAPH_STRUCTURE_BODY, THE_ACTION_BODY, THE_RULE_BODY,
             NODE_FUNCTION_PARAM, TYPE_FUNCTION_PARAM, OBJECT_FUNCTION_PARAM
     );
 
@@ -55,17 +57,10 @@ public class ConceptRuleBlock extends AbstractBlock {
 
     @Override
     protected List<Block> buildChildren() {
-        List<Block> blocks = new ArrayList<>();
-
-        ASTNode[] children = myNode.getChildren(null);
-        for (ASTNode child : children) {
-            Block childBlock = buildBlock(child);
-            if (childBlock != null) {
-                blocks.add(childBlock);
-            }
-        }
-
-        return blocks;
+        return Stream.of(myNode.getChildren(null))
+                .map(this::buildBlock)
+                .filter(Objects::nonNull)
+                .toList();
     }
 
     private Block buildBlock(ASTNode node) {
