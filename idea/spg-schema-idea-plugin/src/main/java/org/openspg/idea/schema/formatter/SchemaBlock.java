@@ -13,7 +13,9 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import static org.openspg.idea.schema.psi.SchemaTypes.*;
 
@@ -66,20 +68,14 @@ public class SchemaBlock extends AbstractBlock implements SettingsAwareBlock {
 
     @Override
     protected List<Block> buildChildren() {
-        List<Block> blocks = new ArrayList<>();
         if (this.myInjection) {
-            return blocks;
+            return new ArrayList<>();
         }
 
-        ASTNode[] children = myNode.getChildren(null);
-        for (ASTNode child : children) {
-            Block childBlock = buildBlock(child);
-            if (childBlock != null) {
-                blocks.add(childBlock);
-            }
-        }
-
-        return blocks;
+        return Stream.of(myNode.getChildren(null))
+                .map(this::buildBlock)
+                .filter(Objects::nonNull)
+                .toList();
     }
 
     private Block buildBlock(ASTNode node) {

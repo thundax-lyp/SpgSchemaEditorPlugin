@@ -29,13 +29,16 @@ public final class SchemaFormattingModelBuilder implements FormattingModelBuilde
     private static SpacingBuilder createSpaceBuilder(CodeStyleSettings settings) {
         CommonCodeStyleSettings commonSetting = settings.getCommonSettings(SchemaLanguage.INSTANCE.getID());
 
+        // blank between 'namespace' and 'namespace-variable'
         SpacingBuilder builder = new SpacingBuilder(settings, SchemaLanguage.INSTANCE);
         builder = builder.after(NAMESPACE_KEYWORD).spaces(1);
 
+        // blank line after namespace
         int blankLinesAfterNamespace = Math.max(0, commonSetting.BLANK_LINES_AFTER_PACKAGE) + 1;
         builder = builder.after(TokenSet.create(NAMESPACE))
                 .spacing(0, 0, blankLinesAfterNamespace, false, 0);
 
+        // blank line after root-entity
         int blankLinesAfterEntity = Math.max(0, commonSetting.BLANK_LINES_AFTER_IMPORTS) + 1;
         builder = builder.after(TokenSet.create(ROOT_ENTITY))
                 .spacing(0, 0, blankLinesAfterEntity, false, 0);
