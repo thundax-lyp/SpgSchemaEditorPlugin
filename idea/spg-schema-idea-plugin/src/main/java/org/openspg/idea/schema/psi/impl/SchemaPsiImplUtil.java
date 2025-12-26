@@ -121,6 +121,10 @@ public class SchemaPsiImplUtil {
         return element.getEntityHead().getName();
     }
 
+    public static int getLevel(SchemaEntity element) {
+        return getEntityLevel(element);
+    }
+
     public static boolean isBodyEmpty(SchemaEntity element) {
         return element.getEntityBody() == null || element.getEntityBody().getPropertyList().isEmpty();
     }
@@ -157,6 +161,10 @@ public class SchemaPsiImplUtil {
     // ============================================
     // SchemaProperty methods
     //
+    public static int getLevel(SchemaProperty element) {
+        return getEntityLevel(element);
+    }
+
     public static boolean isBodyEmpty(SchemaProperty element) {
         return element.getPropertyBody() == null || element.getPropertyBody().getEntityList().isEmpty();
     }
@@ -172,6 +180,18 @@ public class SchemaPsiImplUtil {
             );
         }
         return result;
+    }
+
+    private static int getEntityLevel(PsiElement element) {
+        int level = 0;
+        PsiElement parent = element.getParent();
+        while (parent != null) {
+            if (parent instanceof SchemaEntity) {
+                level++;
+            }
+            parent = parent.getParent();
+        }
+        return level;
     }
 
 

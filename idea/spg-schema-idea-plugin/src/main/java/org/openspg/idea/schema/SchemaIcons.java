@@ -26,7 +26,6 @@ public final class SchemaIcons {
         /** 16x16 */
         public static final @NotNull Icon SubPropertyMeta = IconLoader.getIcon("/icons/nodes/subPropertyMeta.svg", SchemaIcons.class);
 
-
     }
 
 }
