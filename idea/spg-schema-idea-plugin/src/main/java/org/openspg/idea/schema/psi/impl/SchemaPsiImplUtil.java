@@ -84,25 +84,11 @@ public class SchemaPsiImplUtil {
     }
 
     public static String getValue(SchemaBasicPropertyDeclaration element) {
-        PsiElement sibling = element.getPropertyNameDeclaration().getNextSibling();
-
-        while (sibling != null && sibling.getNode().getElementType() != SchemaTypes.COLON) {
-            sibling = sibling.getNextSibling();
-        }
-
-        if (sibling == null) {
+        SchemaPropertyValueDeclaration declaration = element.getPropertyValueDeclaration();
+        if (declaration == null) {
             return null;
         }
-
-        StringBuilder value = new StringBuilder();
-
-        sibling = sibling.getNextSibling();
-        while (sibling != null) {
-            value.append(sibling.getText());
-            sibling = sibling.getNextSibling();
-        }
-
-        return value.toString().trim();
+        return declaration.getText().trim();
     }
 
     public static Map<String, Object> toJson(SchemaBasicPropertyDeclaration element) {

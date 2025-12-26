@@ -27,9 +27,15 @@ public class SchemaPropertyStructureViewElement extends AbstractSchemaStructureV
     @Override
     protected PresentationData createPresentation(SchemaProperty element) {
         SchemaBasicPropertyDeclaration declaration = element.getPropertyHead().getBasicPropertyDeclaration();
+
+        String value = declaration.getValue();
+        if (value != null && value.startsWith("[[") && value.endsWith("]]")) {
+            value = "[[...]]";
+        }
+
         return new PresentationData(
-                declaration.getText(),
-                declaration.getText(),
+                declaration.getName(),
+                value,
                 this.getIcon(element),
                 null
         );

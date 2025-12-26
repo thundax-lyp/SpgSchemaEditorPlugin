@@ -44,9 +44,20 @@ import java.util.*;
         return 0 <= loc && loc < zzBuffer.length() ? zzBuffer.charAt(loc) : (char) -1;
     }
 
+    private boolean isAfter(String tag) {
+        int end = getTokenStart();
+        int start = end - tag.length();
+        return 0 <= start && end < zzBuffer.length() && zzBuffer.subSequence(start, end).toString().equals(tag);
+    }
+
+    private boolean isBefore(String tag) {
+        int start = getTokenEnd();
+        int end = start + tag.length();
+        return 0 <= start && end < zzBuffer.length() && zzBuffer.subSequence(start, end).toString().equals(tag);
+    }
+
     private boolean isAfterEol() {
-        final char prev = getCharAtOffset(-1);
-        return prev == (char)-1 || prev == '\n';
+        return isAfter("\n");
     }
 
     private int getIndent() {
@@ -373,15 +384,11 @@ COMMENT = "#"{LINE}
           return PLAIN_TEXT;
       }
 
-    {EOL} {
-          return TokenType.NEW_LINE_INDENT;
+    [ \t\n]+ {
+          return isAfter("[[") || isBefore("]]") ? TokenType.WHITE_SPACE : PLAIN_TEXT;
       }
 
-    {WHITE_SPACE} {
-          return isAfterEol() ? TokenType.WHITE_SPACE : PLAIN_TEXT;
-      }
-
-    [^ \n\[\]]+ {
+    [^ \t\n\[\]]+ {
           return PLAIN_TEXT;
       }
 }

@@ -33,18 +33,18 @@ public final class ConceptRuleFormattingModelBuilder implements FormattingModelB
 
         CommonCodeStyleSettings commonSetting = settings.getCommonSettings(ConceptRuleLanguage.INSTANCE.getID());
 
-        // space between keyword `namespace` and `namespace variable`
+        // space between `namespace` and `variable`
         builder.between(NAMESPACE_KEYWORD, NAMESPACE_VARIABLE).spaces(1);
 
-        // space predicated_define `Define` and `predicated_define`
+        // space between `Define` and `nodePattern`
         builder.between(DEFINE_KEYWORD, NODE_PATTERN).spaces(1);
 
-        // blank lines after namespace
+        // blank line after namespace
         int blankLinesAfterNamespace = Math.max(0, commonSetting.BLANK_LINES_AFTER_PACKAGE) + 1;
         builder = builder.after(TokenSet.create(NAMESPACE_DECLARATION))
                 .spacing(0, 0, blankLinesAfterNamespace, false, 0);
 
-        // blank lines after schema pattern
+        // blank line after schema pattern
         int blankLinesAfterSchemaPattern = Math.max(0, commonSetting.BLANK_LINES_AFTER_IMPORTS) + 1;
         builder = builder.after(TokenSet.create(RULE_WRAPPER_DECLARATION))
                 .spacing(0, 0, blankLinesAfterSchemaPattern, false, 0);

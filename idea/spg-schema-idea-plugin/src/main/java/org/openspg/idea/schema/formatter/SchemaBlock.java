@@ -11,10 +11,8 @@ import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import static org.openspg.idea.schema.psi.SchemaTypes.*;
@@ -72,10 +70,39 @@ public class SchemaBlock extends AbstractBlock implements SettingsAwareBlock {
             return new ArrayList<>();
         }
 
-        return Stream.of(myNode.getChildren(null))
+        Stream<ASTNode> children;
+        if (myNode.getElementType() == BASIC_PROPERTY_DECLARATION) {
+            children = this.extractNodes(
+                    Stream.of(myNode.getChildren(null)).toList(),
+                    x -> x.getElementType() != PLAIN_TEXT_CONTENT
+            ).stream();
+        } else {
+            children = Stream.of(myNode.getChildren(null));
+        }
+
+        return children
                 .map(this::buildBlock)
                 .filter(Objects::nonNull)
                 .toList();
+    }
+
+    private List<ASTNode> extractNodes(List<ASTNode> nodes, Predicate<ASTNode> predicate) {
+        List<ASTNode> currNodes = nodes;
+        while (true) {
+            List<ASTNode> nextNodes = currNodes.stream()
+                    .flatMap(x -> {
+                        ASTNode[] children = x.getChildren(null);
+                        if (children.length == 0 || !predicate.test(x)) {
+                            return Stream.of(x);
+                        }
+                        return Stream.of(children);
+                    })
+                    .toList();
+            if (nextNodes.equals(currNodes)) {
+                return currNodes;
+            }
+            currNodes = nextNodes;
+        }
     }
 
     private Block buildBlock(ASTNode node) {

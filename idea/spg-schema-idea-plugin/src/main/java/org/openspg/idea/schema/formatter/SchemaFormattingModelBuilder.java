@@ -46,10 +46,16 @@ public final class SchemaFormattingModelBuilder implements FormattingModelBuilde
         builder = builder
                 .before(TokenSet.create(DOUBLE_LBRACKET))
                 .spacing(1, 1, 0, false, 0)
-                .after(TokenSet.create(DOUBLE_LBRACKET))
+
+                .between(TokenSet.create(DOUBLE_LBRACKET), TokenSet.create(DOUBLE_RBRACKET))
+                .spacing(1, 1, 0, false, 0)
+
+                .between(TokenSet.create(DOUBLE_LBRACKET), TokenSet.create(PLAIN_TEXT_CONTENT))
                 .spacing(0, 0, 1, false, 0)
-                .around(TokenSet.create(DOUBLE_RBRACKET))
-                .spacing(0, 0, 1, false, 0);
+
+                .between(TokenSet.create(PLAIN_TEXT_CONTENT), TokenSet.create(DOUBLE_RBRACKET))
+                .spacing(0, 0, 1, false, 0)
+                ;
 
         builder = initSpaceBuilderByComma(builder, commonSetting);
         builder = initSpaceBuilderByColon(builder, commonSetting);
