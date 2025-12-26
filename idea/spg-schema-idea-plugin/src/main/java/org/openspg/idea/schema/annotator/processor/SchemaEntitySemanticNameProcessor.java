@@ -38,5 +38,4 @@ public class SchemaEntitySemanticNameProcessor implements AnnotateProcessor {
         return true;
     }
 
-
 }
